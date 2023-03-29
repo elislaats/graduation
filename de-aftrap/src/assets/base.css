@@ -1,0 +1,48 @@
+:root {
+--color-indigo: #001524;
+--color-indigo-light: #003357;
+
+--color-ocean: #15616d;
+--color-ocean-light: #1d8798;
+
+--color-beige: #ffecd1;
+
+--color-orange-dark: #e76f51;
+--color-orange: #f4a261;
+}
+
+/* semantic color variables for this project */
+:root {
+  --color-background: var(--color-indigo);
+  --color-background-soft: var(--color-indigo-light);
+
+  --color-heading: var(--color-orange);
+  --color-text: var(--color-beige);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  position: relative;
+  font-weight: normal;
+}
+
+body {
+  min-height: 100vh;
+  color: var(--color-text);
+  background: var(--color-background);
+  transition: color 0.5s, background-color 0.5s;
+  line-height: 1.6;
+  font-family: Poppins, Roboto, Oxygen, Ubuntu,
+    Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-size: 15px;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3 {
+  color: var(--color-heading);
+}
