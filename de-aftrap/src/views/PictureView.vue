@@ -1,9 +1,17 @@
+<script>
+import Picture from '../components/Picture.vue'
+
+export default {
+  components: {
+    Picture
+  }
+}
+
+</script>
+
 <template>
-  <div class="about">
-    <h1>Hier komt een afbeelding te staan</h1>
-  </div>
+  <Picture> </Picture>
 </template>
 
-<style>
-
+<style scoped>
 </style>
