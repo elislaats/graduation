@@ -1,5 +1,7 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
+
+
 </script>
 
 <template>
@@ -20,5 +22,25 @@ import { RouterLink, RouterView } from 'vue-router'
     </RouterLink>
   </nav>
 
-  <RouterView />
+  <router-view v-slot="{ Component }">
+    <transition name="router">
+      <component :is="Component" />
+    </transition>
+  </router-view>
 </template>
+
+<style>
+.router-enter-active,
+.router-leave-active {
+  transition: all .3s ease-out;
+}
+
+.router-enter-from {
+  transform: scale(.3) translateY(20vh);
+}
+
+.router-leave-to {
+  transform: scale(.3) translateY(-20vh);
+  opacity: 0;
+}
+</style>

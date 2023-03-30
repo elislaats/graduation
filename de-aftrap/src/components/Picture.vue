@@ -64,7 +64,6 @@ h2 {
 }
 
 .pictureBlock {
-    transition: .5s;
     border-radius: 30px;
     background-color: var(--color-indigo-light);
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
