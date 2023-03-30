@@ -64,6 +64,7 @@ h2 {
 }
 
 .pictureBlock {
+    transition: .5s;
     border-radius: 30px;
     background-color: var(--color-indigo-light);
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
@@ -77,9 +78,9 @@ h2 {
 }
 
 .pictureBlock.loading {
-    widows: 100%;
+    width: 100%;
     height: 100%;
-    background-color: none;
+    background-color: transparent;
     align-items: center;
     justify-content: center;
 }

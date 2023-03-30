@@ -23,7 +23,7 @@ export default {
 <style scoped>
 main {
   grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: auto;
+  grid-template-rows: 1fr 1fr;
   gap: 2rem;
   align-items: center;
   justify-items: center;
