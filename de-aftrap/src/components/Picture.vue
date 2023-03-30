@@ -9,7 +9,8 @@ export default {
             apiLoaded: false,
             gradient: "linear-gradient(0deg, rgba(0,21,36,.9) 0%, rgba(0,21,36,0.2) 20%, rgba(0,21,36,0) 25%, rgba(0,21,36,0) 100%)",
             imageUrl: null,
-            imageBreed: null
+            imageBreed: null,
+            imageRatio: null
         }
     },
     async created() {
@@ -25,10 +26,19 @@ export default {
                 console.error(error);
             }
         },
-        setPicture: function(imageData){
-            this.imageUrl = imageData.message, 5000
+        setPicture: function (imageData) {
+            this.imageUrl = imageData.message;
             this.imageBreed = imageData.message.split("/")[4].replace("-", " ");
+            this.getAspectRatio().then(ratio => {
+                this.imageRatio = ratio;
+            });
             this.apiLoaded = true;
+        },
+        getAspectRatio: async function () {
+            let image = new Image()
+            image.src = this.imageUrl;
+            await image.decode();
+            return image.naturalWidth + " / " + image.naturalHeight;
         }
     }
 }
@@ -36,7 +46,7 @@ export default {
 
 <template>
     <div v-if="this.apiLoaded" class="pictureBlock loaded"
-        v-bind:style="{ backgroundImage: gradient + ', url(' + imageUrl + ')' }">
+        v-bind:style="{ backgroundImage: gradient + ', url(' + imageUrl + ')', aspectRatio: imageRatio }">
         <h2>{{ imageBreed }}</h2>
     </div>
     <div v-else class="pictureBlock loading">
@@ -57,9 +67,8 @@ h2 {
     border-radius: 30px;
     background-color: var(--color-indigo-light);
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    width: 80%;
-    height: auto;
-    aspect-ratio: 1.4 / 1;
+    width: 65%;
+    max-height: 45vh;
     background-size: cover;
     background-position: center;
     display: flex;
@@ -68,6 +77,9 @@ h2 {
 }
 
 .pictureBlock.loading {
+    widows: 100%;
+    height: 100%;
+    background-color: none;
     align-items: center;
     justify-content: center;
 }
@@ -76,7 +88,7 @@ h2 {
     height: 20%;
     align-items: center;
     justify-content: center;
-    animation: spinPulse 1.5s infinite steps(8);
+    animation: spinPulse .5s infinite steps(8);
 }
 
 .pictureBlock.loading svg path {
