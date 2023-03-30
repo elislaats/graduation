@@ -6,7 +6,8 @@ export default {
     data() {
         return {
             imageUrl: "",
-            breed: ""
+            breed: "",
+            gradient: "linear-gradient(0deg, rgba(0,21,36,.9) 0%, rgba(0,21,36,0) 23%, rgba(0,21,36,0) 100%)"
         }
     },
     created() {
@@ -17,7 +18,7 @@ export default {
     },
     methods: {
         handleMyData: function (input) {
-            this.imageUrl = input.message;
+            this.imageUrl = input.message
             this.breed = input.message.split("/")[4].replace("-", " ")
         }
     }
@@ -25,19 +26,23 @@ export default {
 </script>
 
 <template>
-    <div>
+    <div v-bind:style="{ backgroundImage: gradient + ', url(' + imageUrl + ')' }">
         <h2>{{ breed }}</h2>
-        <img class="image" :src="imageUrl">
     </div>
 </template>
 
 <style scoped>
-.image {
+div {
     border-radius: 10px;
     background-color: var(--color-indigo-light);
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    width: 30vw;
-    min-height: 100px;
+    width: 100%;
+    aspect-ratio: 1.2 / 1;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
 }
 
 h2 {
