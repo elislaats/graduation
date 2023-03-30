@@ -1,14 +1,14 @@
 :root {
---color-indigo: #001524;
---color-indigo-light: #003357;
+  --color-indigo: #001524;
+  --color-indigo-light: #003357;
 
---color-ocean: #15616d;
---color-ocean-light: #1d8798;
+  --color-ocean: #15616d;
+  --color-ocean-light: #1d8798;
 
---color-beige: #ffecd1;
+  --color-beige: #ffecd1;
 
---color-orange-dark: #e76f51;
---color-orange: #f4a261;
+  --color-orange-dark: #e76f51;
+  --color-orange: #f4a261;
 }
 
 /* semantic color variables for this project */
@@ -41,10 +41,21 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   color: var(--color-heading);
 }
 
-a{
+a {
   color: inherit;
+}
+
+@keyframes spinPulse {
+  from {
+    transform: rotate(0deg)
+  }
+  to {
+    transform: rotate(360deg)
+  }
 }
