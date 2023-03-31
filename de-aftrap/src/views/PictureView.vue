@@ -1,5 +1,6 @@
 <script>
 import Picture from '../components/Picture.vue'
+import BreedModal from '../components/breedModal.vue'
 
 export default {
   data() {
@@ -10,10 +11,13 @@ export default {
       columns: null,
       rows: null,
       amountOfPictures: null,
+      popup: false,
+      clickedBreedImg: null
     }
   },
   components: {
-    Picture
+    Picture,
+    BreedModal
   },
   methods: {
     placePictures() {
@@ -22,6 +26,10 @@ export default {
       this.columns = Math.ceil(this.amountOfPictures / this.rows)
       this.generateIndex++
       this.displayPictures = true;
+    },
+    openModal(event) {
+      this.clickedBreedImg = event.target.style.backgroundImage
+      this.popup = true;
     }
   }
 }
@@ -43,11 +51,15 @@ export default {
     <div id='pictureBox' ref='pictureBox' v-if="displayPictures" v-bind:style="{
       gridTemplateColumns: 'repeat(' + this.columns + ', 1fr)', gridTemplateRows: 'repeat(' + this.rows + ', 1fr)'
     }">
-      <Picture :key="this.generateIndex" v-for="n in amountOfPictures" v-bind:style="{
+      <Picture @click="openModal" :key="this.generateIndex" v-for="n in amountOfPictures" v-bind:style="{
         maxHeight: 'calc(90vh/ ' + this.rows.toString() + ')', maxWidth: 'calc((100vw - 100px) / ' + this.columns.toString() + ')'
       }">
       </Picture>
     </div>
+
+    <Teleport to="body">
+      <BreedModal :show="popup" :imageUrl="this.clickedBreedImg" @close="popup = false"></BreedModal>
+    </Teleport>
   </main>
 </template>
 

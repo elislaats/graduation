@@ -13,14 +13,23 @@ export default {
             cssImageRatio: null
         }
     },
+    props: {
+        altAPI: String
+    },
     async created() {
         const imageData = await this.getPicture();
         this.setPicture(imageData);
     },
     methods: {
         getPicture: async function () {
+            let TEMP_API_URL;
+            if (this.altAPI != undefined) {
+                TEMP_API_URL = this.altAPI;
+            } else {
+                TEMP_API_URL = API_URL;
+            }
             try {
-                const response = await axios.get(API_URL);
+                const response = await axios.get(TEMP_API_URL);
                 return response.data
             } catch (error) {
                 console.error(error);
