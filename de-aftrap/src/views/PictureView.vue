@@ -5,6 +5,7 @@ export default {
   data() {
     return {
       numberInput: 1,
+      generateIndex: 0,
       displayPictures: false,
       columns: null,
       rows: null,
@@ -19,6 +20,7 @@ export default {
       this.amountOfPictures = parseInt(this.numberInput);
       this.rows = this.columns = Math.ceil(this.amountOfPictures / 4)
       this.columns = Math.ceil(this.amountOfPictures / this.rows)
+      this.generateIndex++
       this.displayPictures = true;
     }
   }
@@ -41,7 +43,7 @@ export default {
     <div id='pictureBox' ref='pictureBox' v-if="displayPictures" v-bind:style="{
       gridTemplateColumns: 'repeat(' + this.columns + ', 1fr)', gridTemplateRows: 'repeat(' + this.rows + ', 1fr)'
     }">
-      <Picture v-for="n in amountOfPictures" v-bind:style="{
+      <Picture :key="this.generateIndex" v-for="n in amountOfPictures" v-bind:style="{
         maxHeight: 'calc(90vh/ ' + this.rows.toString() + ')', maxWidth: 'calc((100vw - 100px) / ' + this.columns.toString() + ')'
       }">
       </Picture>
