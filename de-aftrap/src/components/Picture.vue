@@ -10,7 +10,7 @@ export default {
             gradient: "linear-gradient(0deg, rgba(0,21,36,.9) 0%, rgba(0,21,36,0.2) 20%, rgba(0,21,36,0) 25%, rgba(0,21,36,0) 100%)",
             imageUrl: null,
             imageBreed: null,
-            imageRatio: null
+            cssImageRatio: null
         }
     },
     async created() {
@@ -30,7 +30,7 @@ export default {
             this.imageUrl = imageData.message;
             this.imageBreed = imageData.message.split("/")[4].replace("-", " ");
             this.getAspectRatio().then(ratio => {
-                this.imageRatio = ratio;
+                this.cssImageRatio = ratio;
             });
             this.apiLoaded = true;
         },
@@ -46,7 +46,7 @@ export default {
 
 <template>
     <div v-if="this.apiLoaded" class="pictureBlock loaded"
-        v-bind:style="{ backgroundImage: gradient + ', url(' + imageUrl + ')', aspectRatio: imageRatio }">
+        v-bind:style="{ backgroundImage: gradient + ', url(' + imageUrl + ')', aspectRatio: cssImageRatio }">
         <h2>{{ imageBreed }}</h2>
     </div>
     <div v-else class="pictureBlock loading">
@@ -67,18 +67,15 @@ h2 {
     border-radius: 30px;
     background-color: var(--color-indigo-light);
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    width: 65%;
-    max-height: 45vh;
     background-size: cover;
     background-position: center;
+    justify-self: center;
     display: flex;
     align-items: flex-end;
     justify-content: center;
 }
 
 .pictureBlock.loading {
-    width: 100%;
-    height: 100%;
     background-color: transparent;
     align-items: center;
     justify-content: center;
