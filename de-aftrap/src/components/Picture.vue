@@ -14,7 +14,7 @@ export default {
         }
     },
     props: {
-        altAPI: String
+        breed: String
     },
     async created() {
         const imageData = await this.getPicture();
@@ -23,8 +23,8 @@ export default {
     methods: {
         getPicture: async function () {
             let TEMP_API_URL;
-            if (this.altAPI != undefined) {
-                TEMP_API_URL = this.altAPI;
+            if (this.breed != undefined) {
+                TEMP_API_URL = `https://dog.ceo/api/breed/${this.breed}/images/random`;
             } else {
                 TEMP_API_URL = API_URL;
             }
@@ -35,9 +35,10 @@ export default {
                 console.error(error);
             }
         },
-        setPicture: function (imageData) {
+        setPicture(imageData) {
             this.imageUrl = imageData.message;
-            this.imageBreed = imageData.message.split("/")[4].replace("-", " ");
+            this.imageBreed = imageData.message.split("/")[4].split("-").join("-");
+            this.textBreed = imageData.message.split("/")[4].split("-").reverse().join(" ");
             this.getAspectRatio().then(ratio => {
                 this.cssImageRatio = ratio;
             });
@@ -56,7 +57,7 @@ export default {
 <template>
     <div v-if="this.apiLoaded" class="pictureBlock loaded"
         v-bind:style="{ backgroundImage: gradient + ', url(' + imageUrl + ')', aspectRatio: cssImageRatio }">
-        <h2>{{ imageBreed }}</h2>
+        <h2>{{ textBreed }}</h2>
     </div>
     <div v-else class="pictureBlock loading">
         <svg xmlns="http://www.w3.org/2000/svg"

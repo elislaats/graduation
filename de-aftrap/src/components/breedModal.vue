@@ -9,17 +9,28 @@ export default {
             required: true
         },
     },
+    data() {
+        return {
+            urlBreed: "",
+            key: 0,
+        }
+    },
     components: {
         Picture
     },
+    watch: {
+        show: function (val) {
+            if (val) {
+                this.urlBreed = this.getBreedFromURL()
+            }
+        }
+    },
     methods: {
-        getBreedURL() {
-            let breed = this.imageUrl.split("/")[4];
-            let newURL = `https://dog.ceo/api/breed/${breed}/images/random`
-            console.log(newURL)
-            return newURL;
+        getBreedFromURL: function () {
+            const breedBuilder = this.imageUrl.split("/")[4].split("-")
+            const urlBreed = breedBuilder.join("/");
+            return urlBreed;
 
-            //TO DO: Fix breeds with two parts -> call is out of order. 
         }
     }
 }
@@ -28,8 +39,9 @@ export default {
 <template>
     <Transition name="modal">
         <div v-if="show" @click="$emit('close')" class="overlay">
-            <div class="content">
-                <Picture :altAPI="getBreedURL()"></Picture>
+            <div class="content" @click="key++">
+                <h2>More of this breed</h2>
+                <Picture :key="key" :breed="this.urlBreed"></Picture>
             </div>
         </div>
     </Transition>
@@ -55,6 +67,12 @@ export default {
     background-color: var(--color-beige);
     border-radius: 60px;
     display: grid;
-    grid: 1fr / 1fr;
+    padding: 2rem;
+    grid: 1fr 8fr / 1fr
+}
+
+.content h2 {
+    text-align: center;
+    color: var(--color-indigo-light);
 }
 </style>
