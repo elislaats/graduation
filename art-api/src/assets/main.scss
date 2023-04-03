@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+
 :root {
   --oxford-blue: #061537;
   --royal-blue: #0A2463;
@@ -19,8 +21,40 @@ body {
 }
 
 #app {
-  font-family: Roboto, Helvetica, Arial, sans-serif;
+  font-family: 'Open Sans', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: black;
+  color: var(--offwhite);
+  padding: 1rem;
+}
+
+// TRANSITIONS:
+
+.menuitem-enter-active,
+.menuitem-leave-active {
+  transition-duration: .7s;
+
+  a {
+    transition: all .5s ease-in-out;
+  }
+}
+
+.menuitem-leave-active .one,
+.menuitem-enter-active .two {
+  transition-delay: .2s;
+}
+
+.menuitem-enter-from,
+.menuitem-leave-to {
+  a {
+    transform: translateY(-200%);
+  }
+}
+
+.menubtn-enter-active {
+  transition: all .3s ease-out;
+}
+
+.menubtn-enter-from {
+  transform: rotate(270deg);
 }

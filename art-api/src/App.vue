@@ -65,41 +65,18 @@ nav {
     text-decoration: none;
     color: var(--chocolate-cosmos);
     text-transform: uppercase;
-    font-weight: bold;
+    font-weight: bolder;
     font-size: .8vw;
     padding: .5rem 1vw;
     border-radius: 30px;
     background-color: var(--tan);
+    box-shadow: 3px 3px 7px rgba(0, 0, 0, .7);
+    transition: .15s ease;
 
+    &:hover {
+      transform: scale(.95);
+      box-shadow: none;
+    }
   }
-}
-
-.menuitem-enter-active,
-.menuitem-leave-active {
-  transition-duration: .7s;
-
-  a {
-    transition: all .5s ease-in-out;
-  }
-}
-
-.menuitem-leave-active .one,
-.menuitem-enter-active .two {
-  transition-delay: .2s;
-}
-
-.menuitem-enter-from,
-.menuitem-leave-to {
-  a {
-    transform: translateY(-200%);
-  }
-}
-
-.menubtn-enter-active {
-  transition: all .3s ease-out;
-}
-
-.menubtn-enter-from {
-  transform: rotate(270deg);
 }
 </style>
