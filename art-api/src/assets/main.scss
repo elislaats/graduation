@@ -1,0 +1,26 @@
+:root {
+  --oxford-blue: #061537;
+  --royal-blue: #0A2463;
+  --chocolate-cosmos: #3C0113;
+  --burgundy: #93032E;
+  --poly-green: #14591D;
+  --moonstone: #53A2BE;
+  --tan: #D3B99F;
+  --offwhite: #F9F5F1;
+
+}
+
+* {
+  margin: 0;
+}
+
+body {
+  background-color: var(--chocolate-cosmos);
+}
+
+#app {
+  font-family: Roboto, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: black;
+}
