@@ -30,17 +30,5 @@ import { RouterLink, RouterView } from 'vue-router'
 </template>
 
 <style>
-.router-enter-active,
-.router-leave-active {
-  transition: all .5s ease-in-out;
-}
 
-.router-enter-from {
-  transform: scale(.1) translate(30vw, 30vh);
-}
-
-.router-leave-to {
-  transform: scale(.1) translate(-30vw, -30vh);
-  opacity: 0;
-}
 </style>

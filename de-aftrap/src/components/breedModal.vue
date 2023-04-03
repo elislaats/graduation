@@ -13,6 +13,9 @@ export default {
         return {
             urlBreed: "",
             key: 0,
+            instruction: false,
+            mousePos: ["0", "0"],
+            timer: 0
         }
     },
     components: {
@@ -38,10 +41,17 @@ export default {
 
 <template>
     <Transition name="modal">
-        <div v-if="show" @click="$emit('close')" class="overlay">
-            <div class="content" @click="key++">
+        <div v-if="show" class="overlay">
+            <div class="content">
+                <button class="default-button close-btn" @click="$emit('close')"> <img src="./icons/fa-xmark.svg"
+                        alt="close">
+                </button>
                 <h2>More of this breed</h2>
-                <Picture :key="key" :breed="this.urlBreed"></Picture>
+                <Picture :key="key" @click="key++" @mouseover="this.instruction = true"
+                    @mouseleave="this.instruction = false" :breed="this.urlBreed"></Picture>
+                <p class="instruction" v-show="this.instruction">
+                    click for a new picture</p>
+
             </div>
         </div>
     </Transition>
@@ -68,11 +78,41 @@ export default {
     border-radius: 60px;
     display: grid;
     padding: 2rem;
-    grid: 1fr 8fr / 1fr
+    grid: 1fr 8fr 12px / 1fr;
 }
 
 .content h2 {
-    text-align: center;
+    justify-self: center;
+    align-self: top;
     color: var(--color-indigo-light);
+}
+
+.close-btn {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    border-radius: 25px;
+    font-size: larger;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+}
+
+.close-btn img {
+    width: 80%;
+}
+
+.instruction {
+    color: var(--color-indigo);
+    text-align: center;
+}
+
+.loaded {
+    max-width: calc(65vw - 2rem);
+    max-height: calc(70vh - 10% - 12px);
+    justify-self: center;
+    align-self: normal;
 }
 </style>

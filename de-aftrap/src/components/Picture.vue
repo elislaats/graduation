@@ -55,11 +55,15 @@ export default {
 </script>
 
 <template>
-    <div v-if="this.apiLoaded" class="pictureBlock loaded"
-        v-bind:style="{ backgroundImage: gradient + ', url(' + imageUrl + ')', aspectRatio: cssImageRatio }">
-        <h2>{{ textBreed }}</h2>
+    <div v-if="this.apiLoaded" class="loaded" v-bind:style="{ aspectRatio: cssImageRatio }">
+        <Transition name="picture" appear>
+            <div class="pictureBlock" v-show="this.apiLoaded"
+                v-bind:style="{ backgroundImage: gradient + ', url(' + imageUrl + ')', aspectRatio: cssImageRatio }">
+                <h2>{{ textBreed }}</h2>
+            </div>
+        </Transition>
     </div>
-    <div v-else class="pictureBlock loading">
+    <div v-else class="loading">
         <svg xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 512 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
             <path
@@ -73,32 +77,39 @@ h2 {
     text-transform: capitalize;
 }
 
+.loaded {
+    display: flex;
+    border-radius: 30px;
+}
+
 .pictureBlock {
     border-radius: 30px;
     background-color: var(--color-indigo-light);
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    box-shadow: #0015245e 0px 3px 8px;
     background-size: cover;
     background-position: center;
-    justify-self: center;
     display: flex;
     align-items: flex-end;
     justify-content: center;
 }
 
-.pictureBlock.loading {
-    background-color: transparent;
+.loading {
+    justify-self: center;
+    display: grid;
+    grid: 1fr / 1fr;
     align-items: center;
     justify-content: center;
+    box-shadow: none;
 }
 
-.pictureBlock.loading svg {
-    height: 20%;
+.loading svg {
+    height: 3rem;
     align-items: center;
     justify-content: center;
-    animation: spinPulse .5s infinite steps(8);
+    animation: spinPulse .75s infinite steps(8);
 }
 
-.pictureBlock.loading svg path {
-    fill: var(--color-beige)
+.loading svg path {
+    fill: var(--color-orange-dark)
 }
 </style>

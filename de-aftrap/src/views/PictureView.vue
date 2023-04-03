@@ -5,7 +5,7 @@ import BreedModal from '../components/breedModal.vue'
 export default {
   data() {
     return {
-      numberInput: 1,
+      numberInput: 7,
       generateIndex: 0,
       displayPictures: false,
       columns: null,
@@ -48,11 +48,11 @@ export default {
       </div>
     </div>
 
-    <div id='pictureBox' ref='pictureBox' v-if="displayPictures" v-bind:style="{
+    <div id='pictureBox' ref='pictureBox' v-if="displayPictures" :key="this.generateIndex" v-bind:style="{
       gridTemplateColumns: 'repeat(' + this.columns + ', 1fr)', gridTemplateRows: 'repeat(' + this.rows + ', 1fr)'
     }">
-      <Picture @click="openModal" :key="this.generateIndex" v-for="n in amountOfPictures" v-bind:style="{
-        maxHeight: 'calc(90vh/ ' + this.rows.toString() + ')', maxWidth: 'calc((100vw - 100px) / ' + this.columns.toString() + ')'
+      <Picture @click="openModal" v-for="n in amountOfPictures" v-bind:style="{
+        maxHeight: 'calc(85vh/ ' + this.rows.toString() + ')', maxWidth: 'calc((100vw - 100px) / ' + this.columns.toString() + ')'
       }">
       </Picture>
     </div>
