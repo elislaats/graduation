@@ -42,6 +42,7 @@ export default {
 <template>
     <Transition name="modal">
         <div v-if="show" class="overlay">
+
             <div class="content">
                 <button class="default-button close-btn" @click="$emit('close')"> <img src="./icons/fa-xmark.svg"
                         alt="close">
