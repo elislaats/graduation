@@ -1,13 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import HomeView from '@/views/HomeView.vue'
 
 
 const routes = [
   {
     path: '/',
-    name: 'Homepage',
-    component: function () {
-      return import('../views/HomeView.vue')
-    }
+    name: 'Loading',
+    component: HomeView
   }
 ]
 
