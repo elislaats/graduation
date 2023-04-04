@@ -1,0 +1,64 @@
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 2rem;
+    font-size: 1.4rem;
+    font-weight: 400;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    transition: all ease-in-out .3s;
+    text-align: center;
+}
+
+.btn-primary {
+    background: $primary-color;
+    border: 1px solid $primary-color;
+    color: $white;
+
+    &:hover {
+        background: darken($primary-color, 10%);
+        border-color: darken($primary-color, 10%);
+    }
+
+    &.outline {
+        background-color: transparent;
+        color: $primary-color;
+
+        &:hover {
+            background-color: $primary-color;
+            color: $white;
+        }
+    }
+}
+
+.btn-secondary {
+    background: #555;
+    border: 1px solid #555;
+    color: #fff;
+
+    &:hover {
+        background: #000;
+        border-color: #000;
+    }
+
+    &.outline {
+        background-color: transparent;
+        color: #555;
+
+        &:hover {
+            background-color: #555;
+            color: #fff;
+        }
+    }
+}
+
+.btn-submit {
+    &:disabled {
+        border-color: $grey-light2;
+        background-color: $grey-light2;
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+}
