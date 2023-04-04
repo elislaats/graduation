@@ -1,18 +1,16 @@
 <template>
   <Transition name="picture">
-    <div class='pictureContainer' v-show="this.loaded">
+    <div class='pictureContainer' v-show="this.loaded" @click="this.showFront = !this.showFront">
       <div class="front" v-if="this.showFront">
         <p class="title" v-show="this.title"> {{ this.title }} </p>
         <p class="artist" v-show="this.artist"> {{ this.artist }}</p>
         <img ref="img" src="../assets/fa-noimage.svg" alt="no image available">
       </div>
-      <div v-else>
+      <div class="back" v-else>
         <div>
           <p class="title" v-show="this.title"> {{ this.title }} </p>
           <p class="artist" v-show="this.artist"> {{ this.artist }}</p>
-          <p>
-            {{ this.description }}
-          </p>
+          <p v-for="(value, key) in this.specs" v-bind:key="key"> <span class="key"> {{ key }}:</span> {{ value }}</p>
         </div>
       </div>
     </div>
@@ -36,6 +34,12 @@ export default {
       id: null,
       title: null,
       artist: null,
+      specs: {
+        type: null,
+        medium: null,
+        date: null,
+        dimensions: null
+      },
       imageUrl: null,
     }
   },
@@ -43,7 +47,7 @@ export default {
     async getRandomPainting() {
       const randomPage = Math.round(Math.random() * 9966); // TO DO: function that gets total pages from API
       const randomIndex = Math.round(Math.random() * 12); // Default pagination has 12 artworks on each page
-      const apiUrl = `https://api.artic.edu/api/v1/artworks?page=${randomPage}&fields=id,artist_title,title,image_id`
+      const apiUrl = `https://api.artic.edu/api/v1/artworks?page=${randomPage}&fields=id,artist_title,title,image_id,medium_display,date_display,dimensions,artwork_type_title`
       try {
         const response = await axios.get(apiUrl, { headers: { 'AIC-User-Agent': 'school-project, eli@cre8ion.com' } })
         this.loaded = true
@@ -67,6 +71,10 @@ export default {
           imgEl.alt = this.title;
           imgEl.className = 'available';
         }
+        this.specs.type = data.artwork_type_title
+        this.specs.medium = data.medium_display
+        this.specs.date = data.date_display
+        this.specs.dimensions = data.dimensions
       })
   },
   getRandomId() {
@@ -92,18 +100,48 @@ export default {
 }
 
 .pictureContainer {
-  .front {
 
+  .front,
+  .back {
     display: grid;
-    grid: auto 1fr / 1fr;
-    align-items: center;
-    justify-content: center;
-    gap: .5rem;
-    max-width: 80vw;
-    background-color: var(--offwhite);
-    box-shadow: 3px 3px 8px black;
     padding: 30px 50px;
     border-radius: 30px;
+    width: 60vw;
+    height: 80vh;
+    background-color: var(--offwhite);
+    align-items: center;
+    justify-content: center;
+
+    p {
+      text-align: center;
+      max-width: 70vw;
+      color: var(--royal-blue);
+      font-weight: 300;
+
+      .key {
+        font-weight: 500;
+        text-transform: capitalize;
+      }
+    }
+
+    .artist {
+      font-size: 1.1em;
+      font-weight: 700;
+    }
+
+    .title {
+      font-size: 1.3em;
+      font-weight: 700;
+    }
+  }
+
+  .front {
+    grid: auto 1fr / 1fr;
+
+    gap: .5rem;
+
+    box-shadow: 3px 3px 8px black;
+
 
     img {
       min-height: 100px;
@@ -111,27 +149,12 @@ export default {
       justify-self: center;
 
       &.available {
-        max-height: 50vh;
-        max-width: 70vw;
+        max-height: 100%;
+        max-width: 100%;
         box-shadow: 3px 3px 10px black;
         border: 1px solid black;
       }
     }
-  }
-
-  p {
-    max-width: 70vw;
-    align-self: start;
-    color: var(--royal-blue);
-    font-weight: light;
-  }
-
-  .artist {
-    font-weight: medium;
-  }
-
-  .title {
-    font-weight: 800;
   }
 }
 </style>
