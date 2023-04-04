@@ -15,18 +15,31 @@
 
 <script>
 import './assets/main.scss'
+import axios from 'axios';
 
 export default {
   data() {
     return {
       showMenu: false
     }
+  },
+  created() {
+
+  },
+  methods: {
+    async getIdList() {
+      try {
+        axios.get(`https://api.artic.edu/api/v1/artworks?fields=id`)
+      } catch (error) {
+        console.error(error)
+      }
+    }
   }
 }
 </script>
 
 
-<style lang="scss">
+<style scoped lang="scss">
 #menu-btn {
   z-index: 10;
   position: fixed;

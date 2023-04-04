@@ -25,10 +25,11 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: var(--offwhite);
-  padding: 1rem;
+  width: 100vw;
+  min-height: 100vh;
 }
 
-// TRANSITIONS:
+// transitions
 
 .menuitem-enter-active,
 .menuitem-leave-active {
@@ -57,4 +58,14 @@ body {
 
 .menubtn-enter-from {
   transform: rotate(270deg);
+}
+
+@keyframes pulse {
+  from {
+    opacity: .1;
+  }
+
+  to {
+    opacity: .9;
+  }
 }
