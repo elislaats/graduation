@@ -11,7 +11,7 @@ export default {
     const store = useStore();
     const isAuthenticated = computed(() => store.getters.isAuthenticated);
 
-    store.dispatch('autoLogin');
+    store.dispatch('getRoutes')
 
     return { isAuthenticated };
   }
