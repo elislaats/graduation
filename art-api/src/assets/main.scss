@@ -27,6 +27,9 @@ body {
   color: var(--offwhite);
   width: 100vw;
   min-height: 100vh;
+  display: grid;
+  justify-content: center;
+  align-items: center;
 }
 
 // transitions

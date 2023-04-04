@@ -12,11 +12,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-#app {
-  display: grid;
-  justify-content: center;
-  align-items: center;
-}
-</style>

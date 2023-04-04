@@ -1,9 +1,7 @@
 <template>
   <div class='pictureContainer' v-show="this.loaded">
-    <p>
-      <span class="title" v-show="this.title"> {{ this.title }} </span>
-      <span v-show="this.artist"> By {{ this.artist }}</span>
-    </p>
+    <p class="title" v-show="this.title"> {{ this.title }} </p>
+    <p class="artist" v-show="this.artist"> {{ this.artist }}</p>
     <img ref="img" src="../assets/fa-noimage.svg" alt="no image available">
   </div>
   <div class="loading" v-show="!this.loaded">
@@ -83,24 +81,36 @@ export default {
   display: grid;
   grid: auto 1fr / 1fr;
   align-items: center;
+  justify-content: center;
   gap: .5rem;
-  max-width: 60vw;
+  max-width: 80vw;
+  background-color: var(--offwhite);
+  box-shadow: 3px 3px 8px black;
+  padding: 30px 50px;
+  border-radius: 30px;
 
   img {
+    min-height: 100px;
     max-height: 100px;
     justify-self: center;
 
     &.available {
       max-height: 50vh;
-      max-width: 60vw;
+      max-width: 70vw;
       box-shadow: 3px 3px 10px black;
-      border: 20px solid;
-      border-image: url('../assets/border.png') 90 / 20px;
+      border: 1px solid black;
     }
+  }
 
-    p {
-      align-self: start;
-    }
+  p {
+    max-width: 70vw;
+    align-self: start;
+    color: var(--royal-blue);
+    font-weight: light;
+  }
+
+  .artist {
+    font-weight: medium;
   }
 
   .title {
