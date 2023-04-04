@@ -63,6 +63,27 @@ body {
   transform: rotate(270deg);
 }
 
+.picture-enter-active {
+  transition-duration: 1.4s;
+
+  &div {
+    transition: transform .4s ease-out;
+  }
+
+  img {
+    transition: transform .4s linear;
+    transition-delay: .9s;
+  }
+}
+
+.picture-enter-from {
+  transform: translateY(-70vh);
+
+  img {
+    transform: rotate3d(0, 1, 0, 90deg)
+  }
+}
+
 @keyframes pulse {
   from {
     opacity: .1;

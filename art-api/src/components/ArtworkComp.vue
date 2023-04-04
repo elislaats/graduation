@@ -1,9 +1,22 @@
 <template>
-  <div class='pictureContainer' v-show="this.loaded">
-    <p class="title" v-show="this.title"> {{ this.title }} </p>
-    <p class="artist" v-show="this.artist"> {{ this.artist }}</p>
-    <img ref="img" src="../assets/fa-noimage.svg" alt="no image available">
-  </div>
+  <Transition name="picture">
+    <div class='pictureContainer' v-show="this.loaded">
+      <div class="front" v-if="this.showFront">
+        <p class="title" v-show="this.title"> {{ this.title }} </p>
+        <p class="artist" v-show="this.artist"> {{ this.artist }}</p>
+        <img ref="img" src="../assets/fa-noimage.svg" alt="no image available">
+      </div>
+      <div v-else>
+        <div>
+          <p class="title" v-show="this.title"> {{ this.title }} </p>
+          <p class="artist" v-show="this.artist"> {{ this.artist }}</p>
+          <p>
+            {{ this.description }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </Transition>
   <div class="loading" v-show="!this.loaded">
   </div>
 </template>
@@ -18,6 +31,7 @@ export default {
   },
   data() {
     return {
+      showFront: true,
       loaded: false,
       id: null,
       title: null,
@@ -78,27 +92,30 @@ export default {
 }
 
 .pictureContainer {
-  display: grid;
-  grid: auto 1fr / 1fr;
-  align-items: center;
-  justify-content: center;
-  gap: .5rem;
-  max-width: 80vw;
-  background-color: var(--offwhite);
-  box-shadow: 3px 3px 8px black;
-  padding: 30px 50px;
-  border-radius: 30px;
+  .front {
 
-  img {
-    min-height: 100px;
-    max-height: 100px;
-    justify-self: center;
+    display: grid;
+    grid: auto 1fr / 1fr;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    max-width: 80vw;
+    background-color: var(--offwhite);
+    box-shadow: 3px 3px 8px black;
+    padding: 30px 50px;
+    border-radius: 30px;
 
-    &.available {
-      max-height: 50vh;
-      max-width: 70vw;
-      box-shadow: 3px 3px 10px black;
-      border: 1px solid black;
+    img {
+      min-height: 100px;
+      max-height: 100px;
+      justify-self: center;
+
+      &.available {
+        max-height: 50vh;
+        max-width: 70vw;
+        box-shadow: 3px 3px 10px black;
+        border: 1px solid black;
+      }
     }
   }
 
