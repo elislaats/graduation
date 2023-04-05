@@ -12,7 +12,7 @@ export default {
   setup() {
     const store = useStore()
     const isAuthenticated = computed(() => store.getters.isAuthenticated);
-
+    store.dispatch('loadRoutes')
     return { isAuthenticated };
   },
   components: {
@@ -23,9 +23,6 @@ export default {
       currentRoutes: this.$router.getRoutes()
     }
   },
-  mounted(){
-    this.$store.dispatch('loadRoutes')
-  },
   computed: {
     routes () {
       return this.$store.state.routes
@@ -35,8 +32,10 @@ export default {
     routes(value){
       const newRoutes = JSON.parse(JSON.stringify(value))
       newRoutes.forEach(route => {
+        route.component = () => import('@/views/DynamicView.vue')
         this.$router.addRoute(route)
       })
+      this.$router.push('/homepage')
       this.currentRoutes = this.$router.getRoutes()
     }
   }

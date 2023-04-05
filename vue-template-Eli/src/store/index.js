@@ -1,6 +1,5 @@
 
 import { createStore } from 'vuex'
-import DynamicView from '../views/DynamicView.vue'
 import axios from 'axios';
 
 const API_URL_BASE = `https://api-cre8ion.tc8l.dev/api/`
@@ -31,7 +30,7 @@ export default createStore({
             const route = {
               path: page.url,
               name: page.name,
-              component: DynamicView,
+              component: null, //component is set on add for stability
               props: { id: page.id }
             }
             newRoutes.push(route);

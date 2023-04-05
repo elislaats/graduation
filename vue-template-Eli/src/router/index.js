@@ -5,7 +5,7 @@ import StartupView from '@/views/StartupView.vue'
 const routes = [
   {
     path: '/',
-    name: 'load',
+    name: '',
     component: StartupView
   }
 ]
