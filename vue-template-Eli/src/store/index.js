@@ -7,15 +7,26 @@ const API_URL_BASE = `https://api-cre8ion.tc8l.dev/api/`
 export default createStore({
   state: {
     routes: [],
+    pageid: 0,
+    pagedata: null
   },
   getters: {
     routes: state => {
       return state.routes;
+    },
+    pageid: state => {
+      return state.pageid;
     }
   },
   mutations: {
-    SET_ROUTES(state, routes) {
+    setRoutes(state, routes) {
       state.routes = routes
+    },
+    setPageid(state, pageid){
+      state.pageid = pageid
+    },
+    setPagedata(state, pagedata){
+      state.pagedata = pagedata
     }
   },
   actions: {
@@ -36,25 +47,20 @@ export default createStore({
             newRoutes.push(route);
           })
         }).then(() => {
-          commit('SET_ROUTES', newRoutes)
+          commit('setRoutes', newRoutes)
         })
       } catch (error) {
         console.error(error)
       }
     },
-    /*
-    async loadPageData(id) {
-      const apiUrl = API_URL_BASE + "pages/" + id
+    async loadPageData({ commit }) {
       try {
-        await axios.get(apiUrl).then(response => {
-          console.log(response.data.content)
-          return response.data.content
-        })
+        const response = await axios.get( API_URL_BASE+ `page/` + this.getters.pageid)
+        commit('setPagedata', response.data)
       } catch (error) {
         console.error(error)
       }
     }
-    */
   },
   modules: {
   }

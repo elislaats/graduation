@@ -1,6 +1,8 @@
 <template>
-  <router-view></router-view>
-  <NavBar :routes="currentRoutes"></NavBar>
+  <div class="grid align-center justify-center">
+    <NavBar :routes="currentRoutes"></NavBar>
+    <router-view></router-view>
+  </div>
 </template>
 
 <script>
@@ -18,18 +20,18 @@ export default {
   components: {
     NavBar
   },
-  data(){
-    return{
+  data() {
+    return {
       currentRoutes: this.$router.getRoutes()
     }
   },
   computed: {
-    routes () {
+    routes() {
       return this.$store.state.routes
     }
   },
   watch: {
-    routes(value){
+    routes(value) {
       const newRoutes = JSON.parse(JSON.stringify(value))
       newRoutes.forEach(route => {
         route.component = () => import('@/views/DynamicView.vue')
