@@ -1,53 +1,54 @@
 <template>
   <Transition name="picture">
-    <div class='pictureContainer' v-show="this.loaded" @click="this.showFront = !this.showFront">
-      <div class="front" v-if="this.showFront">
-        <p class="title" v-show="this.title"> {{ this.title }} </p>
-        <p class="artist" v-show="this.artist"> {{ this.artist }}</p>
+    <div class='pictureContainer' :class="{ flippedCard: this.flipped }" @click="this.flipCard()" v-if="this.loaded">
+      <div class="front" v-show="this.showFront">
+        <ArtworkHeader :title="this.title" :artist="this.artist"> </ArtworkHeader>
         <img ref="img" src="../assets/fa-noimage.svg" alt="no image available">
       </div>
-      <div class="back" v-else>
-        <div>
-          <p class="title" v-show="this.title"> {{ this.title }} </p>
-          <p class="artist" v-show="this.artist"> {{ this.artist }}</p>
-          <p v-for="(value, key) in this.specs" v-bind:key="key"> <span class="key"> {{ key }}:</span> {{ value }}</p>
+      <div class="back" v-show="!this.showFront">
+        <ArtworkHeader :title="this.title" :artist="this.artist"> </ArtworkHeader>
+        <div class="specs">
+          <span v-for="(value, key) in this.specs" v-show="value" v-bind:key="key">
+            <p class="key">{{ key }}</p>
+            <p class="value" v-html="value"></p>
+          </span>
         </div>
       </div>
     </div>
   </Transition>
-  <div class="loading" v-show="!this.loaded">
+  <div class="loading" v-if="!this.loaded">
   </div>
 </template>
 
 <script>
 import axios from 'axios';
+import ArtworkHeader from './ArtworkHeader.vue';
 
 export default {
   name: 'ArtworkComp',
   props: {
     inputId: String
   },
+  components: {
+    ArtworkHeader
+  },
   data() {
     return {
+      flipped: false,
       showFront: true,
       loaded: false,
       id: null,
       title: null,
       artist: null,
-      specs: {
-        type: null,
-        medium: null,
-        date: null,
-        dimensions: null
-      },
-      imageUrl: null,
+      specs: {},
+      imageUrl: null
     }
   },
   methods: {
     async getRandomPainting() {
       const randomPage = Math.round(Math.random() * 9966); // TO DO: function that gets total pages from API
       const randomIndex = Math.round(Math.random() * 12); // Default pagination has 12 artworks on each page
-      const apiUrl = `https://api.artic.edu/api/v1/artworks?page=${randomPage}&fields=id,artist_title,title,image_id,medium_display,date_display,dimensions,artwork_type_title`
+      const apiUrl = `https://api.artic.edu/api/v1/artworks?page=${randomPage}&fields=id,artist_title,thumbnail,title,image_id,medium_display,style_title,date_display,dimensions,artwork_type_title,copyright_notice`
       try {
         const response = await axios.get(apiUrl, { headers: { 'AIC-User-Agent': 'school-project, eli@cre8ion.com' } })
         this.loaded = true
@@ -56,6 +57,25 @@ export default {
         console.log(error);
       }
     },
+    flipCard() {
+      this.flipped = !this.flipped
+      setTimeout(() => {
+        this.showFront = !this.showFront
+      }, 500);
+    },
+    checkImage(id, element, title) {
+      if (id !== null) {
+        const image = new Image();
+        image.src = `https://www.artic.edu/iiif/2/${id}/full/843,/0/default.jpg`
+
+        image.onload = function () {
+          const imgEl = element;
+          imgEl.src = image.src;
+          imgEl.className = 'available';
+          imgEl.alt = "image of artwork " + title;
+        }
+      }
+    }
   },
   async created() {
     await this.getRandomPainting()
@@ -65,20 +85,15 @@ export default {
         this.id = data.id
         this.title = data.title
         this.artist = data.artist_title
-        const imgEl = this.$refs.img;
-        if (data.image_id != null) {
-          imgEl.src = `https://www.artic.edu/iiif/2/${data.image_id}/full/843,/0/default.jpg`
-          imgEl.alt = this.title;
-          imgEl.className = 'available';
-        }
+        this.checkImage(data.image_id, this.$refs.img, this.title)
+        this.specs.description = data.thumbnail.alt_text
         this.specs.type = data.artwork_type_title
+        this.specs.style = data.style_title
         this.specs.medium = data.medium_display
         this.specs.date = data.date_display
-        this.specs.dimensions = data.dimensions
+        this.specs.dimensions = data.dimensions.replaceAll(";", " <br>")
+        this.specs.copyright = data.copyright_notice;
       })
-  },
-  getRandomId() {
-    return
   }
 }
 </script>
@@ -95,64 +110,75 @@ export default {
   min-height: 1.5rem;
 }
 
+.flippedCard {
+  transform: rotateY(180deg);
+}
+
 .loading::before {
   animation-direction: alternate-reverse;
 }
 
 .pictureContainer {
+  width: 60vw;
+  height: 80vh;
+  background-color: var(--offwhite);
+  border-radius: 30px;
+  box-shadow: 3px 3px 8px var(--royal-blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 1s ease-in-out;
+  transform-style: preserve-3d;
 
   .front,
   .back {
+    max-width: 90%;
+    height: 80%;
     display: grid;
-    padding: 30px 50px;
-    border-radius: 30px;
-    width: 60vw;
-    height: 80vh;
-    background-color: var(--offwhite);
+    grid: .5fr .5fr 10fr / 1fr;
     align-items: center;
     justify-content: center;
+    gap: .5rem;
+    justify-content: space-around;
 
     p {
-      text-align: center;
-      max-width: 70vw;
       color: var(--royal-blue);
       font-weight: 300;
-
-      .key {
-        font-weight: 500;
-        text-transform: capitalize;
-      }
-    }
-
-    .artist {
-      font-size: 1.1em;
-      font-weight: 700;
-    }
-
-    .title {
-      font-size: 1.3em;
-      font-weight: 700;
     }
   }
 
   .front {
-    grid: auto 1fr / 1fr;
-
-    gap: .5rem;
-
-    box-shadow: 3px 3px 8px black;
-
-
     img {
       min-height: 100px;
       max-height: 100px;
       justify-self: center;
 
       &.available {
+        min-height: 25%;
+        min-width: 25%;
         max-height: 100%;
         max-width: 100%;
-        box-shadow: 3px 3px 10px black;
-        border: 1px solid black;
+        box-shadow: 3px 3px 10px var(--oxford-blue);
+        border: 1px solid var(--oxford-blue);
+      }
+    }
+  }
+
+  .back {
+    transform: rotateY(180deg);
+
+    .specs {
+      min-height: 60%;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      span {
+        .key {
+          font-weight: 500;
+          text-transform: capitalize;
+        }
       }
     }
   }
