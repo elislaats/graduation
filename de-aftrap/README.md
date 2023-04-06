@@ -1,27 +1,37 @@
-# de-aftrap
+# Fontys HBO-ICT Graduation Project
 
-Eerste opzet - opstarten van Vue applicatie en API connectie
+## `graduation/de-aftrap`
 
+**Doel:** \
+Opstarten van Vue applicatie en API connectie maken
 
-## Project Setup
+**Resultaat:** \
+Applicatie die willekeurige hondenafbeeldingen ophaalt en weergeeft
+
+**Tools:** \
+Opgezet met [Vite](https://vitejs.dev/)
+
+## Vite algemeen
+
+### Project Setup
 
 ```sh
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+#### Compile and Hot-Reload for Development
 
 ```sh
 npm run dev
 ```
 
-### Compile and Minify for Production
+#### Compile and Minify for Production
 
 ```sh
 npm run build
 ```
 
-### Lint with [ESLint](https://eslint.org/)
+#### Lint with [ESLint](https://eslint.org/)
 
 ```sh
 npm run lint
