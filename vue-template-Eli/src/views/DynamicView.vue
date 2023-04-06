@@ -3,8 +3,16 @@
         <h1 class="col-1-1"> {{ this.title }}</h1>
         <p class="col-1-1"> retrieved from page id: {{ id }}</p>
         <div class="blocks col-1-1 grid">
-            <div v-for="(block, index) in this.blocks" v-bind:key="index" class="contentblock col-1-4">
-                <p>{{ block._block._name }}</p>
+            <div v-for="(block, index) in this.blocks" v-bind:key="index" class="contentblock">
+                <h4>{{ block._block._name }}</h4>
+
+                <div v-if="block.aanvullenMet" class="grid">
+                    <p class="col-1-1"> <strong> Aanvullen met: {{ block.aanvullenMet }} </strong></p>
+                    <div class="aanvulling col-1-3" v-for="item in this.allseries[block.aanvullenMet]"
+                        v-bind:key="item.name" v-html="item.content.titel" v-show="item.content.titel != ''">
+                    </div>
+                </div>
+                <p v-else v-html="block.titel"></p>
             </div>
         </div>
 
@@ -26,19 +34,31 @@ export default {
     data() {
         return {
             title: null,
-            blocks: null
+            blocks: []
         }
     },
     computed: {
         pagedata() {
             return this.$store.state.pagedata
+        },
+        allseries() {
+            return this.$store.state.allseries
         }
     },
     watch: {
         pagedata(value) {
-            console.log(value)
             this.title = value.content.titel
-            this.blocks = value.content.content
+            this.blocks = [];
+            value.content.content.forEach(item => {
+                this.blocks.push(item)
+                if (item.aanvullenMet != "" && item.aanvullenMet != undefined) {
+                    this.$store.dispatch('loadSeries', parseInt(item.aanvullenMet))
+                }
+            })
+        },
+        allseries(value) {
+            console.log('here')
+            console.log(value)
         },
         id(value) {
             this.getPageData(value)
@@ -46,8 +66,7 @@ export default {
     },
     methods: {
         async getPageData(id) {
-            this.$store.commit('setPageid', id)
-            await this.$store.dispatch('loadPageData')
+            await this.$store.dispatch('loadPageData', id)
         }
     }
 };
@@ -56,8 +75,19 @@ export default {
 <style lang="scss">
 .blocks {
     .contentblock {
-        aspect-ratio: 2 / 1;
+        min-height: 10vh;
+        min-width: 15vw;
         border: 1px solid #fba400;
     }
+
+    .aanvulling {
+        border: 1px solid grey;
+        font-size: .9em;
+        word-break: break-word;
+    }
+}
+
+.bold {
+    font-weight: bold;
 }
 </style>

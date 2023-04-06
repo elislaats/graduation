@@ -7,26 +7,29 @@ const API_URL_BASE = `https://api-cre8ion.tc8l.dev/api/`
 export default createStore({
   state: {
     routes: [],
-    pageid: 0,
-    pagedata: null
+    pagedata: null,
+    allseries: {}
   },
   getters: {
     routes: state => {
       return state.routes;
     },
-    pageid: state => {
-      return state.pageid;
+    pagedata: state => {
+      return state.pagedata
+    },
+    series: state => {
+      return state.series
     }
   },
   mutations: {
     setRoutes(state, routes) {
       state.routes = routes
     },
-    setPageid(state, pageid){
-      state.pageid = pageid
-    },
-    setPagedata(state, pagedata){
+    setPagedata(state, pagedata) {
       state.pagedata = pagedata
+    },
+    addSeries(state, { series, seriesid }) {
+      state.allseries[seriesid] = series;
     }
   },
   actions: {
@@ -53,10 +56,18 @@ export default createStore({
         console.error(error)
       }
     },
-    async loadPageData({ commit }) {
+    async loadPageData({ commit }, id) {
       try {
-        const response = await axios.get( API_URL_BASE+ `page/` + this.getters.pageid)
+        const response = await axios.get(API_URL_BASE + `page/` + id)
         commit('setPagedata', response.data)
+      } catch (error) {
+        console.error(error)
+      }
+    },
+    async loadSeries({ commit }, id) {
+      try {
+        const response = await axios.get(API_URL_BASE + `pages/` + id)
+        commit('addSeries', { series: response.data, seriesid: id })
       } catch (error) {
         console.error(error)
       }

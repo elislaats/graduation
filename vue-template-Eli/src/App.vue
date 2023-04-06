@@ -38,6 +38,7 @@ export default {
         this.$router.addRoute(route)
       })
       this.$router.push('/homepage')
+      this.$router.removeRoute('loading')
       this.currentRoutes = this.$router.getRoutes()
     }
   }
