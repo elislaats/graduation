@@ -3,7 +3,7 @@
         <h1 class="col-1-1"> {{ this.title }}</h1>
         <p class="col-1-1"> retrieved from page id: {{ id }}</p>
         <div class="blocks col-1-1 grid">
-            <div v-for="(block, index) in this.blocks" v-bind:key="index" class="contentblock">
+            <div v-for="(block, index) in this.blocks" v-bind:key="index" class="contentblock col-1-3">
                 <h4>{{ block._block._name }}</h4>
 
                 <div v-if="block.aanvullenMet" class="grid">
@@ -76,11 +76,11 @@ export default {
 .blocks {
     .contentblock {
         min-height: 10vh;
-        min-width: 15vw;
         border: 1px solid #fba400;
     }
 
     .aanvulling {
+        aspect-ratio: 2 / 1;
         border: 1px solid grey;
         font-size: .9em;
         word-break: break-word;
