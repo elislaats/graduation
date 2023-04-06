@@ -1,22 +1,25 @@
 <template>
-    <div class="grid align-center">
+    <main class="grid align-content-start">
         <h1 class="col-1-1"> {{ this.title }}</h1>
         <p class="col-1-1"> retrieved from page id: {{ id }}</p>
         <div class="blocks col-1-1 grid">
-            <div v-for="(block, index) in this.blocks" v-bind:key="index" class="contentblock col-1-3">
-                <h4>{{ block._block._name }}</h4>
+            <div v-for="(block, index) in this.blocks" v-bind:key="index" class="contentblock border-primary bg-white"
+                :class="{ 'col-1-3': !block.aanvullenMet }">
+                <p class="text-orange"> <strong>Type: </strong> {{ block._block._name }}</p>
+                <h5 v-show="block.titel" v-html="block.titel" class="titel"></h5>
+                <p v-show="block.inleiding" v-html="block.inleiding"></p>
 
                 <div v-if="block.aanvullenMet" class="grid">
                     <p class="col-1-1"> <strong> Aanvullen met: {{ block.aanvullenMet }} </strong></p>
-                    <div class="aanvulling col-1-3" v-for="item in this.allseries[block.aanvullenMet]"
-                        v-bind:key="item.name" v-html="item.content.titel" v-show="item.content.titel != ''">
+                    <div class="aanvulling border-success col-1-5" v-for="item in this.allseries[block.aanvullenMet]"
+                        v-bind:key="item.name" v-html="item.content.titel" v-show="item.content.titel">
                     </div>
                 </div>
-                <p v-else v-html="block.titel"></p>
+
             </div>
         </div>
 
-    </div>
+    </main>
 </template>
 
 <script>
@@ -76,12 +79,11 @@ export default {
 .blocks {
     .contentblock {
         min-height: 10vh;
-        border: 1px solid #fba400;
     }
 
     .aanvulling {
-        aspect-ratio: 2 / 1;
-        border: 1px solid grey;
+        text-align: center;
+        aspect-ratio: 4 / 1;
         font-size: .9em;
         word-break: break-word;
     }
