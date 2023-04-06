@@ -38,7 +38,7 @@ body {
 .menuitem-leave-active {
   transition-duration: .7s;
 
-  a {
+  a{
     transition: all .5s ease-in-out;
   }
 }
@@ -50,7 +50,7 @@ body {
 
 .menuitem-enter-from,
 .menuitem-leave-to {
-  a {
+  a{
     transform: translateY(-200%);
   }
 }
@@ -91,5 +91,15 @@ body {
 
   to {
     opacity: .9;
+  }
+}
+
+@keyframes rotate{
+  from {
+    transform: rotate(0);
+  }
+
+  to {
+    transform: rotate(360deg);
   }
 }

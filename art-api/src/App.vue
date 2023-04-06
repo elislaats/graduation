@@ -5,8 +5,8 @@
 
   <Transition name="menuitem">
     <nav v-if="showMenu">
-      <router-link class="one" to="/">Home</router-link>
-      <router-link class="two" to="/about">About</router-link>
+      <router-link @click="showMenu = false" class="one" to="/">Home</router-link>
+      <router-link @click="showMenu = false" class="two" to="/art">Art</router-link>
     </nav>
   </Transition>
   <router-view />
