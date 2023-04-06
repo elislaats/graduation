@@ -11,12 +11,7 @@
 </template>
 
 <script>
-import { useStore } from 'vuex';
-
 export default {
-  name: 'StartupView',
-  setup() {
-    return { store: useStore() };
-  }
+  name: 'StartupView'
 };
 </script>

@@ -1,21 +1,14 @@
 <template>
-  <div class="grid align-center justify-center">
     <NavBar :routes="currentRoutes"></NavBar>
     <router-view></router-view>
-  </div>
 </template>
 
 <script>
-import { computed } from 'vue';
-import { useStore } from 'vuex'
 import NavBar from './components/NavBar.vue'
 
 export default {
-  setup() {
-    const store = useStore()
-    const isAuthenticated = computed(() => store.getters.isAuthenticated);
-    store.dispatch('loadRoutes')
-    return { isAuthenticated };
+  created() {
+    this.$store.dispatch('loadRoutes')
   },
   components: {
     NavBar
