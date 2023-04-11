@@ -1,4 +1,5 @@
 <script setup>
+import ContentBlock from '../components/ContentBlock.vue'
 import { defineProps, ref, watch } from 'vue';
 import { useStore } from 'vuex'
 
@@ -36,11 +37,10 @@ getElements(props.id)
 
 <template>
     <div v-if="elements" class="grid">
-        <div v-for="(element, index) in elements" v-bind:key="'el' + index" class="border-info col-1-4 bg-white">
-            <h6 v-if="element.content.titel"> {{ element.content.titel }}</h6>
-            <p v-if="element.content.subtitel"><strong> {{ element.content.subtitel }}</strong></p>
-            <p v-if="element.content.inleiding" v-html="element.content.inleiding" class="text-info"></p>
-        </div>
+        <p class="col-1-1">Opgehaald van <strong>/api/pages/{{ props.id }}</strong>:</p>
+        <ContentBlock v-for="(element, index) in elements" v-bind:key="'el' + index" class="border-info col-1-3 bg-white"
+            :type="'Aangevuld element'" :color="'info'" :content="element.content">
+        </ContentBlock>
     </div>
     <div v-else>
         <p>loading...</p>
