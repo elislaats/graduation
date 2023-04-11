@@ -29,3 +29,10 @@ Vue applicatie opstarten met inhoud uit de Cre8ion API
 
 **Resultaat:** \
 (Bare bones) applicatie die data uit API weergeeft in een front-end interface
+
+### [`/cre8ion-api-vue`](/cre8ion-api-vue)
+
+**Doel:** \
+Verbeterde versie van inladen inhoud uit Cre8ion API\
+(gebruik van composition API, verbeterd van inladen van router, paginainhoud opslaan in vuex store)
+
