@@ -38,8 +38,26 @@ loadRoutes()
 </script>
 
 <template>
-    <nav v-if="routes" class="grid col-1-1 justify-space-around">
-        <router-link v-for="(route, index) in routes" v-bind:key="index" v-bind:to="route.path">
+    <nav v-if="routes" id="navbar" class="grid col-1-1 justify-space-around bg-white">
+        <router-link class="text-grey" v-for="(route, index) in routes" v-bind:key="index" v-bind:to="route.path">
             {{ route.name }}</router-link>
     </nav>
 </template>
+
+<style lang="scss">
+#navbar {
+    a {
+        background-color: transparent;
+        border: none;
+        padding: 1rem;
+        text-decoration: none;
+        font-size: 1.1em;
+        text-transform: uppercase;
+        transition: all .3s ease-in-out;
+
+        &:hover {
+            transform: scale(1.1);
+        }
+    }
+}
+</style>
