@@ -8,6 +8,7 @@ body {
     box-sizing: border-box;
     background-color: $grey-light1;
     color: $color-text;
+    word-break: break-word;
 }
 
 *,
@@ -24,5 +25,5 @@ a {
 }
 
 main {
-    min-height: 100vh;
+    min-height: 95vh;
 }
