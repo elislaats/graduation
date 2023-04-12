@@ -1,5 +1,6 @@
 <script setup>
 import ContentBlock from "../components/ContentBlock.vue";
+import DataBlock from "../components/DataBlock.vue"
 import { defineProps, ref } from "vue";
 import { useStore } from "vuex";
 
@@ -29,6 +30,14 @@ async function getElements(id) {
 }
 
 getElements(props.id);
+
+function getComponentType(content){
+  if(content.slug) {
+    return DataBlock
+  } else {
+    return ContentBlock
+  }
+}
 </script>
 
 <template>
@@ -37,13 +46,13 @@ getElements(props.id);
       Databank opgehaald van <strong>/api/pages/{{ props.id }}</strong
       >:
     </p>
-    <ContentBlock
+    <component
       v-for="(element, index) in elements"
+      :is="getComponentType(element.content)"
       :key="'el' + index"
       :content="element.content"
       :color="'info'"
-    >
-    </ContentBlock>
+    />
   </div>
   <div class="text-danger col-1-1" v-else>
     <p>loading...</p>
