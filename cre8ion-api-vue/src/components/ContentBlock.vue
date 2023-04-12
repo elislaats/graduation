@@ -72,7 +72,12 @@ const props = defineProps({
         />
 
         <!-- url invoegen als hyperlink -->
-        <a v-if="key == 'url' || key == 'link'" :href="value" class="value" v-text="value"></a>
+        <a
+          v-if="key == 'url' || key == 'link'"
+          :href="value"
+          class="value"
+          v-text="value"
+        ></a>
 
         <!-- inhoud als html -->
         <span class="value text-grey-dark" v-html="value" v-else />
@@ -113,6 +118,10 @@ const props = defineProps({
     p span {
       font-size: smaller;
     }
+  }
+
+  &.aanvullenMet {
+    order: 10;
   }
 
   li {

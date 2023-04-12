@@ -32,14 +32,13 @@ getElements(props.id);
 </script>
 
 <template>
-  <div v-if="elements" class="grid">
-    <p class="col-1-1">
+  <div v-if="elements" class="grid bg-info">
+    <p class="col-1-1 text-grey-light">
       Databank opgehaald van <strong>/api/pages/{{ props.id }}</strong
       >:
     </p>
     <ContentBlock
       v-for="(element, index) in elements"
-      class="border-info col-1-3 bg-white"
       :key="'el' + index"
       :content="element.content"
       :color="'info'"
