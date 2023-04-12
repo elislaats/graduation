@@ -5,6 +5,7 @@ import { defineProps } from "vue";
 const props = defineProps({
   content: {
     type: Object,
+    value: null,
     required: true,
   },
   color: {

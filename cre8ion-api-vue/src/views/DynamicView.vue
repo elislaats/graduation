@@ -1,6 +1,7 @@
 <script setup>
 import { defineProps, watch, ref } from "vue";
 import { useStore } from "vuex";
+import { useRouter } from "vue-router"
 import ContentBlock from "../components/ContentBlock.vue";
 
 const props = defineProps({
@@ -11,6 +12,7 @@ const props = defineProps({
 });
 
 const store = useStore();
+const router = useRouter();
 const pageContent = ref(null);
 
 async function getPageData(id) {
@@ -28,6 +30,10 @@ async function getPageData(id) {
 }
 
 getPageData(props.id);
+
+router.beforeEach(() => {
+  pageContent.value = null;
+})
 
 watch(
   () => props.id,

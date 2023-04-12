@@ -1,7 +1,7 @@
 <template>
   <div class="grid">
-    <div class="col-1-1">
-      <p>Loading</p>
-    </div>
+    <h4 class="col-1-1 text-danger">
+      Loading...
+    </h4>
   </div>
 </template>

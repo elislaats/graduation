@@ -1,6 +1,6 @@
 <script setup>
 import ContentBlock from "../components/ContentBlock.vue";
-import { defineProps, ref, watch } from "vue";
+import { defineProps, ref } from "vue";
 import { useStore } from "vuex";
 
 const props = defineProps({
@@ -12,7 +12,7 @@ const props = defineProps({
 
 const store = useStore();
 
-const elements = ref([]);
+const elements = ref(null);
 
 async function getElements(id) {
   const check = await store.getters.getDatabankById(id);
@@ -27,13 +27,6 @@ async function getElements(id) {
     elements.value = check;
   }
 }
-
-watch(
-  () => props.id,
-  (value) => {
-    getElements(value);
-  }
-);
 
 getElements(props.id);
 </script>
@@ -53,7 +46,7 @@ getElements(props.id);
     >
     </ContentBlock>
   </div>
-  <div v-else>
+  <div class="text-danger col-1-1" v-else>
     <p>loading...</p>
   </div>
 </template>
