@@ -1,34 +1,39 @@
 <script setup>
-import { defineProps } from "vue";
+import { defineProps, onBeforeMount } from "vue";
 import { useRouter } from "vue-router";
 
 const props = defineProps({
+  id: {
+    type: Number,
+    required: true,
+  },
   content: {
     type: Object,
     value: null,
     required: true,
   },
 });
-
 const router = useRouter();
-const currentRoute = router.currentRoute.value.path;
 
-function openDetailPage(detailContent) {
-const detailPath = currentRoute + "/" + detailContent.slug
+onBeforeMount(() => {
+  createDetailRoute(router.currentRoute.value)
+});
 
-  if (!router.hasRoute(detailContent.slug)) {
+function createDetailRoute(parent){
+  if (!router.hasRoute(`${parent.name}-detail`)) {
     const route = {
-      name: detailContent.slug,
-      path: detailPath,
+      name: `${parent.name}-detail`,
+      path: `${parent.path}/:id`,
       component: () => import("../views/DetailView.vue"),
-      props: {
-        content: detailContent,
-      },
+      props: true,
     };
-    router.addRoute(route);
+    router.addRoute(route)
+    console.log(router.getRoutes())
   }
+}
 
-  router.push(detailPath);
+function openDetailPage(id) {
+  router.push(`${router.currentRoute.value.path}/${id}`);
 }
 </script>
 
@@ -39,9 +44,10 @@ const detailPath = currentRoute + "/" + detailContent.slug
     class="col-1-4 flex flex-column align-start border-info bg-white"
   >
     <h5 v-if="props.content.titel" v-text="props.content.titel" />
-    <button @click="openDetailPage(props.content)" class="btn btn-secondary">
+    <button @click="openDetailPage(props.id)" class="btn btn-secondary">
       meer
     </button>
+    <router-link :to="`${router.currentRoute.value.path}/${id}`"></router-link>
   </div>
 
   <!-- indien geen content beschikbaar -->

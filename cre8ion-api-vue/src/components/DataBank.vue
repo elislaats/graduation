@@ -1,6 +1,6 @@
 <script setup>
 import ContentBlock from "../components/ContentBlock.vue";
-import DataBlock from "../components/DataBlock.vue"
+import LinkBlock from "./LinkBlock.vue"
 import { defineProps, ref } from "vue";
 import { useStore } from "vuex";
 
@@ -33,7 +33,7 @@ getElements(props.id);
 
 function getComponentType(content){
   if(content.slug) {
-    return DataBlock
+    return LinkBlock
   } else {
     return ContentBlock
   }
@@ -49,6 +49,7 @@ function getComponentType(content){
     <component
       v-for="(element, index) in elements"
       :is="getComponentType(element.content)"
+      :id="element._id"
       :key="'el' + index"
       :content="element.content"
       :color="'info'"
