@@ -16,7 +16,9 @@ const router = useRouter();
 
 // TO DO: replace with API call to get certain databank element based on ID
 async function getDetails(id) {
-  const data = await store.getters.getDatabankById(6);
+  const data = await store.getters.getDatabankById(
+    getDbId(router.currentRoute.value.path)
+  );
   data.forEach((item) => {
     if (item._id == id) {
       content.value = item.content;
@@ -25,6 +27,21 @@ async function getDetails(id) {
       );
     }
   });
+}
+
+// temporary solution to get databank ID:
+function getDbId(url) {
+  if (url.includes("cases")) {
+    return 6;
+  } else if (url.includes("werk")) {
+    return 5;
+  } else if (url.includes("nieuws")) {
+    return 7;
+  } else if (url.includes("vacatures")) {
+    return 1071;
+  } else {
+    return undefined;
+  }
 }
 
 getDetails(props.id);
