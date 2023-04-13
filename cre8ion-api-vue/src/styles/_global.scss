@@ -1,0 +1,29 @@
+html {
+    font-size: 62.5%;
+    font-family: $font-source-sans-pro;
+}
+
+body {
+    font-size: 1.6rem;
+    box-sizing: border-box;
+    background-color: $grey-light1;
+    color: $color-text;
+    word-break: break-word;
+}
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+}
+
+a {
+    font-size: 1.4rem;
+    color: inherit;
+}
+
+main {
+    min-height: 90vh;
+}
