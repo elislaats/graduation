@@ -31,10 +31,6 @@ function createDetailRoute(parent){
     console.log(router.getRoutes())
   }
 }
-
-function openDetailPage(id) {
-  router.push(`${router.currentRoute.value.path}/${id}`);
-}
 </script>
 
 <template>
@@ -44,10 +40,7 @@ function openDetailPage(id) {
     class="col-1-4 flex flex-column align-start border-info bg-white"
   >
     <h5 v-if="props.content.titel" v-text="props.content.titel" />
-    <button @click="openDetailPage(props.id)" class="btn btn-secondary">
-      meer
-    </button>
-    <router-link :to="`${router.currentRoute.value.path}/${id}`"></router-link>
+    <router-link :to="`${router.currentRoute.value.path}/${props.id}`">meer lezen</router-link>
   </div>
 
   <!-- indien geen content beschikbaar -->
