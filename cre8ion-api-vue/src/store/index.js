@@ -1,24 +1,24 @@
-import { createStore } from 'vuex'
-import axios from 'axios'
+import { createStore } from "vuex";
+import axios from "axios";
 
 export default createStore({
   state: {
     pageData: {},
-    databank: {}
+    databank: {},
   },
   getters: {
     getPageDataById: (state) => (id) => {
       if (state.pageData[id] != undefined) {
         return state.pageData[id];
       } else {
-        return false
+        return false;
       }
     },
     getDatabankById: (state) => (id) => {
       if (state.databank[id] != undefined) {
         return state.databank[id];
       } else {
-        return false
+        return false;
       }
     }
   },
@@ -28,26 +28,29 @@ export default createStore({
     },
     addDatabank(state, { data, id }) {
       state.databank[id] = data;
-    }
+    },
   },
   actions: {
     async loadPageData({ commit }, pageId) {
       try {
-        const response = await axios.get(`https://api-cre8ion.tc8l.dev/api/page/` + pageId)
-        commit('addPageData', { data: response.data, id: pageId })
+        const response = await axios.get(
+          `https://api-cre8ion.tc8l.dev/api/page/` + pageId
+        );
+        commit("addPageData", { data: response.data, id: pageId });
       } catch (error) {
-        console.error(error)
+        console.error(error);
       }
     },
     async loadDatabank({ commit }, dataId) {
       try {
-        const response = await axios.get(`https://api-cre8ion.tc8l.dev/api/pages/` + dataId)
-        commit('addDatabank', { data: response.data, id: dataId })
+        const response = await axios.get(
+          `https://api-cre8ion.tc8l.dev/api/pages/` + dataId
+        );
+        commit("addDatabank", { data: response.data, id: dataId });
       } catch (error) {
-        console.error(error)
+        console.error(error);
       }
     },
   },
-  modules: {
-  }
-})
+  modules: {},
+});
