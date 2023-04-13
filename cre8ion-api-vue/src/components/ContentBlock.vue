@@ -92,9 +92,7 @@ const props = defineProps({
   </div>
 
   <!-- indien geen content beschikbaar -->
-  <div class="col-1-1 border-danger bg-white grid-pad" v-else>
-    <p class="text-danger">Loading...</p>
-  </div>
+  <div class="load-spinner" v-else />
 </template>
 
 <style lang="scss">

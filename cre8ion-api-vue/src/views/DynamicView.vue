@@ -1,7 +1,7 @@
 <script setup>
 import { defineProps, watch, ref } from "vue";
 import { useStore } from "vuex";
-import { useRouter } from "vue-router"
+import { useRouter } from "vue-router";
 import ContentBlock from "../components/ContentBlock.vue";
 
 const props = defineProps({
@@ -31,7 +31,7 @@ getPageData(props.id);
 
 router.beforeEach(() => {
   pageContent.value = null;
-})
+});
 
 watch(
   () => props.id,
@@ -57,6 +57,6 @@ watch(
       >
       </ContentBlock>
     </div>
-    <div v-else class="text-danger col-1-1">Loading...</div>
+    <div class="load-spinner" v-else />
   </main>
 </template>

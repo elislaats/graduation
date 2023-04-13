@@ -6,7 +6,7 @@ import { useRouter } from "vue-router";
 const props = defineProps({
   id: {
     type: String,
-    required: false,
+    required: true,
   },
 });
 

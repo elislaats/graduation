@@ -21,10 +21,8 @@ async function getElements(id) {
   if (!check) {
     await store.dispatch("loadDatabank", props.id);
     const data = await store.getters.getDatabankById(id);
-    console.log("databank from api id:" + id);
     elements.value = data;
   } else {
-    console.log("databank from store id:" + id);
     elements.value = check;
   }
 }
@@ -55,7 +53,6 @@ function getComponentType(content){
       :color="'info'"
     />
   </div>
-  <div class="text-danger col-1-1" v-else>
-    <p>loading...</p>
-  </div>
+    <!-- indien geen content beschikbaar -->
+    <div class="load-spinner" v-else />
 </template>
