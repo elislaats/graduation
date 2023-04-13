@@ -22,6 +22,9 @@ async function getDetails(id) {
   data.forEach((item) => {
     if (item._id == id) {
       content.value = item.content;
+
+      // Laat slug zien in url i.p.v. id
+      // to do: dit oplossen op een manier dat geschiedenis beter behouden wordt
       router.replace(
         router.currentRoute.value.path.replace(id, content.value.slug)
       );
