@@ -61,6 +61,6 @@ getDetails(props.id);
     </p>
   </main>
   <main v-else class="text-danger">
-    <p>geen content</p>
+    <p>inhoud niet gevonden</p>
   </main>
 </template>
