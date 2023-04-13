@@ -25,7 +25,6 @@ const loadRoutes = async () => {
                     router.removeRoute('Loading')
                 }
                 routes.value = router.getRoutes();
-                console.log('loaded routes from api')
             })
     } catch (error) {
         console.error(error)

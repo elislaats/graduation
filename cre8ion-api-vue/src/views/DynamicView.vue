@@ -22,10 +22,8 @@ async function getPageData(id) {
     await store.dispatch("loadPageData", props.id);
     const data = await store.getters.getPageDataById(id);
     pageContent.value = data.content;
-    console.log("page content from api id:" + id);
   } else {
     pageContent.value = check.content;
-    console.log("page content from store id:" + id);
   }
 }
 
