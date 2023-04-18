@@ -5,7 +5,7 @@ import { useRouter } from "vue-router";
 import ImageComponent from "@/components/ImageComponent.vue";
 
 const props = defineProps({
-  id: {
+  slug: {
     type: String,
     required: true,
   },
@@ -15,20 +15,13 @@ const content = ref(null);
 const store = useStore();
 const router = useRouter();
 
-// TO DO: replace with API call to get certain databank element based on ID
-async function getDetails(id) {
+async function getDetails(slug) {
   const data = await store.getters.getDatabankById(
     getDbId(router.currentRoute.value.path)
   );
   data.forEach((item) => {
-    if (item._id == id) {
+    if (item.content.slug == slug) {
       content.value = item.content;
-
-      // Laat slug zien in url i.p.v. id
-      // to do: dit oplossen op een manier dat geschiedenis beter behouden wordt
-      router.replace(
-        router.currentRoute.value.path.replace(id, content.value.slug)
-      );
     }
   });
 }
@@ -48,7 +41,7 @@ function getDbId(url) {
   }
 }
 
-getDetails(props.id);
+getDetails(props.slug);
 </script>
 
 <template>
@@ -62,8 +55,10 @@ getDetails(props.id);
           (key.includes('afbeelding') || key.includes('Afbeelding')) && value
         "
       >
-      <!--To do: give width/heigth to image component-->
-        <p> <strong>{{ key }}:</strong> </p>
+        <!--To do: give width/heigth to image component-->
+        <p>
+          <strong>{{ key }}:</strong>
+        </p>
         <ImageComponent :id="value.toString()" />
       </div>
 

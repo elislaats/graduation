@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps, onMounted, ref } from "vue";
+import { defineProps, onBeforeMount, ref } from "vue";
 import axios from "axios";
 
 const props = defineProps({
@@ -38,11 +38,11 @@ async function getImage() {
     })
     .catch(function (error) {
       imageError.value = true;
-      console.log(error);
+      console.log(error)
     });
 }
 
-onMounted(() => {
+onBeforeMount(() => {
   getImage();
 });
 </script>
