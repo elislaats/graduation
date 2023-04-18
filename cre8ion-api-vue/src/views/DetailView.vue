@@ -55,14 +55,16 @@ getDetails(props.id);
   <main class="grid align-start" v-if="content">
     <h1 class="col-1-1">{{ content.titel }}</h1>
 
-    <template v-for="(value, key) in content" :key="index + key">
-      <div class="col-1-1 afbeelding" v-if="(key.includes('afbeelding') || key.includes('Afbeelding') ) && value">
-        <p>
-          <strong>{{ key }}:</strong>
-        </p>
-        <ImageComponent
-          :id="value.toString()"
-        />
+    <template v-for="(value, key, index) in content" :key="index + key">
+      <div
+        class="col-1-1 afbeelding"
+        v-if="
+          (key.includes('afbeelding') || key.includes('Afbeelding')) && value
+        "
+      >
+      <!--To do: give width/heigth to image component-->
+        <p> <strong>{{ key }}:</strong> </p>
+        <ImageComponent :id="value.toString()" />
       </div>
 
       <p :class="['col-1-1', key]" v-else>
@@ -76,12 +78,11 @@ getDetails(props.id);
   </main>
 </template>
 
-<style lang='scss' scoped>
-.afbeelding{
+<style lang="scss" scoped>
+.afbeelding {
   order: 10;
   img {
     width: 50%;
   }
-
 }
 </style>

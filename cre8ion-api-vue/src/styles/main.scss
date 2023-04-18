@@ -8,6 +8,10 @@
 @import "./global";
 @import "./forms";
 
+li {
+  list-style-position: inside;
+}
+
 .load-spinner{
   width: 100%;
   height: 100%;

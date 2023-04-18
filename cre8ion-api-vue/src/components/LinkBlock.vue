@@ -28,8 +28,7 @@ function createDetailRoute(parent){
       props: true,
     };
     router.addRoute(route)
-    console.log("Router aangepast:")
-    console.log(router.getRoutes())
+    console.log("Router aangepast:", router.getRoutes())
   }
 }
 </script>

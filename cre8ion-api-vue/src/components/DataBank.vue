@@ -1,6 +1,6 @@
 <script setup>
 import ContentBlock from "../components/ContentBlock.vue";
-import LinkBlock from "./LinkBlock.vue"
+import LinkBlock from "./LinkBlock.vue";
 import { defineProps, ref } from "vue";
 import { useStore } from "vuex";
 
@@ -29,11 +29,11 @@ async function getElements(id) {
 
 getElements(props.id);
 
-function getComponentType(content){
-  if(content.slug) {
-    return LinkBlock
+function getComponentType(content) {
+  if (content.slug) {
+    return LinkBlock;
   } else {
-    return ContentBlock
+    return ContentBlock;
   }
 }
 </script>
@@ -53,6 +53,6 @@ function getComponentType(content){
       :color="'info'"
     />
   </div>
-    <!-- indien geen content beschikbaar -->
-    <div class="load-spinner" v-else />
+  <!-- indien geen content beschikbaar -->
+  <div class="load-spinner" v-else />
 </template>
