@@ -43,6 +43,7 @@ getElements(props.id);
       :key="'el' + index"
       :content="element.content"
       :color="'info'"
+      :meta="element.metadata"
     />
   </div>
   <!-- indien geen content beschikbaar -->

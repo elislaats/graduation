@@ -57,8 +57,8 @@ const props = defineProps({
         :id="parseInt(props.content.aanvullenMet)"
       />
 
-      <!-- Image Component voor de afbeelding -->
       <div class="afbeelding" v-else-if="key === 'afbeelding' && value">
+        <!-- image component voor de afbeelding -->
         <p
           class="key"
           :class="{
@@ -93,8 +93,8 @@ const props = defineProps({
         <span class="value text-grey-dark" v-html="value" v-else />
       </p>
 
-      <!-- lege keys toevoegen ter info -->
       <p class="empty" v-else>
+        <!-- lege keys toevoegen ter info -->
         <span class="key" v-text="key + ': '" />
         <span v-text="'leeg'" />
       </p>
