@@ -19,27 +19,27 @@ const imageSrc = ref(null);
 const imageError = ref(false);
 
 async function getImage() {
-    await axios
-      .get(`https://api-cre8ion.tc8l.dev/api/media/${props.id}`, {
-        params: { width: props.width, height: props.heigth },
-        responseType: "blob",
-      })
-      .then((response) => {
-        const imageUrl = window.URL.createObjectURL(response.data);
-        const image = new Image();
-        image.src = imageUrl;
+  await axios
+    .get(`https://api-cre8ion.tc8l.dev/api/media/${props.id}`, {
+      params: { width: props.width, height: props.height },
+      responseType: "blob",
+    })
+    .then((response) => {
+      const imageUrl = window.URL.createObjectURL(response.data);
+      const image = new Image();
+      image.src = imageUrl;
 
-        image.onload = function () {
-          imageSrc.value = imageUrl;
-        };
-        image.onabort = function () {
-          imageError.value = true;
-        };
-      })
-      .catch(function (error) {
+      image.onload = function () {
+        imageSrc.value = imageUrl;
+      };
+      image.onabort = function () {
         imageError.value = true;
-        console.log(error);
-      })
+      };
+    })
+    .catch(function (error) {
+      imageError.value = true;
+      console.log(error);
+    });
 }
 
 onMounted(() => {
@@ -59,28 +59,19 @@ onMounted(() => {
   />
 
   <!-- als er een foutmelding geweest is -->
-  <div
+  <img
     v-else
     class="image-unavailable"
-    :style="{ width: width + 'px', height: height + 'px' }"
+    src="../assets/fa-noimage.svg"
+    alt="afbeelding niet gevonden"
   />
 </template>
 
 <style lang="scss" scoped>
-.load-spinner {
-  background-color: #ffffff75;
-  aspect-ratio: 1 / 1;
-  min-width: 25px;
-  min-height: 25px;
-}
 .image-unavailable {
-  aspect-ratio: 1 / 1;
-  min-width: 25px;
-  min-height: 25px;
-  background-color: #ffffff75;
-  background-image: url("../assets/fa-noimage.svg");
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
+  width: 75px;
+  height: 75px;
+  padding: 10px;
+  background-color: #00000015;
 }
 </style>

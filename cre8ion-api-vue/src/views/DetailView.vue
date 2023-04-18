@@ -2,6 +2,7 @@
 import { defineProps, ref } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
+import ImageComponent from "@/components/ImageComponent.vue";
 
 const props = defineProps({
   id: {
@@ -54,16 +55,33 @@ getDetails(props.id);
   <main class="grid align-start" v-if="content">
     <h1 class="col-1-1">{{ content.titel }}</h1>
 
-    <p
-      v-for="(value, key, index) in content"
-      class="col-1-1"
-      :key="index + key"
-    >
-      <strong>{{ key }}:</strong>
-      <span v-html="value" />
-    </p>
+    <template v-for="(value, key) in content" :key="index + key">
+      <div class="col-1-1 afbeelding" v-if="(key.includes('afbeelding') || key.includes('Afbeelding') ) && value">
+        <p>
+          <strong>{{ key }}:</strong>
+        </p>
+        <ImageComponent
+          :id="value.toString()"
+        />
+      </div>
+
+      <p :class="['col-1-1', key]" v-else>
+        <strong>{{ key }}:</strong>
+        <span v-html="value" />
+      </p>
+    </template>
   </main>
-  <main v-else class="text-danger">
-    <p>inhoud niet gevonden</p>
+  <main v-else>
+    <p class="text-danger">inhoud niet gevonden</p>
   </main>
 </template>
+
+<style lang='scss' scoped>
+.afbeelding{
+  order: 10;
+  img {
+    width: 50%;
+  }
+
+}
+</style>

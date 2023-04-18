@@ -1,5 +1,6 @@
 <script setup>
 import DataBank from "../components/DataBank.vue";
+import ImageComponent from "./ImageComponent.vue";
 import { defineProps } from "vue";
 
 const props = defineProps({
@@ -60,6 +61,13 @@ const props = defineProps({
         :id="parseInt(props.content.aanvullenMet)"
       />
 
+      <!-- Image Component voor de afbeelding -->
+      <template v-else-if="key === 'afbeelding' && value">
+        <p>{{ key }}:</p>
+        <ImageComponent  :id=value.toString() />
+      </template>
+
+
       <!-- Voor alle andere elementen die een waarde hebben, voeg toe -->
       <p v-else-if="value" :class="key + '-item'">
         <span
@@ -109,6 +117,13 @@ const props = defineProps({
 
   &.titel {
     order: -4;
+  }
+  &.afbeelding {
+    order: 1;
+    img {
+      margin: 1%;
+      max-width: 96%;
+    }
   }
 
   &.empty {
