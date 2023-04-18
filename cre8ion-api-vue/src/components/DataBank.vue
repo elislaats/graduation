@@ -28,14 +28,6 @@ async function getElements(id) {
 }
 
 getElements(props.id);
-
-function getComponentType(content) {
-  if (content.slug) {
-    return LinkBlock;
-  } else {
-    return ContentBlock;
-  }
-}
 </script>
 
 <template>
@@ -46,7 +38,7 @@ function getComponentType(content) {
     </p>
     <component
       v-for="(element, index) in elements"
-      :is="getComponentType(element.content)"
+      :is="element.metadata ? LinkBlock : ContentBlock"
       :id="element._id"
       :key="'el' + index"
       :content="element.content"
