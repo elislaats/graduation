@@ -11,6 +11,10 @@ Applicatie die willekeurige hondenafbeeldingen ophaalt en weergeeft
 **Tools:** \
 Opgezet met [Vite](https://vitejs.dev/)
 
+**Demo:** \
+Online te zien op [www.fontys.elislaats.nl/honden/](https://www.fontys.elislaats.nl/honden/)\
+_Moet online staan op `/honden/` url_
+
 ## Vite algemeen
 
 ### Project Setup

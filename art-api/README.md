@@ -9,6 +9,10 @@
 **Resultaat:** \
 Applicatie die willekeurige hondenafbeeldingen ophaalt en weergeeft
 
+**Demo:** \
+Online te zien op [www.fontys.elislaats.nl/kunst/](https://www.fontys.elislaats.nl/kunst/)\
+_Moet online staan op `/kunst/` url_
+
 ## Vue algemeen
 
 ### Project setup
