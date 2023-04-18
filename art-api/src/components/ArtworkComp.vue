@@ -12,9 +12,6 @@
             <p class="key">{{ key }}</p>
             <p class="value" v-html="value"></p>
           </span>
-          <span v-if="!this.specs[0]">
-            <p>no more information availabe</p>
-          </span>
         </div>
       </div>
     </div>
