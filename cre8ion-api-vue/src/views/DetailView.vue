@@ -57,13 +57,13 @@ getDetails(props.slug);
       >
         <!--To do: give width/heigth to image component-->
         <p>
-          <strong>{{ key }}:</strong>
+          <strong>{{ key }}: </strong>
         </p>
         <ImageComponent :id="value.toString()" />
       </div>
 
       <p :class="['col-1-1', key]" v-else>
-        <strong>{{ key }}:</strong>
+        <strong>{{ key }}: </strong>
         <span v-html="value" />
       </p>
     </template>
