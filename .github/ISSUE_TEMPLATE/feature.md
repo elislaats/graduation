@@ -7,8 +7,8 @@ assignees: ''
 
 ---
 
-## Relevante Map
-Op welke folder/project is van dit van toepassing?
+## Relevant Project
+Op welk (sub)project is van dit van toepassing? _mag een link zijn naar waar het probleem gezien is_
 
 ## Omschrijving
 **Huidige versie van functionaliteit**

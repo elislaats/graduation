@@ -7,8 +7,8 @@ assignees: ''
 
 ---
 
-## Relevante Map
-Op welke folder/project is van dit van toepassing?
+## Relevant Project
+Op welk (sub)project is van dit van toepassing? _mag een link zijn naar waar het probleem gezien is_
 
 ## Probleemomschrijving
 Wat gaat er mis? 
@@ -22,7 +22,4 @@ Wat gaat er mis?
 _indien van toepassing_
 
 ## Gewenst gedrag
-Hoe zou het moeten werken? 
-
-**Voorbeeld**
-_indien van toepassing_
+Hoe zou het moeten werken? Aan welke eisen moet de oplossing voldoen?
