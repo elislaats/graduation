@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Omschrijving wat iets wat mis gaat
+about: Omschrijving van iets dat mis gaat
 title: "[BUG]"
 labels: ''
 assignees: ''
