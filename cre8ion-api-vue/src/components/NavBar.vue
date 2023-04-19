@@ -6,7 +6,12 @@ import axios from "axios";
 const router = useRouter();
 const routes = ref();
 
+loadRoutes();
+
 async function loadRoutes() {
+  const prevRoute = router.currentRoute.value.fullPath; // first save the previous route, if available
+  router.push("/"); // go to only available page on startup to prevent error
+
   try {
     await axios
       .get("https://api-cre8ion.tc8l.dev/api/navigation")
@@ -19,19 +24,28 @@ async function loadRoutes() {
             component: () => import("@/views/DynamicView.vue"),
             props: { id: page.id },
           };
-          router.addRoute(route);
+          router.addRoute(route); // create new router
         });
-        router.push("/homepage");
+
+        // navigate to previous available route
+        if (prevRoute == "/") {
+          router.push("/homepage");
+        } else {
+          router.push(prevRoute);
+        }
+
+        // remove startup 'loading' route
         if (router.hasRoute("Loading")) {
           router.removeRoute("Loading");
         }
+
+        // display routes in the router
         routes.value = router.getRoutes();
       });
   } catch (error) {
     console.error(error);
   }
 }
-loadRoutes();
 </script>
 
 <template>
@@ -40,14 +54,17 @@ loadRoutes();
     id="navbar"
     class="flex col-1-1 justify-space-around bg-white"
   >
-    <router-link
-      class="text-grey"
-      v-for="(route, index) in routes"
-      v-bind:key="index"
-      v-bind:to="route.path"
-    >
-      {{ route.name }}</router-link
-    >
+    <template v-for="(route, index) in routes">
+      <router-link
+        class="text-grey"
+        v-if="route.name"
+        v-bind:key="index"
+        v-bind:to="route.path"
+      >
+        <!--display all named routes-->
+        {{ route.name }}
+      </router-link>
+    </template>
   </nav>
 </template>
 
