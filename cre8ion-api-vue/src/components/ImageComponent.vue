@@ -1,6 +1,7 @@
 <script setup>
-import { defineProps, onBeforeMount, ref } from "vue";
+import { defineProps, onBeforeMount, onBeforeUnmount, ref } from "vue";
 import axios from "axios";
+import router from "@/router";
 
 const props = defineProps({
   id: {
@@ -13,13 +14,17 @@ const props = defineProps({
   },
   width: {
     type: String,
-    value: null
+    value: null,
   },
   height: {
     type: String,
-    value: null
+    value: null,
   },
 });
+
+const controller = new AbortController();
+const CancelToken = axios.CancelToken;
+const source = CancelToken.source();
 
 const imageSrc = ref(null);
 const imageError = ref(false);
@@ -32,6 +37,8 @@ async function getImage() {
         height: props.height,
       },
       responseType: "blob",
+      cancelToken: source.token,
+      signal: controller.signal,
     })
     .then((response) => {
       const imageUrl = window.URL.createObjectURL(response.data);
@@ -47,12 +54,20 @@ async function getImage() {
     })
     .catch(function (error) {
       imageError.value = true;
-      console.log(error);
+      if (axios.isCancel(error)) {
+        console.warn("Request canceled:", error.message);
+      } else {
+        console.warn("Something went wrong:", error.message);
+      }
     });
 }
 
 onBeforeMount(() => {
   getImage();
+});
+
+onBeforeUnmount(() => {
+  source.cancel(' Stop loading on unmount ' + router.currentRoute.value.path);
 });
 </script>
 
