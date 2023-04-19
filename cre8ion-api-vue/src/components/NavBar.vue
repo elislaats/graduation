@@ -9,9 +9,6 @@ const routes = ref();
 loadRoutes();
 
 async function loadRoutes() {
-  const prevRoute = router.currentRoute.value.fullPath; // first save the previous route, if available
-  router.push("/"); // go to only available page on startup to prevent error
-
   try {
     await axios
       .get("https://api-cre8ion.tc8l.dev/api/navigation")
@@ -26,6 +23,8 @@ async function loadRoutes() {
           };
           router.addRoute(route); // create new router
         });
+        const prevRoute = router.currentRoute.value.fullPath; // first save the previous route, if available
+        router.push("/"); // go to only available page on startup to prevent error
 
         // navigate to previous available route
         if (prevRoute == "/") {
