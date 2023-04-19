@@ -11,8 +11,14 @@ const props = defineProps({
     type: String,
     default: "cre8ion image",
   },
-  width: String,
-  height: String,
+  width: {
+    type: String,
+    value: null
+  },
+  height: {
+    type: String,
+    value: null
+  },
 });
 
 const imageSrc = ref(null);
@@ -21,7 +27,10 @@ const imageError = ref(false);
 async function getImage() {
   await axios
     .get(`https://api-cre8ion.tc8l.dev/api/media/${props.id}`, {
-      params: { width: props.width, height: props.height },
+      params: {
+        width: props.width,
+        height: props.height,
+      },
       responseType: "blob",
     })
     .then((response) => {
@@ -38,7 +47,7 @@ async function getImage() {
     })
     .catch(function (error) {
       imageError.value = true;
-      console.log(error)
+      console.log(error);
     });
 }
 

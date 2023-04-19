@@ -59,7 +59,7 @@ getDetails(props.slug);
         <p>
           <strong>{{ key }}: </strong>
         </p>
-        <ImageComponent :id="value.toString()" />
+        <ImageComponent :id="value.toString()" width="800" />
       </div>
 
       <p :class="['col-1-1', key]" v-else>
@@ -76,8 +76,5 @@ getDetails(props.slug);
 <style lang="scss" scoped>
 .afbeelding {
   order: 10;
-  img {
-    width: 50%;
-  }
 }
 </style>
