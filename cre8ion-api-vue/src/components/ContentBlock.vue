@@ -1,5 +1,6 @@
 <script setup>
 import DataBank from "../components/DataBank.vue";
+import ImageComponent from "./ImageComponent.vue";
 import { defineProps } from "vue";
 
 const props = defineProps({
@@ -27,12 +28,7 @@ const props = defineProps({
     }"
   >
     <!-- loop over all content-elements -->
-    <div
-      v-for="(value, key, index) in props.content"
-      :key="index + key"
-      class="content-wrapper"
-      :class="[{ empty: !value }, key]"
-    >
+    <template v-for="(value, key, index) in props.content" :key="index + key">
       <!-- contentblock bevat een object van specs, loop over de specs -->
       <div
         v-if="key == '_block' && value"
@@ -42,7 +38,7 @@ const props = defineProps({
             'text-primary': props.color === 'primary',
             'text-info': props.color === 'false',
           },
-          key + '-item',
+          key,
         ]"
       >
         <p v-for="(item, key, index) in value" :key="key + index">
@@ -52,16 +48,30 @@ const props = defineProps({
       </div>
 
       <!-- Header element voor de titel, indien gevuld -->
-      <h3 v-else-if="key === 'titel' && value" v-text="value" />
+      <h3 :class="key" v-else-if="key === 'titel' && value" v-text="value" />
 
       <!-- Elementen uit databank inladen indien nodig -->
       <DataBank
+        :class="key"
         v-else-if="key === 'aanvullenMet' && value"
         :id="parseInt(props.content.aanvullenMet)"
       />
 
+      <div class="afbeelding" v-else-if="key === 'afbeelding' && value">
+        <!-- image component voor de afbeelding -->
+        <p
+          class="key"
+          :class="{
+            'text-primary': props.color === 'primary',
+            'text-info': props.color === 'info',
+          }"
+          v-text="key + ': '"
+        />
+        <ImageComponent :id="value.toString()" />
+      </div>
+
       <!-- Voor alle andere elementen die een waarde hebben, voeg toe -->
-      <p v-else-if="value" :class="key + '-item'">
+      <p v-else-if="value" :class="key">
         <span
           class="key"
           :class="{
@@ -83,47 +93,46 @@ const props = defineProps({
         <span class="value text-grey-dark" v-html="value" v-else />
       </p>
 
-      <!-- lege keys toevoegen ter info -->
-      <p v-else>
+      <p class="empty" v-else>
+        <!-- lege keys toevoegen ter info -->
         <span class="key" v-text="key + ': '" />
         <span v-text="'leeg'" />
       </p>
-    </div>
+    </template>
   </div>
 
   <!-- indien geen content beschikbaar -->
   <div class="load-spinner" v-else />
 </template>
 
-<style lang="scss">
-.content-wrapper {
-  .key {
-    font-weight: bold;
-  }
-  &._block {
-    order: -5;
-    ._block-item {
-      font-style: italic;
-    }
-  }
+<style lang="scss" scoped>
+.key {
+  font-weight: bold;
+}
+._block {
+  order: -5;
+  font-style: italic;
+}
 
-  &.titel {
-    order: -4;
+.titel {
+  order: -4;
+}
+.afbeelding {
+  order: 1;
+  img {
+    margin: 1%;
+    max-width: 96%;
   }
+}
 
-  &.empty {
-    order: 5;
-    p span {
-      font-size: smaller;
-    }
+.empty {
+  order: 5;
+  span {
+    font-size: smaller;
   }
+}
 
-  &.aanvullenMet {
-    order: 10;
-  }
-
-  li {
-    list-style-position: inside;
-  }
+.aanvullenMet {
+  order: 10;
 }
 </style>

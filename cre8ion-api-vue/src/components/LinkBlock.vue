@@ -9,27 +9,29 @@ const props = defineProps({
   },
   content: {
     type: Object,
-    value: null,
     required: true,
+  },
+  meta: {
+    type: Object,
+    required: false,
   },
 });
 const router = useRouter();
 
 onBeforeMount(() => {
-  createDetailRoute(router.currentRoute.value)
+  createDetailRoute(router.currentRoute.value);
 });
 
-function createDetailRoute(parent){
+function createDetailRoute(parent) {
   if (!router.hasRoute(`${parent.name}-detail`)) {
     const route = {
       name: `${parent.name}-detail`,
-      path: `${parent.path}/:id`,
+      path: `${parent.path}/:slug`,
       component: () => import("../views/DetailView.vue"),
       props: true,
     };
-    router.addRoute(route)
-    console.log("Router aangepast:")
-    console.log(router.getRoutes())
+    router.addRoute(route);
+    console.log("Router aangepast:", router.getRoutes());
   }
 }
 </script>
@@ -41,7 +43,9 @@ function createDetailRoute(parent){
     class="col-1-4 flex flex-column align-start border-info bg-white"
   >
     <h5 v-if="props.content.titel" v-text="props.content.titel" />
-    <router-link :to="`${router.currentRoute.value.path}/${props.id}`">meer lezen</router-link>
+    <router-link :to="`${router.currentRoute.value.path}/${props.content.slug}`"
+      >meer lezen</router-link
+    >
   </div>
 
   <!-- indien geen content beschikbaar -->

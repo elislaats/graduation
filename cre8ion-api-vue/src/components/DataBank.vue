@@ -1,6 +1,6 @@
 <script setup>
 import ContentBlock from "../components/ContentBlock.vue";
-import LinkBlock from "./LinkBlock.vue"
+import LinkBlock from "./LinkBlock.vue";
 import { defineProps, ref } from "vue";
 import { useStore } from "vuex";
 
@@ -28,14 +28,6 @@ async function getElements(id) {
 }
 
 getElements(props.id);
-
-function getComponentType(content){
-  if(content.slug) {
-    return LinkBlock
-  } else {
-    return ContentBlock
-  }
-}
 </script>
 
 <template>
@@ -46,13 +38,14 @@ function getComponentType(content){
     </p>
     <component
       v-for="(element, index) in elements"
-      :is="getComponentType(element.content)"
+      :is="element.metadata ? LinkBlock : ContentBlock"
       :id="element._id"
       :key="'el' + index"
       :content="element.content"
       :color="'info'"
+      :meta="element.metadata"
     />
   </div>
-    <!-- indien geen content beschikbaar -->
-    <div class="load-spinner" v-else />
+  <!-- indien geen content beschikbaar -->
+  <div class="load-spinner" v-else />
 </template>
