@@ -20,7 +20,7 @@ export default createStore({
       } else {
         return false;
       }
-    }
+    },
   },
   mutations: {
     addPageData(state, { data, id }) {
