@@ -1,7 +1,6 @@
 <script setup>
 import { defineProps, onBeforeMount, onBeforeUnmount, ref } from "vue";
 import axios from "axios";
-import router from "@/router";
 
 const props = defineProps({
   id: {
@@ -19,10 +18,10 @@ const props = defineProps({
 const imageSrc = ref(null);
 const imageError = ref(false);
 
-const imageControllers = {}
+const imageControllers = ref({});
 
 async function getImage() {
-  imageControllers[props.id] = new AbortController()
+  imageControllers.value[props.id] = new AbortController();
   await axios
     .get(`https://api-cre8ion.tc8l.dev/api/media/${props.id}`, {
       params: {
@@ -30,7 +29,7 @@ async function getImage() {
         height: props.height,
       },
       responseType: "blob",
-      signal: imageControllers[props.id].signal,
+      signal: imageControllers.value[props.id].signal,
     })
     .then((response) => {
       const imageUrl = window.URL.createObjectURL(response.data);
@@ -46,11 +45,9 @@ async function getImage() {
     })
     .catch(function (error) {
       imageError.value = true;
-      if (axios.isCancel(error)) {
-        console.warn("Image request canceled at ", router.currentRoute.value.path);
-      } else {
-        console.warn("Something went wrong:", error.message);
-      }
+      console.warn(
+        `ImageComponent.getImage() did not succeed. Reason: ${error.message}`
+      );
     });
 }
 
@@ -59,7 +56,7 @@ onBeforeMount(() => {
 });
 
 onBeforeUnmount(() => {
-  imageControllers[props.id].abort()
+  imageControllers.value[props.id].abort();
 });
 </script>
 

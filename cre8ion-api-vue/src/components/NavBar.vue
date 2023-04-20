@@ -4,7 +4,7 @@ import { useRouter } from "vue-router";
 import axios from "axios";
 
 const router = useRouter();
-const routes = ref();
+const doneLoading = ref(false);
 
 loadRoutes();
 
@@ -45,7 +45,7 @@ async function loadRoutes() {
         }
 
         // display routes in the navigation
-        routes.value = router.getRoutes();
+        doneLoading.value = true;
       });
   } catch (error) {
     console.error(error);
@@ -55,14 +55,14 @@ async function loadRoutes() {
 
 <template>
   <nav
-    v-if="routes"
+    v-if="doneLoading"
     id="navbar"
     class="flex col-1-1 justify-space-around bg-white"
   >
-    <template v-for="(route, index) in routes">
+    <template v-for="(route, index) in $router.getRoutes()">
       <router-link
         class="text-grey"
-        v-if="route.name"
+        v-if="route.name && !route.name.includes('hidden')"
         v-bind:key="index"
         v-bind:to="route.path"
       >

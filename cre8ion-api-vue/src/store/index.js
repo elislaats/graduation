@@ -49,11 +49,9 @@ export default createStore({
           commit("addPageData", { data: response.data, id: pageId });
         })
         .catch(function (error) {
-          if (axios.isCancel(error)) {
-            console.warn(`loadPageData for ${pageId} cancelled in vuex`);
-          } else {
-            console.warn("Something went wrong:", error.message);
-          }
+          console.warn(
+            `Store.loadPageData(${pageId}) did not succeed. Reason: ${error.message}`
+          );
         });
     },
     async loadDatabank({ commit }, dataId) {
@@ -66,11 +64,9 @@ export default createStore({
           commit("addDatabank", { data: response.data, id: dataId });
         })
         .catch(function (error) {
-          if (axios.isCancel(error)) {
-            console.warn(`loadDatabank for ${dataId} cancelled in vuex`);
-          } else {
-            console.warn("Something went wrong:", error.message);
-          }
+          console.warn(
+            `Store.loadDatabank(${dataId}) did not succeed. Reason: ${error.message}`
+          );
         });
     },
   },
