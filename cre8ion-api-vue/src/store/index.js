@@ -1,6 +1,8 @@
 import { createStore } from "vuex";
 import axios from "axios";
 
+const storeController = new AbortController();
+
 export default createStore({
   state: {
     pageData: {},
@@ -31,25 +33,40 @@ export default createStore({
     },
   },
   actions: {
+    abortAxios() {
+      storeController.abort();
+    },
     async loadPageData({ commit }, pageId) {
-      try {
-        const response = await axios.get(
-          `https://api-cre8ion.tc8l.dev/api/page/` + pageId
-        );
-        commit("addPageData", { data: response.data, id: pageId });
-      } catch (error) {
-        console.error(error);
-      }
+      await axios
+        .get(`https://api-cre8ion.tc8l.dev/api/page/` + pageId, {
+          signal: storeController.signal,
+        })
+        .then((response) => {
+          commit("addPageData", { data: response.data, id: pageId });
+        })
+        .catch(function (error) {
+          if (axios.isCancel(error)) {
+            console.warn(`loadPageData for ${pageId} cancelled in vuex`);
+          } else {
+            console.warn("Something went wrong:", error.message);
+          }
+        });
     },
     async loadDatabank({ commit }, dataId) {
-      try {
-        const response = await axios.get(
-          `https://api-cre8ion.tc8l.dev/api/pages/` + dataId
-        );
-        commit("addDatabank", { data: response.data, id: dataId });
-      } catch (error) {
-        console.error(error);
-      }
+      await axios
+        .get(`https://api-cre8ion.tc8l.dev/api/pages/` + dataId, {
+          signal: storeController.signal,
+        })
+        .then((response) => {
+          commit("addDatabank", { data: response.data, id: dataId });
+        })
+        .catch(function (error) {
+          if (axios.isCancel(error)) {
+            console.warn(`loadDatabank for ${dataId} cancelled in vuex`);
+          } else {
+            console.warn("Something went wrong:", error.message);
+          }
+        });
     },
   },
   modules: {},

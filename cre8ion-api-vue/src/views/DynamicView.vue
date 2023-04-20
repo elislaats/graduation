@@ -1,7 +1,7 @@
 <script setup>
-import { defineProps, watch, ref } from "vue";
+import { watch, defineProps, ref } from "vue";
 import { useStore } from "vuex";
-import { useRouter } from "vue-router";
+import { onBeforeRouteLeave } from "vue-router";
 import ContentBlock from "../components/ContentBlock.vue";
 
 const props = defineProps({
@@ -12,10 +12,10 @@ const props = defineProps({
 });
 
 const store = useStore();
-const router = useRouter();
 const pageContent = ref(null);
 
 async function getPageData(id) {
+  pageContent.value = null;
   const check = await store.getters.getPageDataById(id);
 
   if (!check) {
@@ -29,16 +29,19 @@ async function getPageData(id) {
 
 getPageData(props.id);
 
-router.beforeEach(() => {
-  pageContent.value = null;
+onBeforeRouteLeave(() => {
+  if(!pageContent.value){
+    store.dispatch("abortAxios");
+  }
 });
 
 watch(
   () => props.id,
   (value) => {
-    getPageData(value);
+      getPageData(value)
   }
 );
+
 </script>
 
 <template>

@@ -31,7 +31,7 @@ function createDetailRoute(parent) {
       props: true,
     };
     router.addRoute(route);
-    console.log("Router aangepast:", router.getRoutes());
+    console.warn("Router aangepast:", router.getRoutes());
   }
 }
 </script>

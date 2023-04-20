@@ -19,7 +19,7 @@ const props = defineProps({
 const imageSrc = ref(null);
 const imageError = ref(false);
 
-const controller = new AbortController();
+const imageController = new AbortController();
 
 async function getImage() {
   await axios
@@ -29,7 +29,7 @@ async function getImage() {
         height: props.height,
       },
       responseType: "blob",
-      signal: controller.signal,
+      signal: imageController.signal,
     })
     .then((response) => {
       const imageUrl = window.URL.createObjectURL(response.data);
@@ -46,7 +46,7 @@ async function getImage() {
     .catch(function (error) {
       imageError.value = true;
       if (axios.isCancel(error)) {
-        console.warn("Request canceled at ", router.currentRoute.value.path);
+        console.warn("Image request canceled at ", router.currentRoute.value.path);
       } else {
         console.warn("Something went wrong:", error.message);
       }
@@ -58,7 +58,7 @@ onBeforeMount(() => {
 });
 
 onBeforeUnmount(() => {
-  controller.abort()
+  imageController.abort()
 });
 </script>
 
