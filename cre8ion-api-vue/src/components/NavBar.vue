@@ -38,7 +38,7 @@ async function loadRoutes() {
           router.removeRoute("Loading");
         }
 
-        // display routes in the router
+        // display routes in the navigation
         routes.value = router.getRoutes();
       });
   } catch (error) {
