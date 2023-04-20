@@ -38,6 +38,12 @@ async function loadRoutes() {
           router.removeRoute("Loading");
         }
 
+        // add catch all 404 route
+        router.addRoute({
+          path: "/:pathMatch(.*)*",
+          component: () => import("../views/PageNotFound.vue"),
+        });
+
         // display routes in the navigation
         routes.value = router.getRoutes();
       });

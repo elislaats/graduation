@@ -6,11 +6,7 @@ const routes = [
     name: 'Loading',
     path: "/",
     component: LoadingView,
-  },
-  {
-    path: "/:pathMatch(.*)*",
-    component: () => import("../views/PageNotFound.vue"),
-  },
+  }
 ];
 
 const router = createRouter({
