@@ -30,18 +30,15 @@ async function getPageData(id) {
 getPageData(props.id);
 
 onBeforeRouteLeave(() => {
-  if(!pageContent.value){
-    store.dispatch("abortAxios");
-  }
+  store.dispatch("abortAxios", { actionName: "loadPageData", id: props.id });
 });
 
 watch(
   () => props.id,
   (value) => {
-      getPageData(value)
+    getPageData(value);
   }
 );
-
 </script>
 
 <template>

@@ -1,7 +1,7 @@
 import { createStore } from "vuex";
 import axios from "axios";
 
-const storeController = new AbortController();
+const storeController = {};
 
 export default createStore({
   state: {
@@ -33,13 +33,17 @@ export default createStore({
     },
   },
   actions: {
-    abortAxios() {
-      storeController.abort();
+    abortAxios(state, { actionName, id }) {
+      if (storeController[`${actionName}${id}`] != null) {
+        storeController[actionName + id].abort();
+      }
     },
     async loadPageData({ commit }, pageId) {
+      storeController["loadPageData" + pageId] = new AbortController();
+
       await axios
         .get(`https://api-cre8ion.tc8l.dev/api/page/` + pageId, {
-          signal: storeController.signal,
+          signal: storeController["loadPageData" + pageId].signal,
         })
         .then((response) => {
           commit("addPageData", { data: response.data, id: pageId });
@@ -53,9 +57,10 @@ export default createStore({
         });
     },
     async loadDatabank({ commit }, dataId) {
+      storeController["loadDatabank" + dataId] = new AbortController();
       await axios
         .get(`https://api-cre8ion.tc8l.dev/api/pages/` + dataId, {
-          signal: storeController.signal,
+          signal: storeController["loadDatabank" + dataId].signal,
         })
         .then((response) => {
           commit("addDatabank", { data: response.data, id: dataId });

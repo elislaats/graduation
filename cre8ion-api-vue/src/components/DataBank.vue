@@ -1,7 +1,7 @@
 <script setup>
 import ContentBlock from "../components/ContentBlock.vue";
 import LinkBlock from "./LinkBlock.vue";
-import { defineProps, ref } from "vue";
+import { defineProps, onBeforeUnmount, ref } from "vue";
 import { useStore } from "vuex";
 
 const props = defineProps({
@@ -28,6 +28,10 @@ async function getElements(id) {
 }
 
 getElements(props.id);
+
+onBeforeUnmount(() => {
+  store.dispatch('abortAxios', {actionName: "loadDatabank", id: props.id})
+})
 </script>
 
 <template>
@@ -38,7 +42,7 @@ getElements(props.id);
     </p>
     <template v-for="(element, index) in elements">
       <component
-        v-if="index < 12"
+        v-if="index < 100"
         :is="element.metadata ? LinkBlock : ContentBlock"
         :id="element._id"
         :key="'el' + index"

@@ -19,9 +19,10 @@ const props = defineProps({
 const imageSrc = ref(null);
 const imageError = ref(false);
 
-const imageController = new AbortController();
+const imageControllers = {}
 
 async function getImage() {
+  imageControllers[props.id] = new AbortController()
   await axios
     .get(`https://api-cre8ion.tc8l.dev/api/media/${props.id}`, {
       params: {
@@ -29,7 +30,7 @@ async function getImage() {
         height: props.height,
       },
       responseType: "blob",
-      signal: imageController.signal,
+      signal: imageControllers[props.id].signal,
     })
     .then((response) => {
       const imageUrl = window.URL.createObjectURL(response.data);
@@ -58,7 +59,7 @@ onBeforeMount(() => {
 });
 
 onBeforeUnmount(() => {
-  imageController.abort()
+  imageControllers[props.id].abort()
 });
 </script>
 
