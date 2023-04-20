@@ -4,7 +4,7 @@ import LoadingView from "../views/LoadingView.vue";
 const routes = [
   {
     name: 'Loading',
-    path: "/",
+    path: "/:pathMatch(.*)*",
     component: LoadingView,
   }
 ];
