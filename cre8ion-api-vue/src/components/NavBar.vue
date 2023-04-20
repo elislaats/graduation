@@ -26,6 +26,12 @@ async function loadRoutes() {
         const prevRoute = router.currentRoute.value.fullPath; // first save the previous route, if available
         router.push("/"); // go to only available page on startup to prevent error
 
+        // add catch all 404 route
+        router.addRoute({
+          path: "/:catchAll(.*)",
+          component: () => import("../views/PageNotFound.vue"),
+        });
+        
         // navigate to previous available route
         if (prevRoute == "/") {
           router.push("/homepage");
@@ -37,12 +43,6 @@ async function loadRoutes() {
         if (router.hasRoute("Loading")) {
           router.removeRoute("Loading");
         }
-
-        // add catch all 404 route
-        router.addRoute({
-          path: "/:pathMatch(.*)*",
-          component: () => import("../views/PageNotFound.vue"),
-        });
 
         // display routes in the navigation
         routes.value = router.getRoutes();
