@@ -1,7 +1,7 @@
 <script setup>
 import ContentBlock from "../components/ContentBlock.vue";
 import LinkBlock from "./LinkBlock.vue";
-import { defineProps, ref } from "vue";
+import { defineProps, onBeforeUnmount, ref } from "vue";
 import { useStore } from "vuex";
 
 const props = defineProps({
@@ -28,6 +28,10 @@ async function getElements(id) {
 }
 
 getElements(props.id);
+
+onBeforeUnmount(() => {
+  store.dispatch('abortAxios', {actionName: "loadDatabank", id: props.id})
+})
 </script>
 
 <template>
@@ -36,15 +40,17 @@ getElements(props.id);
       Databank opgehaald van <strong>/api/pages/{{ props.id }}</strong
       >:
     </p>
-    <component
-      v-for="(element, index) in elements"
-      :is="element.metadata ? LinkBlock : ContentBlock"
-      :id="element._id"
-      :key="'el' + index"
-      :content="element.content"
-      :color="'info'"
-      :meta="element.metadata"
-    />
+    <template v-for="(element, index) in elements">
+      <component
+        v-if="index < 20"
+        :is="element.metadata ? LinkBlock : ContentBlock"
+        :id="element._id"
+        :key="'el' + index"
+        :content="element.content"
+        :color="'info'"
+        :meta="element.metadata"
+      />
+    </template>
   </div>
   <!-- indien geen content beschikbaar -->
   <div class="load-spinner" v-else />

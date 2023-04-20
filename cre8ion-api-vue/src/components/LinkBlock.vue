@@ -23,15 +23,15 @@ onBeforeMount(() => {
 });
 
 function createDetailRoute(parent) {
-  if (!router.hasRoute(`${parent.name}-detail`)) {
+  if (!router.hasRoute(`${parent.name}-detail-hidden`)) {
     const route = {
-      name: `${parent.name}-detail`,
+      name: `${parent.name}-detail-hidden`,
       path: `${parent.path}/:slug`,
       component: () => import("../views/DetailView.vue"),
       props: true,
     };
     router.addRoute(route);
-    console.log("Router aangepast:", router.getRoutes());
+    console.warn("Router aangepast:", router.getRoutes());
   }
 }
 </script>

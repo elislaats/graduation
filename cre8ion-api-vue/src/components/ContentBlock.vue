@@ -67,7 +67,7 @@ const props = defineProps({
           }"
           v-text="key + ': '"
         />
-        <ImageComponent :id="value.toString()" />
+        <ImageComponent :id="value.toString()" width="300" />
       </div>
 
       <!-- Voor alle andere elementen die een waarde hebben, voeg toe -->

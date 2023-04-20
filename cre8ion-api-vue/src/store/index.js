@@ -1,6 +1,8 @@
 import { createStore } from "vuex";
 import axios from "axios";
 
+const storeController = {};
+
 export default createStore({
   state: {
     pageData: {},
@@ -20,7 +22,7 @@ export default createStore({
       } else {
         return false;
       }
-    }
+    },
   },
   mutations: {
     addPageData(state, { data, id }) {
@@ -31,25 +33,41 @@ export default createStore({
     },
   },
   actions: {
-    async loadPageData({ commit }, pageId) {
-      try {
-        const response = await axios.get(
-          `https://api-cre8ion.tc8l.dev/api/page/` + pageId
-        );
-        commit("addPageData", { data: response.data, id: pageId });
-      } catch (error) {
-        console.error(error);
+    abortAxios(state, { actionName, id }) {
+      if (storeController[`${actionName}${id}`] != null) {
+        storeController[actionName + id].abort();
       }
     },
+    async loadPageData({ commit }, pageId) {
+      storeController["loadPageData" + pageId] = new AbortController();
+
+      await axios
+        .get(`https://api-cre8ion.tc8l.dev/api/page/` + pageId, {
+          signal: storeController["loadPageData" + pageId].signal,
+        })
+        .then((response) => {
+          commit("addPageData", { data: response.data, id: pageId });
+        })
+        .catch(function (error) {
+          console.warn(
+            `Store.loadPageData(${pageId}) did not succeed. Reason: ${error.message}`
+          );
+        });
+    },
     async loadDatabank({ commit }, dataId) {
-      try {
-        const response = await axios.get(
-          `https://api-cre8ion.tc8l.dev/api/pages/` + dataId
-        );
-        commit("addDatabank", { data: response.data, id: dataId });
-      } catch (error) {
-        console.error(error);
-      }
+      storeController["loadDatabank" + dataId] = new AbortController();
+      await axios
+        .get(`https://api-cre8ion.tc8l.dev/api/pages/` + dataId, {
+          signal: storeController["loadDatabank" + dataId].signal,
+        })
+        .then((response) => {
+          commit("addDatabank", { data: response.data, id: dataId });
+        })
+        .catch(function (error) {
+          console.warn(
+            `Store.loadDatabank(${dataId}) did not succeed. Reason: ${error.message}`
+          );
+        });
     },
   },
   modules: {},

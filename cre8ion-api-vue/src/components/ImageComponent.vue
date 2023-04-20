@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps, onBeforeMount, ref } from "vue";
+import { defineProps, onBeforeMount, onBeforeUnmount, ref } from "vue";
 import axios from "axios";
 
 const props = defineProps({
@@ -18,11 +18,18 @@ const props = defineProps({
 const imageSrc = ref(null);
 const imageError = ref(false);
 
+const imageControllers = ref({});
+
 async function getImage() {
+  imageControllers.value[props.id] = new AbortController();
   await axios
     .get(`https://api-cre8ion.tc8l.dev/api/media/${props.id}`, {
-      params: { width: props.width, height: props.height },
+      params: {
+        width: props.width,
+        height: props.height,
+      },
       responseType: "blob",
+      signal: imageControllers.value[props.id].signal,
     })
     .then((response) => {
       const imageUrl = window.URL.createObjectURL(response.data);
@@ -38,12 +45,18 @@ async function getImage() {
     })
     .catch(function (error) {
       imageError.value = true;
-      console.log(error)
+      console.warn(
+        `ImageComponent.getImage() did not succeed. Reason: ${error.message}`
+      );
     });
 }
 
 onBeforeMount(() => {
   getImage();
+});
+
+onBeforeUnmount(() => {
+  imageControllers.value[props.id].abort();
 });
 </script>
 
