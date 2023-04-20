@@ -12,22 +12,14 @@ const props = defineProps({
     type: String,
     default: "cre8ion image",
   },
-  width: {
-    type: String,
-    value: null,
-  },
-  height: {
-    type: String,
-    value: null,
-  },
+  width: String,
+  height: String,
 });
-
-const controller = new AbortController();
-const CancelToken = axios.CancelToken;
-const source = CancelToken.source();
 
 const imageSrc = ref(null);
 const imageError = ref(false);
+
+const controller = new AbortController();
 
 async function getImage() {
   await axios
@@ -37,7 +29,6 @@ async function getImage() {
         height: props.height,
       },
       responseType: "blob",
-      cancelToken: source.token,
       signal: controller.signal,
     })
     .then((response) => {
@@ -55,7 +46,7 @@ async function getImage() {
     .catch(function (error) {
       imageError.value = true;
       if (axios.isCancel(error)) {
-        console.warn("Request canceled:", error.message);
+        console.warn("Request canceled at ", router.currentRoute.value.path);
       } else {
         console.warn("Something went wrong:", error.message);
       }
@@ -67,7 +58,7 @@ onBeforeMount(() => {
 });
 
 onBeforeUnmount(() => {
-  source.cancel(' Stop loading on unmount ' + router.currentRoute.value.path);
+  controller.abort()
 });
 </script>
 
