@@ -30,8 +30,8 @@ async function getElements(id) {
 getElements(props.id);
 
 onBeforeUnmount(() => {
-  store.dispatch('abortAxios', {actionName: "loadDatabank", id: props.id})
-})
+  store.dispatch("abortAxios", { actionName: "loadDatabank", id: props.id });
+});
 </script>
 
 <template>
@@ -42,7 +42,7 @@ onBeforeUnmount(() => {
     </p>
     <template v-for="(element, index) in elements">
       <component
-        v-if="index < 20"
+        v-if="index < 100"
         :is="element.metadata ? LinkBlock : ContentBlock"
         :id="element._id"
         :key="'el' + index"
