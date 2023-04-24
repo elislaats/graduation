@@ -1,11 +1,9 @@
 import { createRouter, createWebHistory } from "vue-router";
-import LoadingView from "../views/LoadingView.vue";
 
 const routes = [
   {
     name: 'Loading',
-    path: "/:pathMatch(.*)*",
-    component: LoadingView,
+    path: "/:pathMatch(.*)*"
   }
 ];
 
