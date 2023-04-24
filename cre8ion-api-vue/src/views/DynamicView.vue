@@ -16,14 +16,14 @@ const pageContent = ref(null);
 
 async function getPageData(id) {
   pageContent.value = null;
-  const check = await store.getters.getPageDataById(id);
+  const storeData = await store.getters.getPageDataById(id);
 
-  if (!check) {
+  if (!storeData) {
     await store.dispatch("loadPageData", props.id);
     const data = await store.getters.getPageDataById(id);
     pageContent.value = data.content;
   } else {
-    pageContent.value = check.content;
+    pageContent.value = storeData.content;
   }
 }
 

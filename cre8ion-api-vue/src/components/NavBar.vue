@@ -31,7 +31,7 @@ async function loadRoutes() {
           path: "/:catchAll(.*)",
           component: () => import("../views/PageNotFound.vue"),
         });
-        
+
         // navigate to previous available route
         if (prevRoute == "/") {
           router.push("/homepage");
@@ -74,6 +74,8 @@ async function loadRoutes() {
 </template>
 
 <style lang="scss">
+@import "../styles/main.scss";
+
 #navbar {
   position: sticky;
   top: 0;
@@ -88,6 +90,10 @@ async function loadRoutes() {
 
     &:hover {
       transform: scale(1.1);
+    }
+
+    &.router-link-active {
+      color: $primary-color;
     }
   }
 }

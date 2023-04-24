@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps, onBeforeMount } from "vue";
+import { defineProps } from "vue";
 import { useRouter } from "vue-router";
 
 const props = defineProps({
@@ -16,13 +16,12 @@ const props = defineProps({
     required: false,
   },
 });
+
 const router = useRouter();
 
-onBeforeMount(() => {
-  createDetailRoute(router.currentRoute.value);
-});
+function getRoute() {
+  const parent = router.currentRoute.value;
 
-function createDetailRoute(parent) {
   if (!router.hasRoute(`${parent.name}-detail-hidden`)) {
     const route = {
       name: `${parent.name}-detail-hidden`,
@@ -31,8 +30,9 @@ function createDetailRoute(parent) {
       props: true,
     };
     router.addRoute(route);
-    console.warn("Router aangepast:", router.getRoutes());
+    console.warn("router: ", router.getRoutes());
   }
+  return `${parent.path}/${props.content.slug}`;
 }
 </script>
 
@@ -43,9 +43,7 @@ function createDetailRoute(parent) {
     class="col-1-4 flex flex-column align-start border-info bg-white"
   >
     <h5 v-if="props.content.titel" v-text="props.content.titel" />
-    <router-link :to="`${router.currentRoute.value.path}/${props.content.slug}`"
-      >meer lezen</router-link
-    >
+    <router-link :to="getRoute()">meer lezen</router-link>
   </div>
 
   <!-- indien geen content beschikbaar -->
