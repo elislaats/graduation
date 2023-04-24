@@ -4,7 +4,7 @@
     <p style="font-size: 2em">
       Helaas, op
       <strong class="text-primary">
-        {{ $router.currentRoute.value.fullPath }}
+        {{ $route.params.catchAll }}
       </strong>
       is niets gevonden.
     </p>

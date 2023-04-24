@@ -5,7 +5,6 @@ function checkForParent(goal) {
   let foundParent = false;
   routes.forEach((route) => {
     if (goal.path.includes(route.path)) {
-      console.log(route.path, goal.path);
       foundParent = route;
     }
   });
@@ -15,9 +14,9 @@ function checkForParent(goal) {
 function createDetailRoute(parent) {
   if (!router.hasRoute(`${parent.name}-detail-hidden`)) {
     const route = {
-      name: `${parent.name}-detail-hidden`,
+      name: `${parent.name} detail`,
       path: `${parent.path}/:slug`,
-      component: () => import("../views/DetailView.vue"),
+      component: () => import("@/views/DetailView.vue"),
       props: true,
     };
     router.addRoute(route);
@@ -26,17 +25,23 @@ function createDetailRoute(parent) {
 
 const routes = [
   {
-    path: "/:catchAll(.*)",
+    name: "404",
+    path: "/:catchAll(.*)?",
     beforeEnter: (to, from, next) => {
-      const parent = checkForParent(to);
-      if (parent) {
-        createDetailRoute(parent, to);
-        next(to.path);
+      if (!to.meta.wasChecked) {
+        const parent = checkForParent(to);
+        if (parent) {
+          createDetailRoute(parent, to);
+          next(to.path);
+        } else {
+          next();
+        }
       } else {
         next();
       }
     },
-    component: () => import("../views/PageNotFound.vue"),
+    component: () => import("@/views/PageNotFound.vue"),
+    meta: { wasChecked: false },
   },
 ];
 

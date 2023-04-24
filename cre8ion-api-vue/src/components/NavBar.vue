@@ -9,7 +9,6 @@ const navLoaded = ref(false);
 const emit = defineEmits(["navLoaded"]);
 
 router.beforeEach(async (to, from, next) => {
-  console.log("here");
   if (!navLoaded.value) {
     await loadRoutes().then(() => {
       emit("navLoaded");
@@ -32,7 +31,7 @@ async function loadRoutes() {
       data.forEach((page) => {
         const route = {
           path: page.url,
-          name: page.name,
+          name: page.name.toLowerCase(),
           component: () => import("@/views/DynamicView.vue"),
           props: { id: page.id },
           meta: { mainRoute: true },

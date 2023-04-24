@@ -21,7 +21,6 @@ async function getDetails(slug) {
   const storeData = await store.getters.getDatabankById(dbID);
 
   if (!storeData) {
-    console.log('here')
     await store.dispatch("loadDatabank", dbID);
     data = await store.getters.getDatabankById(dbID);
   } else {
@@ -33,6 +32,14 @@ async function getDetails(slug) {
       content.value = item.content;
     }
   });
+
+  if (!content.value) {
+    router.push({
+      name: "404",
+      params:{catchAll: router.currentRoute.value.path},
+      meta: { wasChecked: true },
+    });
+  }
 }
 
 // temporary solution to get databank ID:
@@ -76,7 +83,7 @@ getDetails(props.slug);
     </template>
   </main>
   <main v-else>
-    <p class="text-danger">inhoud niet gevonden</p>
+    <div class="load-spinner"></div>
   </main>
 </template>
 
