@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps, onBeforeMount, ref } from "vue";
+import { defineEmits, defineProps, onBeforeMount, ref } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import ImageComponent from "@/components/ImageComponent.vue";
@@ -10,6 +10,8 @@ const props = defineProps({
     required: true,
   },
 });
+
+const emit = defineEmits(["updateMetadata"]);
 
 const content = ref(null);
 const store = useStore();
@@ -30,6 +32,9 @@ async function getDetails(slug) {
   data.forEach((item) => {
     if (item.content.slug == slug) {
       content.value = item.content;
+      if (item.metadata) {
+        emit("updateMetadata", item.metadata);
+      }
     }
   });
 }
@@ -53,7 +58,7 @@ onBeforeMount(async () => {
     // redirect to 404 if unable to find data
     router.replace({
       name: "404",
-      params: { pathMatch: router.currentRoute.value.path.replace('/', '')},
+      params: { pathMatch: router.currentRoute.value.path.replace("/", "") },
     });
   }
 });
