@@ -1,8 +1,9 @@
 <script setup>
+import LoadingView from "./LoadingView.vue";
+import ContentBlock from "@/components/ContentBlock.vue";
+
 import { watch, defineProps, ref } from "vue";
 import { useStore } from "vuex";
-import { onBeforeRouteLeave } from "vue-router";
-import ContentBlock from "../components/ContentBlock.vue";
 
 const props = defineProps({
   id: {
@@ -12,26 +13,21 @@ const props = defineProps({
 });
 
 const store = useStore();
-const pageContent = ref(null);
+const pageContent = ref();
 
 async function getPageData(id) {
-  pageContent.value = null;
   const storeData = await store.getters.getPageDataById(id);
 
   if (!storeData) {
     await store.dispatch("loadPageData", props.id);
     const data = await store.getters.getPageDataById(id);
-    pageContent.value = data.content;
+    pageContent.value = data;
   } else {
-    pageContent.value = storeData.content;
+    pageContent.value = storeData;
   }
 }
 
 getPageData(props.id);
-
-onBeforeRouteLeave(() => {
-  store.dispatch("abortAxios", { actionName: "loadPageData", id: props.id });
-});
 
 watch(
   () => props.id,
@@ -42,22 +38,17 @@ watch(
 </script>
 
 <template>
-    <main class="grid align-start" v-if="!$route.name.includes('nested')">
-      <div class="grid col-1-1" v-if="pageContent">
-        <h1 class="col-1-1">{{ pageContent.titel }}</h1>
-        <p class="col-1-1">
-          Contentblokken opgehaald van <strong>/api/page/{{ props.id }}</strong
-          >:
-        </p>
-        <ContentBlock
-          v-for="(block, index) in pageContent.content"
-          :key="'cb' + index"
-          :content="block"
-          :color="'primary'"
-        >
-        </ContentBlock>
-      </div>
-      <div class="load-spinner" v-else />
-    </main>
-    <RouterView v-else />
+  <RouterView v-if="$route.name.includes('nested')" />
+  <main class="grid" v-else-if="pageContent">
+    <h1 class='col-1-1' v-if="pageContent.titel">{{ pageContent.titel }}</h1>
+    <p class='col-1-1'> Contentblokken opgehaald van <strong> /api/page/{{ props.id }}:</strong> </p>
+    <component
+      v-for="block in pageContent.blocks"
+      :is="ContentBlock"
+      :key="block._id"
+      :content="block"
+      :color="'primary'"
+    />
+  </main>
+  <LoadingView v-else />
 </template>

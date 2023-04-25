@@ -19,7 +19,6 @@ const props = defineProps({
 <template>
   <!-- render element when content is provided -->
   <div
-    v-if="props.content"
     class="bg-white grid-pad flex flex-column"
     :class="{
       'col-1-3': !props.content.aanvullenMet,
@@ -29,33 +28,24 @@ const props = defineProps({
   >
     <!-- loop over all content-elements -->
     <template v-for="(value, key, index) in props.content" :key="index + key">
-      <!-- contentblock bevat een object van specs, loop over de specs -->
-      <div
-        v-if="key == '_block' && value"
-        class="text-align-right"
-        :class="[
-          {
-            'text-primary': props.color === 'primary',
-            'text-info': props.color === 'false',
-          },
-          key,
-        ]"
-      >
-        <p v-for="(item, key, index) in value" :key="key + index">
-          <span class="key" v-text="key.replace('_', '') + ': '" />
-          <span class="value" v-text="item" />
-        </p>
-      </div>
-
       <!-- Header element voor de titel, indien gevuld -->
-      <h3 :class="key" v-else-if="key === 'titel' && value" v-text="value" />
+      <h3 :class="key" v-if="key === 'titel' && value" v-text="value" />
 
-      <!-- Elementen uit databank inladen indien nodig -->
-      <DataBank
+      <p
+        v-else-if="key.includes('_')"
+        class="info text-align-right"
         :class="key"
-        v-else-if="key === 'aanvullenMet' && value"
-        :id="parseInt(props.content.aanvullenMet)"
-      />
+      >
+        <strong
+          class="key"
+          :class="{
+            'text-primary': props.color === 'primary',
+            'text-info': props.color === 'info',
+          }"
+          v-text="key + ': '"
+        />
+        {{ value }}
+      </p>
 
       <div class="afbeelding" v-else-if="key === 'afbeelding' && value">
         <!-- image component voor de afbeelding -->
@@ -67,8 +57,15 @@ const props = defineProps({
           }"
           v-text="key + ': '"
         />
-        <ImageComponent :id="value.toString()" width="300" />
+        <ImageComponent :id="value.toString()" :width="'300'" />
       </div>
+
+      <!-- Elementen uit databank inladen indien nodig -->
+      <DataBank
+        :class="key"
+        v-else-if="key === 'aanvullenMet' && value"
+        :id="parseInt(props.content.aanvullenMet)"
+      />
 
       <!-- Voor alle andere elementen die een waarde hebben, voeg toe -->
       <p v-else-if="value" :class="key">
@@ -100,18 +97,16 @@ const props = defineProps({
       </p>
     </template>
   </div>
-
-  <!-- indien geen content beschikbaar -->
-  <div class="load-spinner" v-else />
 </template>
 
 <style lang="scss" scoped>
 .key {
   font-weight: bold;
 }
-._block {
+.info {
   order: -5;
   font-style: italic;
+  align-items: end;
 }
 
 .titel {
