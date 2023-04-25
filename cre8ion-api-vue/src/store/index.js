@@ -5,13 +5,13 @@ const storeController = {};
 
 export default createStore({
   state: {
-    pageData: {},
+    pages: {},
     databank: {},
   },
   getters: {
     getPageDataById: (state) => (id) => {
-      if (state.pageData[id] != undefined) {
-        return state.pageData[id];
+      if (state.pages[id] != undefined) {
+        return state.pages[id];
       } else {
         return false;
       }
@@ -23,10 +23,24 @@ export default createStore({
         return false;
       }
     },
+    getDatabankItem:
+      (state) =>
+      ({ id, slug }) => {
+        let found = false;
+        if (state.databank[id] != undefined) {
+          const databank = state.databank[id];
+          databank.forEach((item) => {
+            if (item.content.slug == slug) {
+              found = item;
+            }
+          });
+        }
+        return found;
+      },
   },
   mutations: {
     addPageData(state, { data, id }) {
-      state.pageData[id] = {
+      state.pages[id] = {
         blocks: [],
       };
       const content = data["content"];
@@ -35,16 +49,16 @@ export default createStore({
 
       for (const key in data) {
         if (data[key] != content) {
-          state.pageData[id][key] = data[key];
+          state.pages[id][key] = data[key];
         } else {
           for (const key in content) {
             if (content[key] != blocks) {
-              state.pageData[id][key] = content[key];
+              state.pages[id][key] = content[key];
             }
           }
         }
       }
-      
+
       blocks.forEach((block) => {
         mappedBlock = {};
         for (const key in block) {
@@ -58,7 +72,7 @@ export default createStore({
           }
         }
 
-        state.pageData[id]["blocks"].push(mappedBlock);
+        state.pages[id]["blocks"].push(mappedBlock);
       });
     },
     addDatabank(state, { data, id }) {

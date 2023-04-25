@@ -20,23 +20,23 @@ const router = useRouter();
 async function getDetails(slug) {
   const dbID = getDbId(router.currentRoute.value.path);
   let data = null;
-  const storeData = await store.getters.getDatabankById(dbID);
+  const storeData = await store.getters.getDatabankItem({
+    id: dbID,
+    slug: slug,
+  });
 
   if (!storeData) {
+    console.log("not in store");
     await store.dispatch("loadDatabank", dbID);
-    data = await store.getters.getDatabankById(dbID);
+    data = await store.getters.getDatabankItem({
+      id: dbID,
+      slug: slug,
+    });
   } else {
     data = storeData;
   }
-
-  data.forEach((item) => {
-    if (item.content.slug == slug) {
-      content.value = item.content;
-      if (item.metadata) {
-        emit("updateMetadata", item.metadata);
-      }
-    }
-  });
+  content.value = data.content;
+  emit('updateMetadata', data.metadata)
 }
 
 // temporary solution to get databank ID:
