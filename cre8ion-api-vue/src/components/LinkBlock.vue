@@ -1,6 +1,5 @@
 <script setup>
-import { defineProps, onBeforeMount } from "vue";
-import { useRouter } from "vue-router";
+import { defineProps } from "vue";
 
 const props = defineProps({
   id: {
@@ -16,24 +15,6 @@ const props = defineProps({
     required: false,
   },
 });
-const router = useRouter();
-
-onBeforeMount(() => {
-  createDetailRoute(router.currentRoute.value);
-});
-
-function createDetailRoute(parent) {
-  if (!router.hasRoute(`${parent.name}-detail-hidden`)) {
-    const route = {
-      name: `${parent.name}-detail-hidden`,
-      path: `${parent.path}/:slug`,
-      component: () => import("../views/DetailView.vue"),
-      props: true,
-    };
-    router.addRoute(route);
-    console.warn("Router aangepast:", router.getRoutes());
-  }
-}
 </script>
 
 <template>
@@ -43,7 +24,7 @@ function createDetailRoute(parent) {
     class="col-1-4 flex flex-column align-start border-info bg-white"
   >
     <h5 v-if="props.content.titel" v-text="props.content.titel" />
-    <router-link :to="`${router.currentRoute.value.path}/${props.content.slug}`"
+    <router-link :to="`${$router.currentRoute.value.path}/${content.slug}`"
       >meer lezen</router-link
     >
   </div>

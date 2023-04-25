@@ -1,10 +1,13 @@
 import { createRouter, createWebHistory } from "vue-router";
 
+
 const routes = [
   {
-    name: 'Loading',
-    path: "/:pathMatch(.*)*"
-  }
+    name: "404",
+    path: "/:pathMatch(.*)",
+    component: () => import("@/views/PageNotFound.vue"),
+    props: true,
+  },
 ];
 
 const router = createRouter({

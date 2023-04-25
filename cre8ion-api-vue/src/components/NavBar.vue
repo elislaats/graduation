@@ -11,7 +11,7 @@ const emit = defineEmits(["navLoaded"]);
 router.beforeEach(async (to, from, next) => {
   if (!navLoaded.value) {
     await loadRoutes().then(() => {
-      emit('navLoaded')
+      emit("navLoaded");
       if (to.path == "/") {
         next("/homepage");
       } else {
@@ -31,16 +31,20 @@ async function loadRoutes() {
       data.forEach((page) => {
         const route = {
           path: page.url,
-          name: page.name,
+          name: page.name.toLowerCase(),
           component: () => import("@/views/DynamicView.vue"),
+          children: [
+            {
+              name: page.name.toLowerCase() + " nested",
+              path: page.url + "/:slug",
+              component: () => import("@/views/DetailView.vue"),
+              props: true
+            },
+          ],
           props: { id: page.id },
+          meta: { mainRoute: true },
         };
         router.addRoute(route); // create new router
-      });
-      // add catch all 404 route
-      router.addRoute({
-        path: "/:catchAll(.*)",
-        component: () => import("../views/PageNotFound.vue"),
       });
 
       // remove startup 'loading' route
@@ -49,21 +53,22 @@ async function loadRoutes() {
       }
       navLoaded.value = true;
     })
-    .catch(function(error){
-      console.log(error)
-    })
+    .catch(function (error) {
+      console.log(error);
+    });
 }
 </script>
 
 <template>
-  <nav v-if="navLoaded"
+  <nav
+    v-if="navLoaded"
     id="navbar"
     class="flex col-1-1 justify-space-around bg-white"
   >
     <template v-for="(route, index) in $router.getRoutes()">
       <router-link
         class="text-grey"
-        v-if="route.name && !route.name.includes('hidden')"
+        v-if="route.meta.mainRoute"
         v-bind:key="index"
         v-bind:to="route.path"
       >
@@ -75,6 +80,8 @@ async function loadRoutes() {
 </template>
 
 <style lang="scss">
+@import "../styles/main.scss";
+
 #navbar {
   position: sticky;
   top: 0;
@@ -89,6 +96,10 @@ async function loadRoutes() {
 
     &:hover {
       transform: scale(1.1);
+    }
+
+    &.router-link-active {
+      color: $primary-color;
     }
   }
 }
