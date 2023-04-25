@@ -30,8 +30,8 @@ async function getElements(id) {
 getElements(props.id);
 
 onBeforeUnmount(() => {
-  store.dispatch('abortAxios', {actionName: "loadDatabank", id: props.id})
-})
+  store.dispatch("abortAxios", { actionName: "loadDatabank", id: props.id });
+});
 </script>
 
 <template>

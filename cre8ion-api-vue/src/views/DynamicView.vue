@@ -16,14 +16,14 @@ const pageContent = ref(null);
 
 async function getPageData(id) {
   pageContent.value = null;
-  const check = await store.getters.getPageDataById(id);
+  const storeData = await store.getters.getPageDataById(id);
 
-  if (!check) {
+  if (!storeData) {
     await store.dispatch("loadPageData", props.id);
     const data = await store.getters.getPageDataById(id);
     pageContent.value = data.content;
   } else {
-    pageContent.value = check.content;
+    pageContent.value = storeData.content;
   }
 }
 
@@ -42,21 +42,22 @@ watch(
 </script>
 
 <template>
-  <main class="grid align-start">
-    <div class="grid col-1-1" v-if="pageContent">
-      <h1 class="col-1-1">{{ pageContent.titel }}</h1>
-      <p class="col-1-1">
-        Contentblokken opgehaald van <strong>/api/page/{{ props.id }}</strong
-        >:
-      </p>
-      <ContentBlock
-        v-for="(block, index) in pageContent.content"
-        :key="'cb' + index"
-        :content="block"
-        :color="'primary'"
-      >
-      </ContentBlock>
-    </div>
-    <div class="load-spinner" v-else />
-  </main>
+    <main class="grid align-start" v-if="!$route.name.includes('nested')">
+      <div class="grid col-1-1" v-if="pageContent">
+        <h1 class="col-1-1">{{ pageContent.titel }}</h1>
+        <p class="col-1-1">
+          Contentblokken opgehaald van <strong>/api/page/{{ props.id }}</strong
+          >:
+        </p>
+        <ContentBlock
+          v-for="(block, index) in pageContent.content"
+          :key="'cb' + index"
+          :content="block"
+          :color="'primary'"
+        >
+        </ContentBlock>
+      </div>
+      <div class="load-spinner" v-else />
+    </main>
+    <RouterView v-else />
 </template>
