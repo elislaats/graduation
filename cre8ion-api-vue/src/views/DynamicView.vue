@@ -39,6 +39,8 @@ onMounted(() => getPageData(props.id));
 onUpdated(() => {
   if (pageContent.value.metadata) {
     setMetaData(pageContent.value.metadata);
+  } else {
+    setMetaData({ title: pageContent.value.titel + ' | The Cre8ion.Lab' });
   }
 });
 
