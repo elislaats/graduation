@@ -45,9 +45,9 @@ watch(
       Contentblokken opgehaald van <strong> /api/page/{{ props.id }}:</strong>
     </p>
     <component
-      v-for="block in pageContent.blocks"
+      v-for="(block, index) in pageContent.blocks"
       :is="ContentBlock"
-      :key="block._id"
+      :key="'cb' + index"
       :content="block"
       :color="'primary'"
     />

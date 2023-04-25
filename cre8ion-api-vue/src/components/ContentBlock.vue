@@ -58,14 +58,14 @@ const props = defineProps({
           }"
           v-text="key + ': '"
         />
-        <ImageComponent :id="value.toString()" :width="'300'" />
+        <ImageComponent :id="value.toString()" :width="300" />
       </div>
 
       <!-- Elementen uit databank inladen indien nodig -->
       <DataBank
         :class="key"
         v-else-if="key === 'aanvullenMet' && value"
-        :id="value"
+        :id="parseInt(value)"
       />
 
       <!-- Voor alle andere elementen die een waarde hebben, voeg ze toe -->

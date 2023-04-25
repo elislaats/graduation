@@ -74,7 +74,7 @@ onBeforeMount(async () => {
         <p>
           <strong>{{ key }}: </strong>
         </p>
-        <ImageComponent :id="value.toString()" width="800" />
+        <ImageComponent :id="value.toString()" :width="800" />
       </div>
 
       <p :class="['col-1-1', key]" v-else>

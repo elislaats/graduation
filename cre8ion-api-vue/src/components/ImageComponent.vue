@@ -11,8 +11,8 @@ const props = defineProps({
     type: String,
     default: "cre8ion image",
   },
-  width: String,
-  height: String,
+  width: Number,
+  height: Number,
 });
 
 const imageSrc = ref(null);
