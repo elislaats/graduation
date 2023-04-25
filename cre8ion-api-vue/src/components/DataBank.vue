@@ -42,7 +42,7 @@ onBeforeUnmount(() => {
     </p>
     <template v-for="(element, index) in elements">
       <component
-        v-if="index < 20"
+        v-if="index < 100"
         :is="element.metadata ? LinkBlock : ContentBlock"
         :id="element._id"
         :key="'el' + index"
