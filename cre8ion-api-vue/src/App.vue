@@ -8,6 +8,6 @@ const navLoaded = ref(false);
 
 <template>
   <NavBar @navLoaded="navLoaded = true" />
-  <LoadingView v-if="!navLoaded" />
-  <RouterView v-else />
+  <RouterView v-if="navLoaded" />
+  <LoadingView v-else />
 </template>

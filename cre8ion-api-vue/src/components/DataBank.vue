@@ -1,7 +1,7 @@
 <script setup>
 import ContentBlock from "../components/ContentBlock.vue";
 import LinkBlock from "./LinkBlock.vue";
-import { defineProps, onBeforeUnmount, ref } from "vue";
+import { defineProps, onBeforeUnmount, onMounted, ref } from "vue";
 import { useStore } from "vuex";
 
 const props = defineProps({
@@ -27,7 +27,7 @@ async function getElements(id) {
   }
 }
 
-getElements(props.id);
+onMounted(() => getElements(props.id));
 
 onBeforeUnmount(() => {
   store.dispatch("abortAxios", { actionName: "loadDatabank", id: props.id });
