@@ -29,8 +29,9 @@ const props = defineProps({
     <!-- loop over all content-elements -->
     <template v-for="(value, key, index) in props.content" :key="index + key">
       <!-- Header element voor de titel, indien gevuld -->
-      <h3 :class="key" v-if="key === 'titel' && value" v-text="value" />
+      <h3 v-if="key === 'titel' && value" :class="key" v-text="value" />
 
+      <!-- info-element voor de data die begint met '_' -->
       <p
         v-else-if="key.includes('_')"
         class="info text-align-right"
@@ -48,9 +49,9 @@ const props = defineProps({
       </p>
 
       <div class="afbeelding" v-else-if="key === 'afbeelding' && value">
-        <!-- image component voor de afbeelding -->
+        <!-- laad image-component voor afbeelding(en)-->
         <p
-          class="key"
+          class="afbeelding key"
           :class="{
             'text-primary': props.color === 'primary',
             'text-info': props.color === 'info',
@@ -64,10 +65,10 @@ const props = defineProps({
       <DataBank
         :class="key"
         v-else-if="key === 'aanvullenMet' && value"
-        :id="parseInt(props.content.aanvullenMet)"
+        :id="value"
       />
 
-      <!-- Voor alle andere elementen die een waarde hebben, voeg toe -->
+      <!-- Voor alle andere elementen die een waarde hebben, voeg ze toe -->
       <p v-else-if="value" :class="key">
         <span
           class="key"
@@ -80,18 +81,18 @@ const props = defineProps({
 
         <!-- url invoegen als hyperlink -->
         <a
-          v-if="key == 'url' || key == 'link'"
+          v-if="key.toLowerCase().includes('url') || key.toLowerCase().includes('link')"
           :href="value"
           class="value"
           v-text="value"
         ></a>
 
-        <!-- inhoud als html -->
+        <!-- andere inhoud invoegen als html -->
         <span class="value text-grey-dark" v-html="value" v-else />
       </p>
 
       <p class="empty" v-else>
-        <!-- lege keys toevoegen ter info -->
+        <!-- aanwezige keys zonder value toevoegen ter info -->
         <span class="key" v-text="key + ': '" />
         <span v-text="'leeg'" />
       </p>

@@ -2,7 +2,7 @@
 import LoadingView from "./LoadingView.vue";
 import ContentBlock from "@/components/ContentBlock.vue";
 
-import { watch, defineProps, ref } from "vue";
+import { watch, defineProps, ref, onMounted } from "vue";
 import { useStore } from "vuex";
 
 const props = defineProps({
@@ -27,7 +27,7 @@ async function getPageData(id) {
   }
 }
 
-getPageData(props.id);
+onMounted(() => getPageData(props.id));
 
 watch(
   () => props.id,
@@ -40,8 +40,10 @@ watch(
 <template>
   <RouterView v-if="$route.name.includes('nested')" />
   <main class="grid" v-else-if="pageContent">
-    <h1 class='col-1-1' v-if="pageContent.titel">{{ pageContent.titel }}</h1>
-    <p class='col-1-1'> Contentblokken opgehaald van <strong> /api/page/{{ props.id }}:</strong> </p>
+    <h1 class="col-1-1" v-if="pageContent.titel">{{ pageContent.titel }}</h1>
+    <p class="col-1-1">
+      Contentblokken opgehaald van <strong> /api/page/{{ props.id }}:</strong>
+    </p>
     <component
       v-for="block in pageContent.blocks"
       :is="ContentBlock"
