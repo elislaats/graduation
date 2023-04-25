@@ -33,6 +33,14 @@ async function loadRoutes() {
           path: page.url,
           name: page.name.toLowerCase(),
           component: () => import("@/views/DynamicView.vue"),
+          children: [
+            {
+              name: page.name.toLowerCase() + " nested",
+              path: page.url + "/:slug",
+              component: () => import("@/views/DetailView.vue"),
+              props: true
+            },
+          ],
           props: { id: page.id },
           meta: { mainRoute: true },
         };

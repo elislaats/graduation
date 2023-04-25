@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps, ref } from "vue";
+import { defineProps, onBeforeMount, ref } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import ImageComponent from "@/components/ImageComponent.vue";
@@ -32,14 +32,6 @@ async function getDetails(slug) {
       content.value = item.content;
     }
   });
-
-  if (!content.value) {
-    router.push({
-      name: "404",
-      params:{catchAll: router.currentRoute.value.path},
-      meta: { wasChecked: true },
-    });
-  }
 }
 
 // temporary solution to get databank ID:
@@ -55,7 +47,16 @@ function getDbId(url) {
   }
 }
 
-getDetails(props.slug);
+onBeforeMount(async () => {
+  await getDetails(props.slug);
+  if (!content.value) {
+    // redirect to 404 if unable to find data
+    router.replace({
+      name: "404",
+      params: { pathMatch: router.currentRoute.value.path.replace('/', '')},
+    });
+  }
+});
 </script>
 
 <template>

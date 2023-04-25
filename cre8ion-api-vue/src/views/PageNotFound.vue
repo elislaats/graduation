@@ -4,7 +4,7 @@
     <p style="font-size: 2em">
       Helaas, op
       <strong class="text-primary">
-        {{ $route.params.catchAll }}
+        /{{ $route.params.pathMatch }}
       </strong>
       is niets gevonden.
     </p>
