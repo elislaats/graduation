@@ -26,7 +26,40 @@ export default createStore({
   },
   mutations: {
     addPageData(state, { data, id }) {
-      state.pageData[id] = data;
+      state.pageData[id] = {
+        blocks: [],
+      };
+      const content = data["content"];
+      const blocks = content["content"];
+      let mappedBlock = {};
+
+      for (const key in data) {
+        if (data[key] != content) {
+          state.pageData[id][key] = data[key];
+        } else {
+          for (const key in content) {
+            if (content[key] != blocks) {
+              state.pageData[id][key] = content[key];
+            }
+          }
+        }
+      }
+      
+      blocks.forEach((block) => {
+        mappedBlock = {};
+        for (const key in block) {
+          if (typeof block[key] == "object") {
+            const subBlock = block[key];
+            for (const subKey in subBlock) {
+              mappedBlock[subKey] = subBlock[subKey];
+            }
+          } else {
+            mappedBlock[key] = block[key];
+          }
+        }
+
+        state.pageData[id]["blocks"].push(mappedBlock);
+      });
     },
     addDatabank(state, { data, id }) {
       state.databank[id] = data;
