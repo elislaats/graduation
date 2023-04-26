@@ -1,7 +1,8 @@
 <script setup>
+import { defineProps } from "vue";
 import DataBank from "../components/DataBank.vue";
 import ImageComponent from "./ImageComponent.vue";
-import { defineProps } from "vue";
+import VideoComponent from "./VideoComponent.vue";
 
 const props = defineProps({
   content: {
@@ -48,18 +49,33 @@ const props = defineProps({
         {{ value }}
       </p>
 
-      <div class="afbeelding" v-else-if="key === 'afbeelding' && value">
-        <!-- laad image-component voor afbeelding(en)-->
+      <div class="video" v-else-if="key === 'videoUrl' && value">
+        <!-- laad video-component voor video(s)-->
         <p
-          class="afbeelding key"
+          class="video key"
           :class="{
             'text-primary': props.color === 'primary',
             'text-info': props.color === 'info',
           }"
           v-text="key + ': '"
         />
-        <ImageComponent :id="value" :width="300" />
+        <VideoComponent :url="value" :fallback="props.content.afbeelding" />
       </div>
+
+      <template v-else-if="key === 'afbeelding' && value">
+        <!-- laad image-component voor afbeelding(en)-->
+        <div class="afbeelding">
+          <p
+            class="afbeelding key"
+            :class="{
+              'text-primary': props.color === 'primary',
+              'text-info': props.color === 'info',
+            }"
+            v-text="key + ': '"
+          />
+          <ImageComponent :id="value" :width="300" />
+        </div>
+      </template>
 
       <!-- Elementen uit databank inladen indien nodig -->
       <DataBank
@@ -81,7 +97,11 @@ const props = defineProps({
 
         <!-- url invoegen als hyperlink -->
         <a
-          v-if="key.toLowerCase().includes('url') || key.toLowerCase().includes('link')"
+          v-if="
+            key.toLowerCase().includes('url') ||
+            (key.toLowerCase().includes('link') &&
+              !key.toLowerCase().includes('tekst'))
+          "
           :href="value"
           class="value"
           v-text="value"
