@@ -69,7 +69,7 @@ watch(
       </p>
     </div>
     <div class="col-2-3 flex justify-end" v-if="pageContent.afbeelding">
-      <ImageComponent :id="pageContent.afbeelding" :width="300" />
+      <ImageComponent :key="pageContent.afbeelding" :id="pageContent.afbeelding" :width="300" />
     </div>
     <component
       v-for="(block, index) in pageContent.blocks"

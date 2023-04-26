@@ -62,14 +62,16 @@ onBeforeUnmount(() => {
 
 <template>
   <!-- render element wanneer content beschikbaar is -->
-  <img v-if="imageSrc" :src="imageSrc" :alt="altText" />
+  <img
+    class="image-available"
+    v-if="imageSrc"
+    :src="imageSrc"
+    :alt="props.altText"
+    :style="{ width: props.width + 'px', height: props.height + 'px' }"
+  />
 
   <!-- bij geen content beschikbaar, maar geen foutmelding -->
-  <div
-    v-else-if="!imageError"
-    class="load-spinner"
-    :style="{ width: width + 'px', height: height + 'px' }"
-  />
+  <div v-else-if="!imageError" class="load-spinner" />
 
   <!-- als er een foutmelding geweest is -->
   <img
@@ -81,6 +83,9 @@ onBeforeUnmount(() => {
 </template>
 
 <style lang="scss" scoped>
+.image-available {
+  max-width: 100%;
+}
 .image-unavailable {
   width: 75px;
   height: 75px;
