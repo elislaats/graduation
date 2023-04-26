@@ -3,6 +3,7 @@ import { defineEmits, defineProps, onBeforeMount, ref } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import ImageComponent from "@/components/ImageComponent.vue";
+import VideoComponent from "@/components/VideoComponent.vue";
 
 const props = defineProps({
   slug: {
@@ -36,7 +37,7 @@ async function getDetails(slug) {
     data = storeData;
   }
   content.value = data.content;
-  emit('updateMetadata', data.metadata)
+  emit("updateMetadata", data.metadata);
 }
 
 // temporary solution to get databank ID:
@@ -69,13 +70,20 @@ onBeforeMount(async () => {
     <h1 class="col-1-1">{{ content.titel }}</h1>
 
     <template v-for="(value, key, index) in content" :key="index + key">
+      <div class="col-1-2 video" v-if="key.includes('vimeo') && value">
+        <!-- laad video-component voor video(s)-->
+        <p>
+          <strong>{{ key }}: </strong>
+        </p>
+        <VideoComponent :url="value" />
+      </div>
+
       <div
-        class="col-1-1 afbeelding"
-        v-if="
+        class="col-1-2 afbeelding"
+        v-else-if="
           (key.includes('afbeelding') || key.includes('Afbeelding')) && value
         "
       >
-        <!--To do: give width/heigth to image component-->
         <p>
           <strong>{{ key }}: </strong>
         </p>
@@ -96,5 +104,8 @@ onBeforeMount(async () => {
 <style lang="scss" scoped>
 .afbeelding {
   order: 10;
+}
+.video {
+  order: 11;
 }
 </style>
