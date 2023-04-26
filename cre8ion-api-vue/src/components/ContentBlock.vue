@@ -49,7 +49,15 @@ const props = defineProps({
         {{ value }}
       </p>
 
-      <div class="video" v-else-if="key === 'videoUrl' && value">
+      <div
+        class="video"
+        v-else-if="
+          (key === 'videoUrl' && value) ||
+          (props.content['_name'] == 'Video' &&
+            key === 'linkUrl' &&
+            value)
+        "
+      >
         <!-- laad video-component voor video(s)-->
         <p
           class="video key"
@@ -59,7 +67,11 @@ const props = defineProps({
           }"
           v-text="key + ': '"
         />
-        <VideoComponent :key="value" :url="value" :fallback="props.content.afbeelding" />
+        <VideoComponent
+          :key="value"
+          :url="value"
+          :fallback="props.content.afbeelding"
+        />
       </div>
 
       <template v-else-if="key === 'afbeelding' && value">
