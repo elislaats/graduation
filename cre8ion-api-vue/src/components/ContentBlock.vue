@@ -59,7 +59,7 @@ const props = defineProps({
           }"
           v-text="key + ': '"
         />
-        <VideoComponent :url="value" :fallback="props.content.afbeelding" />
+        <VideoComponent :key="value" :url="value" :fallback="props.content.afbeelding" />
       </div>
 
       <template v-else-if="key === 'afbeelding' && value">
@@ -73,7 +73,7 @@ const props = defineProps({
             }"
             v-text="key + ': '"
           />
-          <ImageComponent :id="value" :width="300" />
+          <ImageComponent :key="value" :id="value" :width="300" />
         </div>
       </template>
 

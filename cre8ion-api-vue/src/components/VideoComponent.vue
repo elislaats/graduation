@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps, watch, ref } from "vue";
+import { defineProps, ref } from "vue";
 import ImageComponent from "./ImageComponent.vue";
 
 const props = defineProps({
@@ -15,20 +15,6 @@ const props = defineProps({
 
 const vidError = ref(false);
 const vidLoading = ref(true);
-
-watch(
-  () => props.url,
-  () => {
-    //reload & reset values on url change
-    if (vidError.value) {
-      vidError.value = false;
-      vidLoading.value = true;
-    } else {
-      const videoEl = document.getElementsByTagName("video")[0];
-      videoEl.load();
-    }
-  }
-);
 </script>
 
 <template>
