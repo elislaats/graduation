@@ -1,6 +1,7 @@
 <script setup>
 import LoadingView from "./LoadingView.vue";
 import ContentBlock from "@/components/ContentBlock.vue";
+import ImageComponent from "@/components/ImageComponent.vue";
 
 import { watch, defineProps, ref, onMounted, onUpdated } from "vue";
 import { useStore } from "vuex";
@@ -40,7 +41,7 @@ onUpdated(() => {
   if (pageContent.value.metadata) {
     setMetaData(pageContent.value.metadata);
   } else {
-    setMetaData({ title: pageContent.value.titel + ' | The Cre8ion.Lab' });
+    setMetaData({ title: pageContent.value.titel + " | The Cre8ion.Lab" });
   }
 });
 
@@ -57,11 +58,19 @@ watch(
     @update-metadata="(data) => setMetaData(data)"
     v-if="$route.name.includes('nested')"
   />
-  <main class="grid" v-else-if="pageContent">
-    <h1 class="col-1-1" v-if="pageContent.titel">{{ pageContent.titel }}</h1>
-    <p class="col-1-1">
-      Contentblokken opgehaald van <strong> /api/page/{{ props.id }}:</strong>
-    </p>
+  <main class="grid align-content-start" v-else-if="pageContent">
+    <div
+      class="flex flex-column justify-center"
+      :class="[pageContent.afbeelding ? 'col-1-3' : 'col-1-1']"
+    >
+      <h1 v-if="pageContent.titel">{{ pageContent.titel }}</h1>
+      <p>
+        Contentblokken opgehaald van <strong> /api/page/{{ props.id }}:</strong>
+      </p>
+    </div>
+    <div class="col-2-3 flex justify-end" v-if="pageContent.afbeelding">
+      <ImageComponent :id="pageContent.afbeelding" :width="300" />
+    </div>
     <component
       v-for="(block, index) in pageContent.blocks"
       :is="ContentBlock"

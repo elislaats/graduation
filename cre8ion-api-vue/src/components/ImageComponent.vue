@@ -4,7 +4,7 @@ import axios from "axios";
 
 const props = defineProps({
   id: {
-    type: String,
+    type: Number,
     required: true,
   },
   altText: {

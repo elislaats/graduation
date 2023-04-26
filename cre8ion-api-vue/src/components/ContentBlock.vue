@@ -58,7 +58,7 @@ const props = defineProps({
           }"
           v-text="key + ': '"
         />
-        <ImageComponent :id="value.toString()" :width="300" />
+        <ImageComponent :id="value" :width="300" />
       </div>
 
       <!-- Elementen uit databank inladen indien nodig -->
