@@ -1,8 +1,10 @@
 <script setup>
-import { watch, defineProps, ref } from "vue";
+import LoadingView from "./LoadingView.vue";
+import ContentBlock from "@/components/ContentBlock.vue";
+import ImageComponent from "@/components/ImageComponent.vue";
+
+import { watch, defineProps, ref, onMounted, onUpdated } from "vue";
 import { useStore } from "vuex";
-import { onBeforeRouteLeave } from "vue-router";
-import ContentBlock from "../components/ContentBlock.vue";
 
 const props = defineProps({
   id: {
@@ -12,52 +14,70 @@ const props = defineProps({
 });
 
 const store = useStore();
-const pageContent = ref(null);
+const pageContent = ref();
 
 async function getPageData(id) {
-  pageContent.value = null;
   const storeData = await store.getters.getPageDataById(id);
 
   if (!storeData) {
     await store.dispatch("loadPageData", props.id);
     const data = await store.getters.getPageDataById(id);
-    pageContent.value = data.content;
+    pageContent.value = data;
   } else {
-    pageContent.value = storeData.content;
+    pageContent.value = storeData;
   }
 }
 
-getPageData(props.id);
+function setMetaData(data) {
+  for (const key in data) {
+    const value = data[key];
+    document[key] = value;
+  }
+}
 
-onBeforeRouteLeave(() => {
-  store.dispatch("abortAxios", { actionName: "loadPageData", id: props.id });
+onMounted(() => getPageData(props.id));
+
+onUpdated(() => {
+  if (pageContent.value.metadata) {
+    setMetaData(pageContent.value.metadata);
+  } else {
+    setMetaData({ title: pageContent.value.titel + " | The Cre8ion.Lab" });
+  }
 });
 
 watch(
   () => props.id,
-  (value) => {
-    getPageData(value);
+  (id) => {
+    getPageData(id);
   }
 );
 </script>
 
 <template>
-    <main class="grid align-start" v-if="!$route.name.includes('nested')">
-      <div class="grid col-1-1" v-if="pageContent">
-        <h1 class="col-1-1">{{ pageContent.titel }}</h1>
-        <p class="col-1-1">
-          Contentblokken opgehaald van <strong>/api/page/{{ props.id }}</strong
-          >:
-        </p>
-        <ContentBlock
-          v-for="(block, index) in pageContent.content"
-          :key="'cb' + index"
-          :content="block"
-          :color="'primary'"
-        >
-        </ContentBlock>
-      </div>
-      <div class="load-spinner" v-else />
-    </main>
-    <RouterView v-else />
+  <RouterView
+    @update-metadata="(data) => setMetaData(data)"
+    v-if="$route.name.includes('nested')"
+  />
+  <main class="grid align-content-start" v-else-if="pageContent">
+    <div
+      class="flex flex-column justify-center"
+      :class="[pageContent.afbeelding ? 'col-1-3' : 'col-1-1']"
+    >
+      <h1 v-if="pageContent.titel">{{ pageContent.titel }}</h1>
+      <p>
+        Contentblokken opgehaald van <strong> /api/page/{{ props.id }}:</strong>
+      </p>
+    </div>
+    <div class="col-2-3 flex justify-end" v-if="pageContent.afbeelding">
+      <ImageComponent :id="pageContent.afbeelding" :width="300" />
+    </div>
+    <component
+      v-for="(block, index) in pageContent.blocks"
+      :is="ContentBlock"
+      :key="'cb' + index"
+      :content="block"
+      :color="'primary'"
+    />
+  </main>
+  <LoadingView v-else />
 </template>

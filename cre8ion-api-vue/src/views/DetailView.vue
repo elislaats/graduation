@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps, onBeforeMount, ref } from "vue";
+import { defineEmits, defineProps, onBeforeMount, ref } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import ImageComponent from "@/components/ImageComponent.vue";
@@ -11,6 +11,8 @@ const props = defineProps({
   },
 });
 
+const emit = defineEmits(["updateMetadata"]);
+
 const content = ref(null);
 const store = useStore();
 const router = useRouter();
@@ -18,20 +20,23 @@ const router = useRouter();
 async function getDetails(slug) {
   const dbID = getDbId(router.currentRoute.value.path);
   let data = null;
-  const storeData = await store.getters.getDatabankById(dbID);
+  const storeData = await store.getters.getDatabankItem({
+    id: dbID,
+    slug: slug,
+  });
 
   if (!storeData) {
+    console.log("not in store");
     await store.dispatch("loadDatabank", dbID);
-    data = await store.getters.getDatabankById(dbID);
+    data = await store.getters.getDatabankItem({
+      id: dbID,
+      slug: slug,
+    });
   } else {
     data = storeData;
   }
-
-  data.forEach((item) => {
-    if (item.content.slug == slug) {
-      content.value = item.content;
-    }
-  });
+  content.value = data.content;
+  emit('updateMetadata', data.metadata)
 }
 
 // temporary solution to get databank ID:
@@ -53,7 +58,7 @@ onBeforeMount(async () => {
     // redirect to 404 if unable to find data
     router.replace({
       name: "404",
-      params: { pathMatch: router.currentRoute.value.path.replace('/', '')},
+      params: { pathMatch: router.currentRoute.value.path.replace("/", "") },
     });
   }
 });
@@ -74,7 +79,7 @@ onBeforeMount(async () => {
         <p>
           <strong>{{ key }}: </strong>
         </p>
-        <ImageComponent :id="value.toString()" width="800" />
+        <ImageComponent :id="value" :width="800" />
       </div>
 
       <p :class="['col-1-1', key]" v-else>
