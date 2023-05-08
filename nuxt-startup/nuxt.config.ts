@@ -1,8 +1,14 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  runtimeConfig: {
-    public: {
-      apiBase: "https://api-cre8ion.tc8l.dev/api",
-    },
-  },
+  pages: true,
+  hooks: {
+    'pages:extend'(pages) {
+      // add a route
+      pages.push(  {
+        name: "404",
+        path: "/:pathMatch(.*)",
+        file: "@/views/PageNotFound.vue",
+      })
+    }
+  }
 });
