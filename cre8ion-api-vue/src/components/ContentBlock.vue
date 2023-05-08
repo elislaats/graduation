@@ -25,6 +25,7 @@ const props = defineProps({
       'col-1-3': !props.content.aanvullenMet,
       'border-primary': props.color == 'primary',
       'border-info': props.color == 'info',
+      'border-success': props.color == 'success',
     }"
   >
     <!-- loop over all content-elements -->
@@ -43,6 +44,7 @@ const props = defineProps({
           :class="{
             'text-primary': props.color === 'primary',
             'text-info': props.color === 'info',
+            'text-success': props.color == 'success',
           }"
           v-text="key + ': '"
         />
@@ -53,9 +55,7 @@ const props = defineProps({
         class="video"
         v-else-if="
           (key === 'videoUrl' && value) ||
-          (props.content['_name'] == 'Video' &&
-            key === 'linkUrl' &&
-            value)
+          (props.content['_name'] == 'Video' && key === 'linkUrl' && value)
         "
       >
         <!-- laad video-component voor video(s)-->
@@ -64,6 +64,7 @@ const props = defineProps({
           :class="{
             'text-primary': props.color === 'primary',
             'text-info': props.color === 'info',
+            'text-success': props.color == 'success',
           }"
           v-text="key + ': '"
         />
@@ -82,6 +83,7 @@ const props = defineProps({
             :class="{
               'text-primary': props.color === 'primary',
               'text-info': props.color === 'info',
+              'text-success': props.color == 'success',
             }"
             v-text="key + ': '"
           />
@@ -103,6 +105,7 @@ const props = defineProps({
           :class="{
             'text-primary': props.color === 'primary',
             'text-info': props.color === 'info',
+            'text-success': props.color == 'success',
           }"
           v-text="key + ': '"
         />
