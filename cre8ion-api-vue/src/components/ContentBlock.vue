@@ -94,8 +94,9 @@ const props = defineProps({
       <!-- Elementen uit databank inladen indien nodig -->
       <DataBank
         :class="key"
-        v-else-if="key === 'aanvullenMet' && value"
+        v-else-if="key === 'aanvullenMet'"
         :id="parseInt(value)"
+        :content="content"
       />
 
       <!-- Voor alle andere elementen die een waarde hebben, voeg ze toe -->

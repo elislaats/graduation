@@ -54,7 +54,7 @@ async function loadRoutes() {
       navLoaded.value = true;
     })
     .catch(function (error) {
-      console.log(error);
+      console.warn(error);
     });
 }
 </script>

@@ -14,7 +14,7 @@ export default createStore({
   getters: {
     findDatabankIdFromUrl: () => (path) => {
       for (const [key, value] of Object.entries(DatabankMap)) {
-        if (path.replace("-", "").includes(key)) {
+        if (path.replace("-", "").toLowerCase().includes(key)) {
           return value;
         }
       }
@@ -70,7 +70,6 @@ export default createStore({
       state.databank[id] = data;
     },
     addDetailpageData(state, { parentId, data }) {
-      console.log(data);
       const pageId = data._id;
       state.detailPages[parentId] = {};
       state.detailPages[parentId][pageId] = {
@@ -118,8 +117,6 @@ export default createStore({
     },
     async loadDetailpageData({ commit }, { parentId, pageId }) {
       storeController["loadDetailpageData" + pageId] = new AbortController();
-
-      console.log(parentId, pageId);
 
       await axios
         .get(`https://api-cre8ion.tc8l.dev/api/page/${parentId}/${pageId}`, {

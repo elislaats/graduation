@@ -7,7 +7,11 @@ import { useStore } from "vuex";
 const props = defineProps({
   id: {
     type: Number,
-    required: true,
+    required: false,
+  },
+  content: {
+    type: Object,
+    required: false
   }
 });
 
@@ -15,11 +19,16 @@ const store = useStore();
 
 const elements = ref(null);
 
+const databank = ref(null)
+
+const idList = ref([]);
+
 async function getElements(id) {
+  databank.value = id;
   const check = await store.getters.getDatabankById(id);
 
   if (!check) {
-    await store.dispatch("loadDatabank", props.id);
+    await store.dispatch("loadDatabank", id);
     const data = await store.getters.getDatabankById(id);
     elements.value = data;
   } else {
@@ -30,6 +39,19 @@ async function getElements(id) {
 onMounted(() => {
   if (props.id) {
     getElements(props.id);
+  } else if (props.content){
+    for(const key in props.content){
+      if(props.content._name.toLowerCase().replace(' ', '').includes(key.toLowerCase())){
+        console.log('sending', key)
+        const dbId = store.getters.findDatabankIdFromUrl(key);
+        console.log('found', dbId)
+        getElements(dbId);
+        props.content[key].split(', ').forEach((number) => idList.value.push(parseInt(number)))
+        console.log(idList.value)
+      }
+    }
+  } else {
+    console.warn('No data provided')
   }
 });
 
@@ -41,7 +63,7 @@ onBeforeUnmount(() => {
 <template>
   <div v-if="elements" class="grid bg-info">
     <p class="col-1-1 text-grey-light">
-      Databank opgehaald van <strong>/api/pages/{{ props.id }}</strong
+      Databank opgehaald van <strong>/api/pages/{{ databank }}</strong
       >:
     </p>
     <template v-for="(element, index) in elements">
