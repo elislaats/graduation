@@ -33,7 +33,7 @@ async function getElements(id) {
   if (!check) {
     await store.dispatch("loadDatabank", id);
     const data = await store.getters.getDatabankById(id);
-    allElements = data;
+    allElements = data.reverse();
   } else {
     allElements = check;
   }
@@ -41,14 +41,14 @@ async function getElements(id) {
   if (idList.value.length > 0) {
     allElements.forEach((el) => {
       idList.value.forEach((id) => {
-        if (parseInt(id) == el._id) {
+        if (id == el._id) {
           elements.value.push(el);
         }
       });
     });
     elements.value.reverse();
   } else {
-    elements.value = allElements.reverse();
+    elements.value = allElements;
   }
 }
 
@@ -63,8 +63,13 @@ onMounted(() => {
           .replace(" ", "")
           .includes(key.toLowerCase())
       ) {
-        //find uppercase letters, split with dash and make lowercase to 
-        databank.value.path = "/" + key.split(/(?=[A-Z])/).join('-').toLowerCase(); 
+        //find uppercase letters, split with dash and make lowercase to
+        databank.value.path =
+          "/" +
+          key
+            .split(/(?=[A-Z])/)
+            .join("-")
+            .toLowerCase();
         databank.value.id = store.getters.findDatabankIdFromText(key);
         props.content[key]
           .split(", ")
@@ -80,12 +85,15 @@ onMounted(() => {
 });
 
 onBeforeUnmount(() => {
-  store.dispatch("abortAxios", { actionName: "loadDatabank", id: databank.value.id });
+  store.dispatch("abortAxios", {
+    actionName: "loadDatabank",
+    id: databank.value.id,
+  });
 });
 </script>
 
 <template>
-  <div v-if="elements" class="grid bg-info">
+  <div v-if="elements" class="grid bg-info" :key="databank.id">
     <p class="col-1-1 text-grey-light">
       Databank opgehaald van <strong>/api/pages/{{ databank.id }}</strong
       >:
