@@ -10,6 +10,10 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+  parent: {
+    type: Object,
+    required: false
+  },
   meta: {
     type: Object,
     required: false,
@@ -24,7 +28,7 @@ const props = defineProps({
     class="col-1-3 flex flex-column align-start border-info bg-white"
   >
     <h5 v-if="props.content.titel" v-text="props.content.titel" />
-    <router-link :to="`${$router.currentRoute.value.path}/${content.slug}`"
+    <router-link :to="`${props.parent.path}/${content.slug}`"
       >meer lezen</router-link
     >
   </div>
