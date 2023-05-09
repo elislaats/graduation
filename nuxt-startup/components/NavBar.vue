@@ -17,7 +17,9 @@ const pending = ref();
 const routes = ref([]);
 
 onMounted(() => {
-  loadRoutes();
+  if (routes.value.length == 0) {
+    loadRoutes();
+  }
 });
 
 const loadRoutes = () => {
@@ -31,6 +33,7 @@ const loadRoutes = () => {
       routes.value.push({
         name: route.name.toLowerCase(),
         path: route.url,
+        props: { id: route.id },
       });
     });
     pending.value = false;
