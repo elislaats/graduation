@@ -46,7 +46,6 @@ async function getElements(id) {
         }
       });
     });
-    elements.value.reverse();
   } else {
     elements.value = allElements;
   }
