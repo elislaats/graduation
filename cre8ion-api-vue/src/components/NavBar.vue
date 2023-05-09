@@ -83,6 +83,7 @@ async function loadRoutes() {
 @import "../styles/main.scss";
 
 #navbar {
+  z-index: 10;
   position: sticky;
   top: 0;
   a {
