@@ -91,14 +91,6 @@ const props = defineProps({
         </div>
       </template>
 
-      <!-- Elementen uit databank inladen indien nodig -->
-      <DataBank
-        :class="key"
-        v-else-if="key === 'aanvullenMet'"
-        :id="parseInt(value)"
-        :content="content"
-      />
-
       <!-- Voor alle andere elementen die een waarde hebben, voeg ze toe -->
       <p v-else-if="value" :class="key">
         <span
@@ -132,6 +124,14 @@ const props = defineProps({
         <span class="key" v-text="key + ': '" />
         <span v-text="'leeg'" />
       </p>
+
+      <!-- Elementen uit databank inladen indien nodig -->
+      <DataBank
+        :class="key"
+        v-if="key === 'aanvullenMet'"
+        :id="parseInt(value)"
+        :content="content"
+      />
     </template>
   </div>
 </template>

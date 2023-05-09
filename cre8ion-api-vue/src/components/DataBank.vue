@@ -11,47 +11,64 @@ const props = defineProps({
   },
   content: {
     type: Object,
-    required: false
-  }
+    required: false,
+  },
 });
 
 const store = useStore();
 
-const elements = ref(null);
+const elements = ref([]);
 
-const databank = ref(null)
+const databank = ref(null);
 
 const idList = ref([]);
 
 async function getElements(id) {
   databank.value = id;
   const check = await store.getters.getDatabankById(id);
+  let allElements;
 
   if (!check) {
     await store.dispatch("loadDatabank", id);
     const data = await store.getters.getDatabankById(id);
-    elements.value = data;
+    allElements = data;
   } else {
-    elements.value = check;
+    allElements = check;
+  }
+
+  if (idList.value.length > 0) {
+    allElements.forEach((el) => {
+      idList.value.forEach((id) => {
+        if (parseInt(id) == el._id) {
+          elements.value.push(el);
+        }
+      });
+    });
+  } else {
+    elements.value = allElements;
   }
 }
 
 onMounted(() => {
   if (props.id) {
     getElements(props.id);
-  } else if (props.content){
-    for(const key in props.content){
-      if(props.content._name.toLowerCase().replace(' ', '').includes(key.toLowerCase())){
-        console.log('sending', key)
-        const dbId = store.getters.findDatabankIdFromUrl(key);
-        console.log('found', dbId)
+  } else if (props.content) {
+    for (const key in props.content) {
+      if (
+        props.content._name
+          .toLowerCase()
+          .replace(" ", "")
+          .includes(key.toLowerCase())
+      ) {
+        const dbId = store.getters.findDatabankIdFromText(key);
         getElements(dbId);
-        props.content[key].split(', ').forEach((number) => idList.value.push(parseInt(number)))
-        console.log(idList.value)
+        props.content[key]
+          .split(", ")
+          .forEach((number) => idList.value.push(parseInt(number)));
       }
     }
   } else {
-    console.warn('No data provided')
+    console.warn("No data provided");
   }
 });
 

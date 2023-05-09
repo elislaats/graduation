@@ -21,7 +21,7 @@ const props = defineProps({
   <!-- render element wanneer content beschikbaar is -->
   <div
     v-if="props.content"
-    class="col-1-4 flex flex-column align-start border-info bg-white"
+    class="col-1-3 flex flex-column align-start border-info bg-white"
   >
     <h5 v-if="props.content.titel" v-text="props.content.titel" />
     <router-link :to="`${$router.currentRoute.value.path}/${content.slug}`"

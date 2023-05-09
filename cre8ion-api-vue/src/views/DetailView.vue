@@ -20,7 +20,7 @@ const store = useStore();
 const router = useRouter();
 
 async function getDetailId(slug) {
-  const dbID = store.getters.findDatabankIdFromUrl(router.currentRoute.value.path);
+  const dbID = store.getters.findDatabankIdFromText(router.currentRoute.value.path);
   let data = null;
   const storeData = await store.getters.findDatabankItemBySlug({
     id: dbID,
@@ -28,7 +28,6 @@ async function getDetailId(slug) {
   });
 
   if (!storeData) {
-    console.log("not in store");
     await store.dispatch("loadDatabank", dbID);
     data = await store.getters.findDatabankItemBySlug({
       id: dbID,
@@ -41,7 +40,7 @@ async function getDetailId(slug) {
 }
 
 async function getDetailPageData(pageId) {
-  const parentId = store.getters.findDatabankIdFromUrl(
+  const parentId = store.getters.findDatabankIdFromText(
     router.currentRoute.value.path
   );
   let foundContent = null;

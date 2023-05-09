@@ -12,9 +12,10 @@ export default createStore({
     detailPages: {},
   },
   getters: {
-    findDatabankIdFromUrl: () => (path) => {
+    findDatabankIdFromText: () => (text) => {
       for (const [key, value] of Object.entries(DatabankMap)) {
-        if (path.replace("-", "").toLowerCase().includes(key)) {
+        const checkable = text.replace("-", "").toLowerCase()
+        if (checkable.includes(key)) {
           return value;
         }
       }
