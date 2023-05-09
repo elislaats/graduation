@@ -20,7 +20,9 @@ const store = useStore();
 const router = useRouter();
 
 async function getDetailId(slug) {
-  const dbID = store.getters.findDatabankIdFromText(router.currentRoute.value.path);
+  const dbID = store.getters.findDatabankIdFromText(
+    router.currentRoute.value.path
+  );
   let data = null;
   const storeData = await store.getters.findDatabankItemBySlug({
     id: dbID,
@@ -61,8 +63,16 @@ async function getDetailPageData(pageId) {
   } else {
     foundContent = storeData;
   }
-  content.value = foundContent;
-  emit("updateMetadata", foundContent.metadata);
+  if (foundContent) {
+    content.value = foundContent;
+    emit("updateMetadata", foundContent.metadata);
+  } else {
+    // redirect to 404 if unable to find data
+    router.replace({
+      name: "404",
+      params: { pathMatch: router.currentRoute.value.path.replace("/", "") },
+    });
+  }
 }
 
 onBeforeMount(async () => {
@@ -70,7 +80,7 @@ onBeforeMount(async () => {
   if (detailId) {
     getDetailPageData(detailId);
   } else {
-    // redirect to 404 if unable to find data
+    // redirect to 404 if unable to find id
     router.replace({
       name: "404",
       params: { pathMatch: router.currentRoute.value.path.replace("/", "") },
