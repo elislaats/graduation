@@ -5,10 +5,9 @@ export default defineNuxtRouteMiddleware((to, from) => {
   routes.forEach((route) => {
     if (route.path == "/" + to.params.mainPath) {
       useState("currentId", () => route.id);
-      foundRoute = route;
+      foundRoute = true;
     }
   });
-  useState("activeRoute", () => foundRoute);
   if (!foundRoute) {
     return navigateTo(`/404${to.path}`);
   }

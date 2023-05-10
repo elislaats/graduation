@@ -1,14 +1,30 @@
 <template>
-  <main>
-    <h3>Main route</h3>
-    <p>{{ $route.params }}</p>
-    <p>id: {{ currentId }}</p>
+  <main class="grid align-content-start" v-if="pageData.loaded">
+    <h3 class="col-1-1">{{ pageData.info.titel }}</h3>
+    <div
+      v-for="contentBlock in pageData.contentBlocks"
+      :key="contentBlock._block._id"
+      class="col-1-1 border-primary"
+    >
+      <p v-for="(value, key) in contentBlock" :key="key">
+        <strong>{{ key }}</strong>
+        {{ value }}
+      </p>
+    </div>
   </main>
 </template>
 
 <script setup>
 definePageMeta({
   middleware: ["check-main-path"],
+});
+
+const currentId = ref();
+const pageData = ref({
+  loaded: false,
+  info: null,
+  contentBlocks: [],
+  metaData: null,
 });
 
 function getContentId() {
@@ -21,7 +37,22 @@ function getContentId() {
   });
 }
 
-const currentId = ref();
+async function loadPageData(id) {
+  const response = await $fetch(`/api/page/${id}`, {
+    method: "GET",
+    baseURL: "https://api-cre8ion.tc8l.dev",
+  });
+  pageData.value = {
+    loaded: true,
+    info: response.content,
+    contentBlocks: response.content.content,
+    metaData: response.content.metadata,
+  };
+  return true;
+}
 
-onMounted(() => getContentId());
+onMounted(async () => {
+  getContentId();
+  await loadPageData(currentId.value);
+});
 </script>
