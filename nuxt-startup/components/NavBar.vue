@@ -8,7 +8,6 @@
       {{ route.name }}
     </NuxtLink>
   </nav>
-  <template v-else> loading routes... </template>
 </template>
 
 <script setup>
