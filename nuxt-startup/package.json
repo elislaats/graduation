@@ -13,8 +13,5 @@
     "nuxt": "^3.4.3",
     "sass": "^1.62.1",
     "sass-loader": "^13.2.2"
-  },
-  "dependencies": {
-    "vuex": "^4.1.0"
   }
 }
