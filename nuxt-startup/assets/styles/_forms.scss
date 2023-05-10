@@ -1,0 +1,274 @@
+/* Form */
+
+.form-header-logo {
+  width: 45%;
+  img {
+    width: 100%;
+    height: auto;
+  }
+}
+
+.input-error-message {
+  margin-top: 0.5rem;
+  color: $danger;
+}
+
+/* Text Input */
+.input-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2rem;
+
+  &.error {
+    .input-field:not(:focus) {
+      border: 2px solid $danger;
+    }
+  }
+}
+
+.input-label {
+  color: $grey3;
+}
+
+.input-required {
+  margin-left: 0.5rem;
+  color: $grey3;
+}
+
+.input-control {
+  margin-top: 0.5rem;
+
+  .input-field {
+    font-family: $font-text;
+    border: 1px solid $grey-light4;
+    border-radius: 0.5rem;
+    padding: 1rem 1rem;
+    width: 100%;
+    font-size: 1.6rem;
+    color: $grey3;
+
+    &:focus {
+      outline-color: $primary-color;
+    }
+  }
+}
+
+/* Password */
+.input-control.password {
+  position: relative;
+
+  .eyes {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 5rem;
+
+    .eye,
+    .eye-slash {
+      position: absolute;
+      top: 53%;
+      left: 50%;
+      height: 2.5rem;
+      width: 2.5rem;
+      transform: translate(-50%, -50%);
+      display: none;
+      cursor: pointer;
+
+      &.active {
+        display: block;
+      }
+
+      svg {
+        fill: $grey-light4;
+      }
+    }
+  }
+}
+
+/* Checkbox */
+.checkbox-group {
+  position: relative;
+  padding-left: 3rem;
+  margin-bottom: 2rem;
+
+  .custom-checkbox {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 2rem;
+    width: 2rem;
+    border: 1px solid $grey-light4;
+    border-radius: 3px;
+
+    svg {
+      visibility: hidden;
+      pointer-events: none;
+    }
+  }
+
+  &.error .custom-checkbox {
+    border: 2px solid $danger;
+  }
+
+  input[type='checkbox'] {
+    display: none;
+
+    &:checked + .custom-checkbox svg {
+      visibility: visible;
+    }
+  }
+
+  .checkbox-label,
+  .custom-checkbox {
+    cursor: pointer;
+  }
+
+  .checkbox-label {
+    color: $grey-light6;
+  }
+}
+
+/* Radio Buttons */
+.radiobtn-group {
+  display: flex;
+  margin-top: 0.5rem;
+  margin-bottom: 2rem;
+
+  .radiobtn-container {
+    position: relative;
+
+    .custom-radiobtn {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 2rem;
+      width: 2rem;
+      border: 1px solid $grey-light4;
+      border-radius: 50%;
+    }
+
+    input[type='radio'] {
+      display: none;
+
+      &:checked + .custom-radiobtn {
+        border: 2px solid $primary-color;
+
+        &::after {
+          content: '';
+          @extend .centered;
+          background-color: $primary-color;
+          height: 1rem;
+          width: 1rem;
+          border-radius: 50%;
+        }
+      }
+    }
+
+    .custom-radiobtn,
+    .radiobtn-label {
+      cursor: pointer;
+    }
+
+    .radiobtn-label {
+      margin-left: 3rem;
+    }
+  }
+
+  &.error .custom-radiobtn {
+    border: 2px solid $danger;
+  }
+}
+
+/* Select */
+.custom-select-container {
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.custom-select {
+  padding: 1rem 2rem;
+  height: 5rem;
+  display: flex;
+  align-items: center;
+  font-size: 1.6rem;
+  background-image: radial-gradient(circle at 0px 40px, $burgundy-dark 0%, $burgundy 100%);
+  border-radius: 5px;
+  transition: all 0.25s ease;
+  position: relative;
+  color: $white;
+  cursor: pointer;
+
+  &.active {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+}
+
+.custom-select-chevron {
+  position: absolute;
+  top: 50%;
+  right: 2rem;
+  height: 12px;
+  width: 12px;
+  transform: translateY(-70%) rotate(45deg);
+  transition: all 0.25s ease-in-out;
+
+  &.active {
+    transform: translateY(-30%) rotate(-135deg);
+  }
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    background-color: $white;
+    border-top-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+  }
+
+  &::before {
+    height: 4px;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    border-bottom-left-radius: 5px;
+  }
+
+  &::after {
+    width: 4px;
+    height: 100%;
+    top: 0;
+    right: 0;
+    border-top-right-radius: 5px;
+  }
+}
+
+/*style items (options)*/
+.custom-select-items {
+  background-color: $grey-light1;
+  border-radius: 0 0 5px 5px;
+  top: 100%;
+  left: 0;
+  width: 100%;
+}
+
+/*style the items (options), including the selected item:*/
+.custom-select-option {
+  color: $grey-light6;
+  padding: 8px 16px;
+  border: 1px solid transparent;
+  border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+  cursor: pointer;
+  user-select: none;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+}
+
+.expand-enter-active,
+.expand-leave-active {
+  transition: height 0.5s ease-in-out;
+  overflow: hidden;
+}
