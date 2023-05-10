@@ -3,7 +3,8 @@
     <NuxtLink
       v-for="route in routing.routes"
       :to="route.path"
-      class="btn btn-secondary"
+      :class="'btn'"
+      :active-class="'text-primary'"
     >
       {{ route.name }}
     </NuxtLink>

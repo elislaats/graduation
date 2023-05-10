@@ -14,9 +14,6 @@ export default defineNuxtRouteMiddleware((to, from) => {
   });
 
   if (!foundRoute) {
-    console.log("main path doesnt exist");
     return navigateTo(`/404${to.path}`);
-  } else {
-    console.log("main path is good");
   }
 });
