@@ -8,6 +8,7 @@ body {
     box-sizing: border-box;
     background-color: $black;
     color: $color-text;
+    overflow-y: scroll;
 }
 
 *,
