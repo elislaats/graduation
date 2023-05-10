@@ -5,6 +5,7 @@ $font-source-sans-pro: "Source Sans Pro", Arial, "Helvetica Neue", Helvetica, sa
 $font-text: $font-source-sans-pro;
 
 /* Colors */
+
 $orange1: #ffa626;
 $orange2: #f7a200;
 $orange3: #fba400;
@@ -26,16 +27,16 @@ $white: #fff;
 $black: #000;
 $mint: #e2efdb;
 $seafoam: #d6e8e5;
-// $blue: #2a6496;
 $blue: #238de8;
-$yellow: #fffcc8;
+$yellow1: #fffcc8;
+$yellow2: #ffc300;
 $danger: #ff4949;
 $success: #24b824;
 $info: #25a9b3;
 
-$color-text: $grey1;
-$primary-color: $orange1;
-$secondary-color: $burgundy-dark;
+$color-text: $grey-light1;
+$primary-color: $yellow2;
+$secondary-color: $burgundy;
 
 /* Grid */
 $gutter: 0.8rem;

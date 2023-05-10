@@ -34,8 +34,8 @@
 }
 
 .btn-secondary {
-    background: #555;
-    border: 1px solid #555;
+    background: $grey-dark;
+    border: 1px solid $grey-dark;
     color: #fff;
 
     &:hover {
@@ -45,10 +45,10 @@
 
     &.outline {
         background-color: transparent;
-        color: #555;
+        color: $grey-dark;
 
         &:hover {
-            background-color: #555;
+            background-color: $grey-dark;
             color: #fff;
         }
     }

@@ -19,7 +19,6 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   if (useState("routes").value == undefined) {
     const loadedRoutes = await loadRoutes();
     const routes = useState("routes", () => loadedRoutes);
-    console.log("loaded routes");
   }
   if (to.path == "/") {
     return navigateTo("/homepage");

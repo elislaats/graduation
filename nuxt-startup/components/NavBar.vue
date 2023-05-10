@@ -1,9 +1,13 @@
 <template>
-  <template v-if="routing.loaded">
-    <NuxtLink v-for="route in routing.routes" :to="route.path" class="btn">
+  <nav v-if="routing.loaded" class="flex justify-space-evenly bg-grey-dark">
+    <NuxtLink
+      v-for="route in routing.routes"
+      :to="route.path"
+      class="btn btn-secondary"
+    >
       {{ route.name }}
     </NuxtLink>
-  </template>
+  </nav>
   <template v-else> loading routes... </template>
 </template>
 
