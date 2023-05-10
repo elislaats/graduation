@@ -1,8 +1,8 @@
 <template>
-  <div>
-    <NavBar />
-    <NuxtPage />
-  </div>
+  <NavBar />
+  <NuxtPage />
 </template>
 
-<script setup></script>
+<script setup>
+onMounted(() => console.log("#app mounted"));
+</script>

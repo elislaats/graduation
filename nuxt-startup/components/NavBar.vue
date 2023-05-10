@@ -1,42 +1,23 @@
 <template>
-  <NuxtLink v-for="route in routes" :to="route.path">
-    {{ route.name }}
-  </NuxtLink>
-  <div v-if="pending">Loading...</div>
+  <template v-if="routing.loaded">
+    <NuxtLink v-for="route in routing.routes" :to="route.path" class="btn">
+      {{ route.name }}
+    </NuxtLink>
+  </template>
+  <template v-else> loading routes... </template>
 </template>
 
-<style scoped>
-a {
-  border: 1px solid black;
-  padding: 1%;
-}
-</style>
-
 <script setup>
-const pending = ref();
-const routes = ref([]);
-
-onMounted(() => {
-  if (routes.value.length == 0) {
-    loadRoutes();
-  }
+const routing = ref({
+  loaded: false,
+  routes: [],
 });
 
-const loadRoutes = () => {
-  pending.value = true;
-
-  $fetch(`/api/navigation`, {
-    method: "GET",
-    baseURL: "https://api-cre8ion.tc8l.dev",
-  }).then((response) => {
-    response.forEach((route) => {
-      routes.value.push({
-        name: route.name.toLowerCase(),
-        path: route.url,
-        props: { id: route.id },
-      });
-    });
-    pending.value = false;
-  });
-};
+onMounted(() => {
+  const loadedRoutes = useState("routes");
+  routing.value = {
+    loaded: true,
+    routes: loadedRoutes.value,
+  };
+});
 </script>
