@@ -18,6 +18,6 @@ async function loadRoutes() {
 export default defineNuxtRouteMiddleware(async (to, from) => {
   if (useState("routes").value == undefined) {
     const loadedRoutes = await loadRoutes();
-    const routes = useState("routes", () => loadedRoutes);
+    useState("routes", () => loadedRoutes);
   }
 });
