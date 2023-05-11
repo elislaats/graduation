@@ -9,44 +9,14 @@ const props = defineProps({
     required: true,
   },
 });
-
-const styleObject = ref({});
-
-async function getImageUrl(id) {
-  await $fetch(`api/media/${id}`, {
-    method: "GET",
-    baseURL: "https://api-cre8ion.tc8l.dev",
-    responseType: "blob",
-  })
-    .then((response) => {
-      let blob_url = URL.createObjectURL(response);
-      const image = new Image();
-      image.src = blob_url;
-
-      return blob_url;
-    })
-    .catch(function (error) {
-      console.warn(error.message);
-    });
-}
-
-onMounted(async () => {
-  if (props.info._id == 60) {
-    await getImageUrl(props.data.afbeelding).then((url) => {
-      if (url) {
-        styleObject.value = { backgroundImage: `url(${url})` };
-      }
-    });
-  }
-});
 </script>
 
 <template>
   <section
+    ref="outerblock"
     class="contentblock"
     :class="props.info._name.toLowerCase()"
     v-if="props.info && props.data"
-    :style="styleObject"
   >
     <template v-if="props.info._id == 60">
       <div class="inner grid grid-pad align-content-center ml-10">
