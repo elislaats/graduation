@@ -1,8 +1,13 @@
 <template>
+  <Html>
+    <Head>
+      <Link rel="shortcut icon" href="icon.png" type="image/png" />
+    </Head>
+  </Html>
   <main>
-    <section v-if="pageData.loaded">
+    <section v-if="contentLoaded">
       <ContentBlock
-        v-for="(block, index) in pageData.contentBlocks"
+        v-for="(block, index) in page.contentBlocks"
         :key="'cb' + index"
         :info="block.info"
         :data="block.data"
@@ -17,18 +22,17 @@ definePageMeta({
 });
 
 const currentId = ref();
-const pageData = ref({
-  loaded: false,
+const contentLoaded = ref(false);
+const page = ref({
   info: null,
-  contentBlocks: [],
+  contentBlocks: null,
   metaData: null,
 });
 
-function getContentId() {
-  const currentRoute = useRoute();
+function getContentId(path) {
   const routes = useState("routes").value;
   routes.forEach((route) => {
-    if (route.path == currentRoute.fullPath) {
+    if (route.path == path) {
       currentId.value = route.id;
     }
   });
@@ -37,21 +41,18 @@ function getContentId() {
 async function loadPageData(id) {
   const stateData = useState(`pagedata-${id}`);
   if (stateData.value) {
-    pageData.value = stateData.value;
+    page.value = stateData.value;
+    contentLoaded.value = true;
   } else {
     await $fetch(`/api/page/${id}`, {
       method: "GET",
       baseURL: "https://api-cre8ion.tc8l.dev",
     })
       .then((response) => {
-        const loadedData = {
-          loaded: true,
-          info: response.content,
-          contentBlocks: mapContentBlocks(response.content.content),
-          metaData: response.content.metadata,
-        };
-        pageData.value = loadedData;
+        const loadedData = mapPageData(response);
+        page.value = loadedData;
         useState(`pagedata-${id}`, () => loadedData);
+        contentLoaded.value = true;
       })
       .catch((error) => {
         console.warn(error);
@@ -60,7 +61,8 @@ async function loadPageData(id) {
 }
 
 onMounted(async () => {
-  getContentId();
+  contentLoaded.value = false;
+  getContentId(useRoute().fullPath);
   await loadPageData(currentId.value);
 });
 </script>
