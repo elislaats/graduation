@@ -5,14 +5,14 @@ export default defineNuxtConfig({
   hooks: {
     "pages:extend"(pages) {
       pages.push({
-        name: '404',
-        path: '/404/:badPath(.*)',
+        name: "404",
+        path: "/404/:badPath(.*)",
         file: "@/views/NotFound.vue",
       });
     },
   },
 
   devtools: {
-    enabled: true
-  }
+    enabled: true,
+  },
 });

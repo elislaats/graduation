@@ -1,16 +1,4 @@
 <template>
-  <Html v-if="contentLoaded && page.metaData">
-    <Head>
-      <Title>
-        {{ page.metaData.title }}
-      </Title>
-      <Meta
-        v-for="(value, key) in page.metaData"
-        :name="key"
-        :content="value"
-      ></Meta>
-    </Head>
-  </Html>
   <main>
     <section v-if="contentLoaded">
       <ContentBlock
@@ -24,6 +12,8 @@
 </template>
 
 <script setup>
+import { propsToAttrMap } from "@vue/shared";
+
 definePageMeta({
   middleware: ["check-main-path"],
 });
@@ -71,5 +61,6 @@ onMounted(async () => {
   contentLoaded.value = false;
   getContentId(useRoute().fullPath);
   await loadPageData(currentId.value);
+  setMetadata(page.value.info.titel, page.value.metaData);
 });
 </script>
