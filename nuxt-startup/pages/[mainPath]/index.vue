@@ -12,8 +12,6 @@
 </template>
 
 <script setup>
-import { propsToAttrMap } from "@vue/shared";
-
 definePageMeta({
   middleware: ["check-main-path"],
 });
@@ -61,6 +59,8 @@ onMounted(async () => {
   contentLoaded.value = false;
   getContentId(useRoute().fullPath);
   await loadPageData(currentId.value);
-  setMetadata(page.value.info.titel, page.value.metaData);
+  if (contentLoaded.value) {
+    setMetadata(page.value.info.titel, page.value.metaData);
+  }
 });
 </script>
