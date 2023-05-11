@@ -1,6 +1,7 @@
 export default defineNuxtConfig({
   pages: true,
   css: ["@/assets/styles/main.scss"],
+
   hooks: {
     "pages:extend"(pages) {
       pages.push({
@@ -10,4 +11,8 @@ export default defineNuxtConfig({
       });
     },
   },
+
+  devtools: {
+    enabled: true
+  }
 });
