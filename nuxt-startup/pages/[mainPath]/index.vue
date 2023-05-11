@@ -1,16 +1,13 @@
 <template>
-  <main class="grid align-content-start" v-if="pageData.loaded">
-    <h3 class="col-1-1">{{ pageData.info.titel }}</h3>
-    <div
-      v-for="contentBlock in pageData.contentBlocks"
-      :key="contentBlock._block._id"
-      class="col-1-1 border-primary"
-    >
-      <p v-for="(value, key) in contentBlock" :key="key">
-        <strong>{{ key }}</strong>
-        {{ value }}
-      </p>
-    </div>
+  <main>
+    <section v-if="pageData.loaded">
+      <ContentBlock
+        v-for="block in pageData.contentBlocks"
+        :key="block.info._id"
+        :info="block.info"
+        :data="block.data"
+      />
+    </section>
   </main>
 </template>
 
@@ -45,7 +42,7 @@ async function loadPageData(id) {
   pageData.value = {
     loaded: true,
     info: response.content,
-    contentBlocks: response.content.content,
+    contentBlocks: mapContentBlocks(response.content.content),
     metaData: response.content.metadata,
   };
   return true;
