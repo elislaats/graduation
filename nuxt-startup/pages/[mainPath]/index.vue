@@ -1,7 +1,14 @@
 <template>
-  <Html>
+  <Html v-if="contentLoaded && page.metaData">
     <Head>
-      <Link rel="shortcut icon" href="icon.png" type="image/png" />
+      <Title>
+        {{ page.metaData.title }}
+      </Title>
+      <Meta
+        v-for="(value, key) in page.metaData"
+        :name="key"
+        :content="value"
+      ></Meta>
     </Head>
   </Html>
   <main>
