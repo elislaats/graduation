@@ -2,8 +2,8 @@
   <main>
     <section v-if="pageData.loaded">
       <ContentBlock
-        v-for="block in pageData.contentBlocks"
-        :key="block.info._id"
+        v-for="(block, index) in pageData.contentBlocks"
+        :key="'cb' + index"
         :info="block.info"
         :data="block.data"
       />
@@ -35,17 +35,28 @@ function getContentId() {
 }
 
 async function loadPageData(id) {
-  const response = await $fetch(`/api/page/${id}`, {
-    method: "GET",
-    baseURL: "https://api-cre8ion.tc8l.dev",
-  });
-  pageData.value = {
-    loaded: true,
-    info: response.content,
-    contentBlocks: mapContentBlocks(response.content.content),
-    metaData: response.content.metadata,
-  };
-  return true;
+  const stateData = useState(`pagedata-${id}`);
+  if (stateData.value) {
+    pageData.value = stateData.value;
+  } else {
+    await $fetch(`/api/page/${id}`, {
+      method: "GET",
+      baseURL: "https://api-cre8ion.tc8l.dev",
+    })
+      .then((response) => {
+        const loadedData = {
+          loaded: true,
+          info: response.content,
+          contentBlocks: mapContentBlocks(response.content.content),
+          metaData: response.content.metadata,
+        };
+        pageData.value = loadedData;
+        useState(`pagedata-${id}`, () => loadedData);
+      })
+      .catch((error) => {
+        console.warn(error);
+      });
+  }
 }
 
 onMounted(async () => {
