@@ -284,6 +284,9 @@ $shadow-2: 0 3px 10px $grey-light-5;
 .border-info {
     border: 1px solid $info;
 }
+.border-white {
+    border: 1px solid $white;
+}
 
 /* Margins and paddings */
 @for $i from 0 through 10 {
