@@ -45,7 +45,6 @@ const props = defineProps({
           <img
             :style="{ width: '100%' }"
             class="border-primary"
-            src="onbekend"
             :alt="props.data.afbeelding"
           />
         </div>
