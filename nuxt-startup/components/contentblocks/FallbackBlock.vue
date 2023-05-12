@@ -13,12 +13,10 @@ const props = defineProps({
 
 <template>
   <section class="contentblock" v-if="props.info && props.data">
-    <h4>
-      Geen component gevonden voor
-      <em class="text-primary">
-        {{ props.info._id }}: {{ props.info._name }}</em
-      >
-    </h4>
+    <h3>
+      Geen template bekend voor type
+      <em class="text-primary"> {{ props.info._name }}</em>
+    </h3>
     <p><strong class="text-primary"> Data: </strong>{{ props.data }}</p>
   </section>
   <section class="contentblock text-danger" v-else>
