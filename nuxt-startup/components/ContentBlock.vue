@@ -45,9 +45,9 @@ const props = defineProps({
 
     <template v-else>
       <h3>
-        Geen template bekend voor type <em> {{ props.info._name }}</em>
+        Geen template bekend voor type <em class="text-primary"> {{ props.info._name }}</em>
       </h3>
-      <p>{{ props.data }}</p>
+      <p> <strong class="text-primary"> Data: </strong>{{ props.data }}</p>
     </template>
   </section>
   <section class="contentblock text-danger" v-else>
