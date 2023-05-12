@@ -2,6 +2,7 @@
 import { defineEmits, defineProps, onBeforeMount, ref } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
+import ContentBlock from "@/components/ContentBlock.vue";
 import ImageComponent from "@/components/ImageComponent.vue";
 import VideoComponent from "@/components/VideoComponent.vue";
 
@@ -18,45 +19,68 @@ const content = ref(null);
 const store = useStore();
 const router = useRouter();
 
-async function getDetails(slug) {
-  const dbID = getDbId(router.currentRoute.value.path);
+async function getDetailId(slug) {
+  const dbID = store.getters.findDatabankIdFromText(
+    router.currentRoute.value.path
+  );
   let data = null;
-  const storeData = await store.getters.getDatabankItem({
+  const storeData = await store.getters.findDatabankItemBySlug({
     id: dbID,
     slug: slug,
   });
 
   if (!storeData) {
-    console.log("not in store");
     await store.dispatch("loadDatabank", dbID);
-    data = await store.getters.getDatabankItem({
+    data = await store.getters.findDatabankItemBySlug({
       id: dbID,
       slug: slug,
     });
   } else {
     data = storeData;
   }
-  content.value = data.content;
-  emit("updateMetadata", data.metadata);
+  return data._id;
 }
 
-// temporary solution to get databank ID:
-function getDbId(url) {
-  if (url.includes("case")) {
-    return 6;
-  } else if (url.includes("werk")) {
-    return 5;
-  } else if (url.includes("nieuws")) {
-    return 7;
+async function getDetailPageData(pageId) {
+  const parentId = store.getters.findDatabankIdFromText(
+    router.currentRoute.value.path
+  );
+  let foundContent = null;
+  const storeData = await store.getters.getDetailPageById({
+    parentId: parentId,
+    pageId: pageId,
+  });
+
+  if (!storeData) {
+    await store.dispatch("loadDetailpageData", {
+      parentId: parentId,
+      pageId: pageId,
+    });
+    foundContent = await store.getters.getDetailPageById({
+      parentId: parentId,
+      pageId: pageId,
+    });
   } else {
-    return undefined;
+    foundContent = storeData;
+  }
+  if (foundContent) {
+    content.value = foundContent;
+    emit("updateMetadata", foundContent.metadata);
+  } else {
+    // redirect to 404 if unable to find data
+    router.replace({
+      name: "404",
+      params: { pathMatch: router.currentRoute.value.path.replace("/", "") },
+    });
   }
 }
 
 onBeforeMount(async () => {
-  await getDetails(props.slug);
-  if (!content.value) {
-    // redirect to 404 if unable to find data
+  const detailId = await getDetailId(props.slug);
+  if (detailId) {
+    getDetailPageData(detailId);
+  } else {
+    // redirect to 404 if unable to find id
     router.replace({
       name: "404",
       params: { pathMatch: router.currentRoute.value.path.replace("/", "") },
@@ -68,9 +92,20 @@ onBeforeMount(async () => {
 <template>
   <main class="grid align-start" v-if="content">
     <h1 class="col-1-1">{{ content.titel }}</h1>
-
     <template v-for="(value, key, index) in content" :key="index + key">
-      <div class="col-1-2 video" v-if="key.includes('vimeo') && value">
+      <template v-if="key == 'blocks'">
+        <h2 class="blocks header text-success">Contentblokken</h2>
+        <component
+          v-for="(block, index) in value"
+          :is="ContentBlock"
+          :key="'cb' + index"
+          :content="block"
+          :color="'success'"
+          class="blocks"
+        />
+      </template>
+
+      <div class="col-1-2 video" v-else-if="key.includes('vimeo') && value">
         <!-- laad video-component voor video(s)-->
         <p>
           <strong>{{ key }}: </strong>
@@ -107,5 +142,13 @@ onBeforeMount(async () => {
 }
 .video {
   order: 11;
+}
+
+.blocks {
+  order: 20;
+  &.header {
+    width: 100%;
+    padding-top: 10vh;
+  }
 }
 </style>

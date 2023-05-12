@@ -3,12 +3,23 @@ import axios from "axios";
 
 const storeController = {};
 
+const DatabankMap = { onswerk: 5, cases: 6, nieuws: 7 };
+
 export default createStore({
   state: {
     pages: {},
     databank: {},
+    detailPages: {},
   },
   getters: {
+    findDatabankIdFromText: () => (text) => {
+      for (const [key, value] of Object.entries(DatabankMap)) {
+        const checkable = text.replace("-", "").toLowerCase()
+        if (checkable.includes(key)) {
+          return value;
+        }
+      }
+    },
     getPageDataById: (state) => (id) => {
       if (state.pages[id] != undefined) {
         return state.pages[id];
@@ -23,7 +34,7 @@ export default createStore({
         return false;
       }
     },
-    getDatabankItem:
+    findDatabankItemBySlug:
       (state) =>
       ({ id, slug }) => {
         let found = false;
@@ -37,46 +48,35 @@ export default createStore({
         }
         return found;
       },
+    getDetailPageById:
+      (state) =>
+      ({ parentId, pageId }) => {
+        if (state.detailPages[parentId] != undefined) {
+          if (state.detailPages[parentId][pageId] != undefined) {
+            return state.detailPages[parentId][pageId];
+          }
+        } else {
+          return false;
+        }
+      },
   },
   mutations: {
     addPageData(state, { data, id }) {
       state.pages[id] = {
         blocks: [],
       };
-      const content = data["content"];
-      const blocks = content["content"];
-      let mappedBlock = {};
-
-      for (const key in data) {
-        if (data[key] != content) {
-          state.pages[id][key] = data[key];
-        } else {
-          for (const key in content) {
-            if (content[key] != blocks) {
-              state.pages[id][key] = content[key];
-            }
-          }
-        }
-      }
-
-      blocks.forEach((block) => {
-        mappedBlock = {};
-        for (const key in block) {
-          if (typeof block[key] == "object") {
-            const subBlock = block[key];
-            for (const subKey in subBlock) {
-              mappedBlock[subKey] = subBlock[subKey];
-            }
-          } else {
-            mappedBlock[key] = block[key];
-          }
-        }
-
-        state.pages[id]["blocks"].push(mappedBlock);
-      });
+      mapContent(data, state.pages[id]);
     },
     addDatabank(state, { data, id }) {
       state.databank[id] = data;
+    },
+    addDetailpageData(state, { parentId, data }) {
+      const pageId = data._id;
+      state.detailPages[parentId] = {};
+      state.detailPages[parentId][pageId] = {
+        blocks: []
+      }
+      mapContent(data, state.detailPages[parentId][pageId]);
     },
   },
   actions: {
@@ -116,6 +116,59 @@ export default createStore({
           );
         });
     },
+    async loadDetailpageData({ commit }, { parentId, pageId }) {
+      storeController["loadDetailpageData" + pageId] = new AbortController();
+
+      await axios
+        .get(`https://api-cre8ion.tc8l.dev/api/page/${parentId}/${pageId}`, {
+          signal: storeController["loadDetailpageData" + pageId].signal,
+        })
+        .then((response) => {
+          commit("addDetailpageData", {
+            parentId: parentId,
+            data: response.data,
+          });
+        })
+        .catch(function (error) {
+          console.warn(
+            `loadDetailpageData(${pageId}) did not succeed. Reason: ${error.message}`
+          );
+        });
+    },
   },
   modules: {},
 });
+
+function mapContent(data, target) {
+  const content = data["content"];
+  const blocks = content["content"];
+  let mappedBlock = {};
+
+  for (const key in data) {
+    if (data[key] != content) {
+      target[key] = data[key];
+    } else {
+      for (const key in content) {
+        if (content[key] != blocks) {
+          target[key] = content[key];
+        }
+      }
+    }
+  }
+
+  blocks.forEach((block) => {
+    mappedBlock = {};
+    for (const key in block) {
+      if (typeof block[key] == "object") {
+        const subBlock = block[key];
+        for (const subKey in subBlock) {
+          mappedBlock[subKey] = subBlock[subKey];
+        }
+      } else {
+        mappedBlock[key] = block[key];
+      }
+    }
+
+    target["blocks"].push(mappedBlock);
+  });
+}

@@ -54,7 +54,7 @@ async function loadRoutes() {
       navLoaded.value = true;
     })
     .catch(function (error) {
-      console.log(error);
+      console.warn(error);
     });
 }
 </script>
@@ -83,6 +83,7 @@ async function loadRoutes() {
 @import "../styles/main.scss";
 
 #navbar {
+  z-index: 10;
   position: sticky;
   top: 0;
   a {

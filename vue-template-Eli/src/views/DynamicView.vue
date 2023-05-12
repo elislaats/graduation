@@ -60,7 +60,6 @@ export default {
             })
         },
         allseries(value) {
-            console.log('here')
             console.log(value)
         },
         id(value) {
