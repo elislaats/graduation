@@ -28,7 +28,7 @@ const page = ref({
 function getContentId(path) {
   const routes = useState("routes").value;
   routes.forEach((route) => {
-    if (route.path == path) {
+    if (path.includes(route.path)) {
       currentId.value = route.id;
     }
   });
