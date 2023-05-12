@@ -1,8 +1,20 @@
-# Nuxt 3 Minimal Starter
+# Fontys HBO-ICT Graduation Project
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+## `graduation/nuxt-startup`
 
-## Setup
+**Doelen:** \
+‐ Data van API inlezen met een SSR applicatie \
+‐ Content stylen op basis van type blok
+
+## Tools
+
+**Nuxt 3** en **Vue 3**
+
+Zie ook: 
+[Nuxt 3 documentatie](https://nuxt.com/docs/) &
+[Vue 3 documentatie](https://vuejs.org/guide/introduction.html)
+
+### Setup (Nuxt Algemeen)
 
 Make sure to install the dependencies:
 
@@ -17,7 +29,7 @@ npm install
 pnpm install
 ```
 
-## Development Server
+### Development Server
 
 Start the development server on `http://localhost:3000`
 
@@ -25,7 +37,7 @@ Start the development server on `http://localhost:3000`
 npm run dev
 ```
 
-## Production
+### Production
 
 Build the application for production:
 
