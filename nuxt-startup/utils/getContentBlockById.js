@@ -1,5 +1,6 @@
 import FallbackBlock from "~/components/contentblocks/FallbackBlock.vue";
 import HeaderBlock from "~/components/contentblocks/HeaderBlock.vue";
+import OverzichtBlock from "~/components/contentblocks/OverzichtBlock.vue";
 import TekstBlock from "~/components/contentblocks/TekstBlock.vue";
 import VideoBlock from "~/components/contentblocks/VideoBlock.vue";
 
@@ -7,6 +8,8 @@ export default function (id) {
   switch (id) {
     case 35:
       return VideoBlock;
+    case 51:
+      return OverzichtBlock;
     case 54:
     case 55:
     case 58:
@@ -21,7 +24,6 @@ export default function (id) {
 /* 
 blocks to do:
   50: nieuwsoverzicht
-  51: Cases overzicht
   52: Ons werk overzicht
   57: Medewerkers overzicht
   61: Referentie Slider
