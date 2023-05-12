@@ -36,3 +36,8 @@ Vue applicatie opstarten met inhoud uit de Cre8ion API
 Verbeterde versie van inladen inhoud uit Cre8ion API\
 (gebruik van composition API, verbeterd van inladen van router, paginainhoud opslaan in vuex store)
 
+## [`/graduation/nuxt-startup`](/graduation/nuxt-startup)
+
+**Doelen:** \
+‐ Data van API inlezen met een SSR applicatie \
+‐ Content stylen op basis van type blok

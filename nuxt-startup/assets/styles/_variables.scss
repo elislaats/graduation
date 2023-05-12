@@ -1,0 +1,48 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;700&display=swap');
+
+/* Fonts */
+$font-source-sans-pro: "Source Sans Pro", Arial, "Helvetica Neue", Helvetica, sans-serif;
+$font-text: $font-source-sans-pro;
+
+/* Colors */
+
+$orange1: #ffa626;
+$orange2: #f7a200;
+$orange3: #fba400;
+$orange-dark1: #db6a00;
+$orange-dark2: #da5500;
+$burgundy: #730021;
+$burgundy-dark: #391833;
+$grey1: #575757;
+$grey2: #444;
+$grey3: #6e685c;
+$grey-dark: #333;
+$grey-light1: #f7f7f7;
+$grey-light2: #dcdcdc;
+$grey-light3: #dbdbdb;
+$grey-light4: #dad8d9;
+$grey-light5: #ccc;
+$grey-light6: #adadad;
+$white: #fff;
+$black: #000;
+$mint: #e2efdb;
+$seafoam: #d6e8e5;
+$blue: #238de8;
+$yellow1: #fffcc8;
+$yellow2: #ffc300;
+$danger: #ff4949;
+$success: #24b824;
+$info: #25a9b3;
+
+$color-text: $grey-light1;
+$primary-color: $yellow2;
+$secondary-color: $burgundy;
+
+/* Grid */
+$gutter: 0.8rem;
+
+/* Breakpoints */
+$screen-lg: 1280px;
+$screen-md: 1024px;
+$screen-sm: 768px;
+$screen-xs: 480px;
