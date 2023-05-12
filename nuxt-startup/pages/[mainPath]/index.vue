@@ -1,8 +1,9 @@
 <template>
   <main>
     <section v-if="contentLoaded">
-      <ContentBlock
+      <component
         v-for="(block, index) in page.contentBlocks"
+        :is="getContentBlockById(block.info._id)"
         :key="'cb' + index"
         :info="block.info"
         :data="block.data"
