@@ -28,6 +28,16 @@ if (props.data.aanvullenMet) {
     useState(`sitemap-${databank.value}`, () => elements.value);
   }
 }
+
+const page = ref(0);
+const max = ref(6);
+
+const filteredElements = computed(() => {
+  if (props.data.maximaalWeerTeGevenArtikelen) {
+    max.value = props.data.maximaalWeerTeGevenArtikelen;
+  }
+  return elements.value.slice(0, max.value + max.value * page.value);
+});
 </script>
 
 <template>
@@ -36,14 +46,31 @@ if (props.data.aanvullenMet) {
       <h2 class="titel-label border-white">
         {{ data.titel }}
       </h2>
+
+      <form
+        v-if="data.filterWeergeven"
+        class="overview-filter col-1-1 flex flex-nowrap justify-end"
+      >
+        <select>
+          <option value>FILTER</option>
+        </select>
+      </form>
+
       <div class="grid no-p">
         <LinkBlock
-          v-for="element in elements"
+          v-for="element in filteredElements"
           :metaData="element.metadata"
           :content="element.content"
           :parent="parent"
         >
         </LinkBlock>
+        <button
+          v-if="elements.length > filteredElements.length"
+          @click="page++"
+          class="col-2-3 push-1-6 btn btn-secondary"
+        >
+          meer weergeven
+        </button>
       </div>
     </div>
     <div v-else>
@@ -60,12 +87,30 @@ if (props.data.aanvullenMet) {
 </template>
 
 <style lang="scss" scoped>
-
 h2.titel-label {
   font-size: small;
   margin: 1rem;
   margin-bottom: 2rem;
   padding: 1rem 2.5rem;
   font-family: Inconsolata, monospace;
+}
+.overview-filter {
+  select {
+    height: 4.5rem;
+    padding: 0 2rem;
+    border: 1px solid;
+    color: #fff;
+    letter-spacing: 0.1rem;
+    background-color: #000;
+    font-size: 1rem;
+    margin-left: 3rem;
+    border-radius: 0;
+    box-shadow: none;
+    background: 0 0;
+    outline: 0;
+  }
+}
+.btn {
+  font-family: monospace;
 }
 </style>
