@@ -13,8 +13,18 @@ const props = defineProps({
     required: false,
   },
 });
+
+const loadedLogo = ref(null);
+
+onMounted(async () => {
+  if (props.parent == "ons-werk") {
+    const id = props.content.transparantLogo400X400MargeAanZijden;
+    await getImageSrc(id).then((src) => {
+      loadedLogo.value = src;
+    });
+  }
+});
 </script>
-right
 <template>
   <template v-if="parent == 'cases'">
     <div class="case flex col-1-2">
@@ -40,9 +50,11 @@ right
           class="work-link"
           :to="`/ons-werk/${content.slug}`"
         ></NuxtLink>
-        <figure class="work-logo">
-          <img :alt="'logo van ' + content.titel" />
-        </figure>
+        <template v-if="loadedLogo">
+          <figure class="work-logo">
+            <img :src="loadedLogo" :alt="'logo van ' + content.titel" />
+          </figure>
+        </template>
       </div>
     </div>
   </template>
@@ -120,10 +132,8 @@ right
       height: 50%;
       left: 25%;
       top: 25%;
-      background-color: rgba(255,255,255,.2);
       img {
         width: 100%;
-        height: 100%;
         position: absolute;
         left: 0;
         top: 0;
