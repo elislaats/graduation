@@ -40,7 +40,7 @@ right
           class="work-link"
           :to="`/ons-werk/${content.slug}`"
         ></NuxtLink>
-        <figure class="work-logo border-white">
+        <figure class="work-logo">
           <img :alt="'logo van ' + content.titel" />
         </figure>
       </div>
@@ -120,8 +120,8 @@ right
       height: 50%;
       left: 25%;
       top: 25%;
+      background-color: rgba(255,255,255,.2);
       img {
-        object-fit: cover;
         width: 100%;
         height: 100%;
         position: absolute;

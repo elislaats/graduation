@@ -17,7 +17,7 @@ const props = defineProps({
     :class="props.info._name.toLowerCase()"
     v-if="props.info && props.data"
   >
-    <div class="inner grid grid-pad align-content-center ml-10">
+    <div class="inner grid no-p align-content-center">
       <div class="col-8-12">
         <h1 v-if="props.data.titel" v-html="props.data.titel" />
         <div v-if="props.data.tekst" v-html="props.data.tekst" />
