@@ -30,7 +30,6 @@ onMounted(() => {
 
 <style lang="scss">
 .navBar {
-  font-family: monospace;
   width: 100%;
   background-color: rgba(0, 0, 0, 0.1);
   z-index: 9999;
@@ -49,7 +48,7 @@ onMounted(() => {
   }
   .navLink {
     text-transform: uppercase;
-    font-size: large;
+    font-size: medium;
     &.homepage {
       grid-area: 1 / 1 / last-line / 1;
       border-right: 1px solid rgba(255, 255, 255, 0.4);
