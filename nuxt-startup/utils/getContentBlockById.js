@@ -9,6 +9,7 @@ export default function (id) {
     case 35:
       return VideoBlock;
     case 51:
+    case 52:
       return OverzichtBlock;
     case 54:
     case 55:
@@ -24,7 +25,6 @@ export default function (id) {
 /* 
 blocks to do:
   50: nieuwsoverzicht
-  52: Ons werk overzicht
   57: Medewerkers overzicht
   61: Referentie Slider
   66: Our Culture

@@ -30,6 +30,7 @@ onMounted(() => {
 
 <style lang="scss">
 .navBar {
+  font-family: monospace;
   width: 100%;
   background-color: rgba(0, 0, 0, 0.1);
   z-index: 9999;
@@ -48,7 +49,7 @@ onMounted(() => {
   }
   .navLink {
     text-transform: uppercase;
-    font-size: medium;
+    font-size: large;
     &.homepage {
       grid-area: 1 / 1 / last-line / 1;
       border-right: 1px solid rgba(255, 255, 255, 0.4);
@@ -65,22 +66,6 @@ onMounted(() => {
       grid-row: 2 / 2;
       border-left: 1px solid rgba(255, 255, 255, 0.4);
     }
-  }
-}
-
-.navBar2 {
-  width: 100%;
-  background-color: rgba(0, 0, 0, 0.1);
-  z-index: 9999;
-  position: fixed;
-  left: 0;
-  top: 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
-  display: grid;
-  grid-template: 1fr 1fr / 31rem 1fr;
-  .logo {
-    grid-area: 1 / 1 / last-line / 1;
-    border-right: 1px solid rgba(255, 255, 255, 0.4);
   }
 }
 </style>

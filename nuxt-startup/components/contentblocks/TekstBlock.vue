@@ -22,24 +22,29 @@ const props = defineProps({
       <!--Tekst 2 koloms-->
       <div class="grid grid-pad p-5">
         <h2 v-if="props.data.titel" class="col-1-1">{{ props.data.titel }}</h2>
-        <div class="col-4-12" v-html="props.data.tekstLinks"></div>
-        <div class="col-4-12" v-html="props.data.tekstRechts"></div>
+        <div class="col-4-12 push-1-12" v-html="props.data.tekstLinks"></div>
+        <div class="col-4-12 push-1-12" v-html="props.data.tekstRechts"></div>
       </div>
     </template>
     <template v-if="props.info._id == 55">
       <!--Tekst en afbeelding-->
       <div
-        class="grid grid-pad justify-space-between"
+        class="textAndImage grid grid-pad justify-space-between"
         :class="{
           'flex-row-reverse': props.data.weergaveTekst == 'right',
         }"
       >
         <div class="col-7-12">
           <h2
+            class="titel"
             v-if="props.data.titel"
             v-html="props.data.titel.replace('<p>', '').replace('</p>', '')"
           ></h2>
-          <div v-if="props.data.tekst" v-html="props.data.tekst"></div>
+          <div
+            class="col-8-12 push-4-12"
+            v-if="props.data.tekst"
+            v-html="props.data.tekst"
+          ></div>
         </div>
         <div class="col-4-12 flex">
           <img
@@ -53,7 +58,7 @@ const props = defineProps({
     <template v-if="props.info._id == 58">
       <!--Tekst blok-->
       <div
-        class="grid grid-pad"
+        class="grid grid-pad col-10-12 push-1-12"
         :class="{
           'flex-row-reverse': props.data.weergave == 'right',
         }"
@@ -70,3 +75,12 @@ const props = defineProps({
     <p>no content available</p>
   </section>
 </template>
+
+<style scoped lang="scss">
+.textAndImage {
+  .titel {
+    font-size: 6rem;
+    margin-bottom: 5rem;
+  }
+}
+</style>
