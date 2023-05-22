@@ -29,8 +29,23 @@ if (stateData) {
 }
 
 const filteredElements = computed(() => {
-  if (props.data.maximaalWeerTeGevenArtikelen && max.value != props.data.maximaalWeerTeGevenArtikelen) {
-    max.value = props.data.maximaalWeerTeGevenArtikelen;
+  if (
+    props.data.maximaalWeerTeGevenArtikelen != "" &&
+    max.value != parseInt(props.data.maximaalWeerTeGevenArtikelen)
+  ) {
+    max.value = parseInt(props.data.maximaalWeerTeGevenArtikelen);
+  }
+  if (props.data.cases) {
+    const idList = props.data.cases.split(",");
+    let specElements = [];
+    allElements.value.forEach((element) => {
+      idList.forEach((id) => {
+        if (element._id == id) {
+          specElements.push(element);
+        }
+      });
+    });
+    allElements.value = specElements;
   }
   return allElements.value.slice(0, max.value + max.value * page.value);
 });
@@ -39,7 +54,7 @@ const filteredElements = computed(() => {
 <template>
   <section class="contentblock" v-if="info._id && info._name">
     <div class="grid" v-if="allElements">
-      <h2 class="titel-label border-white">
+      <h2 class="titel-label border-white" v-if="data.titel">
         {{ data.titel }}
       </h2>
 
