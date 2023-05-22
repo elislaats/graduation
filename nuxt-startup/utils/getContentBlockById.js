@@ -1,3 +1,4 @@
+import CasesOverzicht from "~/components/contentblocks/CasesOverzicht.vue";
 import FallbackBlock from "~/components/contentblocks/FallbackBlock.vue";
 import HeaderBlock from "~/components/contentblocks/HeaderBlock.vue";
 import OverzichtBlock from "~/components/contentblocks/OverzichtBlock.vue";
@@ -9,6 +10,7 @@ export default function (id) {
     case 35:
       return VideoBlock;
     case 51:
+      return CasesOverzicht;
     case 52:
       return OverzichtBlock;
     case 54:

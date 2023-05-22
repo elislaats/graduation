@@ -16,7 +16,7 @@ const elements = ref();
 
 if (props.data.aanvullenMet) {
   databank.value = props.data.aanvullenMet;
-  const stateData = useState(`sitemap-${databank.value}`).value;
+  const stateData = useState(`databank-${databank.value}`).value;
   if (stateData) {
     elements.value = stateData;
   } else {
@@ -25,7 +25,7 @@ if (props.data.aanvullenMet) {
       baseURL: "https://api-cre8ion.tc8l.dev",
     });
     elements.value = response.data.value;
-    useState(`sitemap-${databank.value}`, () => elements.value);
+    useState(`databank-${databank.value}`, () => elements.value);
   }
 }
 
