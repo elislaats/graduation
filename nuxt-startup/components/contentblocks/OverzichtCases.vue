@@ -17,10 +17,7 @@ const max = ref(6);
 const allElements = ref();
 
 if (props.data.cases) {
-  allElements.value = await getItemsFromDatabank(
-    databankId,
-    props.data.cases
-  );
+  allElements.value = await getItemsFromDatabank(databankId, props.data.cases);
 } else {
   allElements.value = await getDatabank(databankId);
 }
@@ -46,7 +43,7 @@ const filteredElements = computed(() => {
       <div class="grid no-p">
         <template v-for="element in filteredElements">
           <div class="case flex col-1-2">
-            <div class="case-inner flex bg-grey-dark">
+            <div class="case-inner flex">
               <NuxtLink
                 class="case-link"
                 :to="`/cases/${element.content.slug}`"
@@ -57,6 +54,12 @@ const filteredElements = computed(() => {
               >
                 &#8594;
               </NuxtLink>
+              <ImageComp
+                v-if="element.content.afbeelding1200X900"
+                :id="element.content.afbeelding1200X900"
+                :width="1200"
+                :className="'case-bg'"
+              ></ImageComp>
               <div class="case-content flex flex-column align-start p-6">
                 <h4 class="bg-black p-1">{{ element.content.titel }}</h4>
                 <h3>{{ element.content.subtitel }}</h3>
@@ -115,6 +118,10 @@ h2.titel-label {
     margin: 1rem 1rem 1rem 1rem;
     position: relative;
     overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.25);
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.1);
+    }
     .case-link {
       position: absolute;
       width: 100%;
@@ -122,11 +129,9 @@ h2.titel-label {
       left: 0;
       top: 0;
       z-index: 4;
-      &:hover {
-        background-color: rgba(0, 0, 0, 0.1);
-      }
     }
     .case-content {
+      z-index: 1;
       padding: 3rem 3rem 7rem 3rem;
       h4 {
         padding: 1rem 1.5rem 0.8rem 1.5rem;
@@ -150,6 +155,15 @@ h2.titel-label {
       z-index: 4;
       pointer-events: none;
     }
+  }
+  .case-bg {
+    position: abosolute;
+    position: absolute;
+    z-index: -1;
+    max-width: 120%;
+    min-width: 100%;
+    min-height: 100%;
+    top: 0;
   }
 }
 </style>
