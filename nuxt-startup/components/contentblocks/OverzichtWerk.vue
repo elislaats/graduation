@@ -62,9 +62,22 @@ const filteredElements = computed(() => {
               </div>
 
               <ImageComp
-                v-if="element.content.headerAfbeelding1920X800"
+                v-if="
+                  element.content.headerAfbeelding1920X800 &&
+                  $route.params.mainPath != 'homepage'
+                "
                 :id="element.content.headerAfbeelding1920X800"
                 :width="1920"
+                :className="'work-bg'"
+              ></ImageComp>
+
+              <ImageComp
+                v-else-if="
+                  element.content.afbeelding700X700 &&
+                  $route.params.mainPath == 'homepage'
+                "
+                :id="element.content.afbeelding700X700"
+                :width="700"
                 :className="'work-bg'"
               ></ImageComp>
             </div>
@@ -122,6 +135,11 @@ h2.titel-label {
     margin: 1rem 1rem 1rem 1rem;
     position: relative;
     overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.35);
+    transition: 0.5s;
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.5);
+    }
     .work-link {
       position: absolute;
       width: 100%;
@@ -129,9 +147,6 @@ h2.titel-label {
       left: 0;
       top: 0;
       z-index: 4;
-      &:hover {
-        background-color: rgba(0, 0, 0, 0.1);
-      }
     }
     .work-logo {
       position: absolute;
@@ -150,7 +165,7 @@ h2.titel-label {
     }
     .work-bg {
       position: absolute;
-      z-index: 0;
+      z-index: -1;
       max-width: 150%;
       max-height: 150%;
       min-width: 100%;
