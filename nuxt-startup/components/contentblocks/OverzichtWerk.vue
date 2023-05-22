@@ -16,16 +16,13 @@ const page = ref(0);
 const max = ref(6);
 const allElements = ref();
 
-const stateData = useState(`databank-${databankId}`).value;
-if (stateData) {
-  allElements.value = stateData;
+if (props.data.onsWerk) {
+  allElements.value = await getItemsFromDatabank(
+    databankId,
+    props.data.onsWerk
+  );
 } else {
-  const response = await useFetch(`/api/pages/${databankId}`, {
-    method: "GET",
-    baseURL: "https://api-cre8ion.tc8l.dev",
-  });
-  allElements.value = response.data.value;
-  useState(`databank-${databankId}`, () => allElements.value);
+  allElements.value = await getDatabank(databankId);
 }
 
 const filteredElements = computed(() => {
@@ -35,24 +32,15 @@ const filteredElements = computed(() => {
   ) {
     max.value = parseInt(props.data.maximaalWeerTeGevenArtikelen);
   }
-  if (props.data.onsWerk) {
-    const idList = props.data.onsWerk.split(",");
-    let specElements = [];
-    allElements.value.forEach((element) => {
-      idList.forEach((id) => {
-        if (element._id == id) {
-          specElements.push(element);
-        }
-      });
-    });
-    allElements.value = specElements;
-  }
   return allElements.value.slice(0, max.value + max.value * page.value);
 });
 </script>
 
 <template>
-  <section class="contentblock" v-if="info._id && info._name">
+  <section
+    class="contentblock"
+    v-if="info._id && info._name"
+  >
     <div class="grid" v-if="allElements">
       <h2 class="titel-label border-white" v-if="data.titel">
         {{ data.titel }}

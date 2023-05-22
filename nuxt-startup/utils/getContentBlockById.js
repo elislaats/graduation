@@ -4,6 +4,7 @@ import HeaderBlock from "~/components/contentblocks/HeaderBlock.vue";
 import TekstBlock from "~/components/contentblocks/TekstBlock.vue";
 import VideoBlock from "~/components/contentblocks/VideoBlock.vue";
 import OverzichtWerk from "~/components/contentblocks/OverzichtWerk.vue";
+import OverzichtMedewerkers from "~/components/contentblocks/OverzichtMedewerkers.vue";
 
 export default function (id) {
   switch (id) {
@@ -17,6 +18,8 @@ export default function (id) {
     case 55:
     case 58:
       return TekstBlock;
+    case 57:
+      return OverzichtMedewerkers;
     case 60:
       return HeaderBlock;
     default:

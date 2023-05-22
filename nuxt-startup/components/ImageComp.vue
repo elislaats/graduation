@@ -6,7 +6,7 @@ const props = defineProps({
   },
   width: {
     type: Number,
-    required: false,
+    required: false
   },
   height: {
     type: Number,
