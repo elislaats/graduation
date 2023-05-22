@@ -30,10 +30,22 @@ if (stateData) {
 
 const filteredElements = computed(() => {
   if (
-    props.data.maximaalWeerTeGevenArtikelen &&
-    max.value != props.data.maximaalWeerTeGevenArtikelen
+    props.data.maximaalWeerTeGevenArtikelen != "" &&
+    max.value != parseInt(props.data.maximaalWeerTeGevenArtikelen)
   ) {
-    max.value = props.data.maximaalWeerTeGevenArtikelen;
+    max.value = parseInt(props.data.maximaalWeerTeGevenArtikelen);
+  }
+  if (props.data.onsWerk) {
+    const idList = props.data.onsWerk.split(",");
+    let specElements = [];
+    allElements.value.forEach((element) => {
+      idList.forEach((id) => {
+        if (element._id == id) {
+          specElements.push(element);
+        }
+      });
+    });
+    allElements.value = specElements;
   }
   return allElements.value.slice(0, max.value + max.value * page.value);
 });
@@ -42,7 +54,7 @@ const filteredElements = computed(() => {
 <template>
   <section class="contentblock" v-if="info._id && info._name">
     <div class="grid" v-if="allElements">
-      <h2 class="titel-label border-white">
+      <h2 class="titel-label border-white" v-if="data.titel">
         {{ data.titel }}
       </h2>
 
@@ -61,7 +73,7 @@ const filteredElements = computed(() => {
                 :className="'work-logo'"
               ></ImageComp>
               <div v-else class="work-logo">
-                {{ element.content.titel }}, geen logo.
+                <h5>{{ element.content.titel }}</h5>
               </div>
             </div>
           </div>
@@ -75,13 +87,6 @@ const filteredElements = computed(() => {
           meer weergeven
         </button>
       </div>
-    </div>
-    <div v-else>
-      <h4>
-        <em class="text-primary"> {{ info._id }}: {{ info._name }}</em>
-        Bevat geen 'aanvullenMet'
-      </h4>
-      <p><strong class="text-primary"> Data: </strong>{{ data }}</p>
     </div>
   </section>
   <section class="contentblock text-danger" v-else>
