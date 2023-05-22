@@ -40,9 +40,6 @@ const filteredElements = computed(() => {
     page.value.index = 0;
   }
   const endValue = page.value.index * page.value.amount + page.value.amount;
-
-  console.log(endValue);
-
   return allElements.value.slice(0, endValue);
 });
 </script>
