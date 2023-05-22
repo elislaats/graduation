@@ -76,6 +76,7 @@ const filteredElements = computed(() => {
   }
   .employee-image {
     width: 100%;
+    aspect-ratio: 1/1;
   }
 }
 </style>

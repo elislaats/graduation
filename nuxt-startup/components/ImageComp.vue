@@ -41,7 +41,6 @@ const {
 
 const imgSrc = computed(() => {
   try {
-    console.log(image);
     return window.URL.createObjectURL(image.value);
   } catch (error) {
     imgError.value = true;
