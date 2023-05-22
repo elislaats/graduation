@@ -37,10 +37,7 @@ const filteredElements = computed(() => {
 </script>
 
 <template>
-  <section
-    class="contentblock"
-    v-if="info._id && info._name"
-  >
+  <section class="contentblock" v-if="info._id && info._name">
     <div class="grid" v-if="allElements">
       <h2 class="titel-label border-white" v-if="data.titel">
         {{ data.titel }}
@@ -63,6 +60,13 @@ const filteredElements = computed(() => {
               <div v-else class="work-logo">
                 <h5>{{ element.content.titel }}</h5>
               </div>
+
+              <ImageComp
+                v-if="element.content.headerAfbeelding1920X800"
+                :id="element.content.headerAfbeelding1920X800"
+                :width="1920"
+                :className="'work-bg'"
+              ></ImageComp>
             </div>
           </div>
         </template>
@@ -143,6 +147,15 @@ h2.titel-label {
         top: 0;
         z-index: 0;
       }
+    }
+    .work-bg {
+      position: absolute;
+      z-index: 0;
+      max-width: 150%;
+      max-height: 150%;
+      min-width: 100%;
+      min-height: 100%;
+      top: 0;
     }
   }
 }

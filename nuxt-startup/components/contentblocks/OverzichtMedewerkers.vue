@@ -48,6 +48,7 @@ const filteredElements = computed(() => {
             :key="element.content.afbeelding"
             :id="element.content.afbeelding"
             :className="'employee-image'"
+            :width="700"
           >
           </ImageComp>
           <div class="employee-info">

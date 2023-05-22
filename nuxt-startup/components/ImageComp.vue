@@ -6,16 +6,18 @@ const props = defineProps({
   },
   width: {
     type: Number,
-    required: false
+    default: 500,
+    required: false,
   },
   height: {
     type: Number,
+    default: 500,
     required: false,
   },
   altText: {
     type: String,
     required: false,
-    value: "",
+    default: "",
   },
   className: {
     type: String,
@@ -29,16 +31,17 @@ const {
   data: image,
   pending,
   apiError,
-} = await useLazyFetch(`https://api-cre8ion.tc8l.dev/api/media/${props.id}`, {
-  params: {
-    width: props.width,
-    height: props.height,
-  },
-  responseType: "blob",
-});
+} = await useLazyFetch(
+  `https://api-cre8ion.tc8l.dev/api/media/${props.id}?width=${props.width}&height=${props.height}`,
+  {
+    key: `image-${props.id}`,
+    responseType: "blob",
+  }
+);
 
 const imgSrc = computed(() => {
   try {
+    console.log(image);
     return window.URL.createObjectURL(image.value);
   } catch (error) {
     imgError.value = true;
@@ -48,7 +51,7 @@ const imgSrc = computed(() => {
 
 <template>
   <template v-if="pending">
-    <div :class="className">afbeelding aan het laden...</div>
+    <div :class="className">...</div>
   </template>
   <template v-else-if="apiError || imgError">
     <div :class="className" class="error">
