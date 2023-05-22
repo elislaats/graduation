@@ -1,18 +1,18 @@
-import CasesOverzicht from "~/components/contentblocks/CasesOverzicht.vue";
+import OverzichtCases from "~/components/contentblocks/OverzichtCases.vue";
 import FallbackBlock from "~/components/contentblocks/FallbackBlock.vue";
 import HeaderBlock from "~/components/contentblocks/HeaderBlock.vue";
-import OverzichtBlock from "~/components/contentblocks/OverzichtBlock.vue";
 import TekstBlock from "~/components/contentblocks/TekstBlock.vue";
 import VideoBlock from "~/components/contentblocks/VideoBlock.vue";
+import OverzichtWerk from "~/components/contentblocks/OverzichtWerk.vue";
 
 export default function (id) {
   switch (id) {
     case 35:
       return VideoBlock;
     case 51:
-      return CasesOverzicht;
+      return OverzichtCases;
     case 52:
-      return OverzichtBlock;
+      return OverzichtWerk;
     case 54:
     case 55:
     case 58:

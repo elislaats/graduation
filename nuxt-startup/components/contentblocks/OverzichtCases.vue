@@ -11,7 +11,6 @@ const props = defineProps({
 });
 
 const databankId = 6;
-const parent = "/cases";
 
 const page = ref(0);
 const max = ref(6);
