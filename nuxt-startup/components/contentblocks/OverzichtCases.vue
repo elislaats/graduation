@@ -74,13 +74,6 @@ const filteredElements = computed(() => {
         </button>
       </div>
     </div>
-    <div v-else>
-      <h4>
-        <em class="text-primary"> {{ info._id }}: {{ info._name }}</em>
-        Bevat geen 'aanvullenMet'
-      </h4>
-      <p><strong class="text-primary"> Data: </strong>{{ data }}</p>
-    </div>
   </section>
   <section class="contentblock text-danger" v-else>
     <p>no content available</p>
