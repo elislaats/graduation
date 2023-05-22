@@ -5,14 +5,14 @@ import TekstBlock from "~/components/contentblocks/TekstBlock.vue";
 import VideoBlock from "~/components/contentblocks/VideoBlock.vue";
 import OverzichtWerk from "~/components/contentblocks/OverzichtWerk.vue";
 import OverzichtMedewerkers from "~/components/contentblocks/OverzichtMedewerkers.vue";
-import OverzichtNiews from "~/components/contentblocks/OverzichtNiews.vue";
+import OverzichtNieuws from "~/components/contentblocks/OverzichtNieuws.vue";
 
 export default function (id) {
   switch (id) {
     case 35:
       return VideoBlock;
     case 50:
-      return OverzichtNiews;
+      return OverzichtNieuws;
     case 51:
       return OverzichtCases;
     case 52:
