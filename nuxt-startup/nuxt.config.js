@@ -1,6 +1,14 @@
 export default defineNuxtConfig({
   pages: true,
-  css: ["@/assets/styles/main.scss"],
+  vite: {
+    css: {
+        preprocessorOptions: {
+            scss: {
+                additionalData: '@import "~/assets/styles/main.scss";',
+            },
+        },
+    },
+},
   devtools: {
     enabled: true,
   },

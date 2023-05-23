@@ -22,6 +22,7 @@ const props = defineProps({
   className: {
     type: String,
     required: false,
+    default: "",
   },
 });
 
@@ -69,7 +70,6 @@ const imgSrc = computed(() => {
     <figure v-else :class="className">
       <img :src="imgSrc" :alt="altText" />
     </figure>
-
   </template>
 </template>
 
@@ -106,7 +106,7 @@ const imgSrc = computed(() => {
     left: 0;
     top: 0;
     z-index: 0;
-    object-position: center center
+    object-position: center center;
   }
 }
 
