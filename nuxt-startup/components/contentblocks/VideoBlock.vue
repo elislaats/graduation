@@ -9,13 +9,11 @@ const props = defineProps({
     required: true,
   },
 });
-
-//{ "titel": "Small Big Bangs", "linkNaam": "", "linkUrl": "https://vimeo.com/470177125", "marginBottom": "margin-default" }
 </script>
 
 <template>
   <section
-    class="contentblock grid"
+    class="contentblock" :class="info._name.toLowerCase().replaceAll(' ', '-')"
     v-if="props.info && props.data"
   >
     <h2 class="col-1-1" v-if="props.data.titel">
