@@ -8,6 +8,10 @@ export default defineNuxtRouteMiddleware((to, from) => {
     }
   });
   if (!foundRoute) {
-    return abortNavigation({statusCode: 404, statusMessage:'Deze hoofdroute bestaat niet in de API-navigatie'});
+    return abortNavigation({
+      statusCode: 404,
+      statusMessage: "route onbekend",
+      message: "de hoofdroute is niet bekend als beschikbare routes",
+    });
   }
 });

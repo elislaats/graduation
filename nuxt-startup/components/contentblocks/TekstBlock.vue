@@ -15,7 +15,7 @@ const props = defineProps({
   <section
     ref="outerblock"
     class="contentblock"
-    :class="props.info._name.toLowerCase()"
+    :class="props.info._name.toLowerCase().replaceAll(' ', '-')"
     v-if="props.info && props.data"
   >
     <template v-if="props.info._id == 54">
@@ -29,12 +29,12 @@ const props = defineProps({
     <template v-if="props.info._id == 55">
       <!--Tekst en afbeelding-->
       <div
-        class="textAndImage grid grid-pad justify-space-between"
+        class="text-and-image grid pr-0 mr-0 justify-space-between"
         :class="{
           'flex-row-reverse': props.data.weergaveTekst == 'right',
         }"
       >
-        <div class="col-7-12">
+        <div class="col-text col-7-12">
           <h2
             class="titel"
             v-if="props.data.titel"
@@ -46,12 +46,8 @@ const props = defineProps({
             v-html="props.data.tekst"
           ></div>
         </div>
-        <div class="col-4-12 flex">
-          <img
-            :style="{ width: '100%' }"
-            class="border-primary"
-            :alt="props.data.afbeelding"
-          />
+        <div class="col-img col-4-12 flex">
+          <ImageComp v-if="data.afbeelding" :id="data.afbeelding" className="image"></ImageComp>
         </div>
       </div>
     </template>
@@ -76,11 +72,29 @@ const props = defineProps({
   </section>
 </template>
 
-<style scoped lang="scss">
-.textAndImage {
-  .titel {
-    font-size: 6rem;
-    margin-bottom: 5rem;
+<style lang="scss">
+.text-and-image {
+  .col-text{
+    .titel {
+      font-size: 6rem;
+      margin-bottom: 5rem;
+      strong{
+        color: $primary-color
+      }
+    }
+  }
+
+
+  .col-img{
+    position: relative;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    padding:0;
+    .image{
+      display: flex;
+      width: 100%;
+    }
   }
 }
 </style>

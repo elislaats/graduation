@@ -32,7 +32,7 @@ const filteredElements = computed(() => {
 </script>
 
 <template>
-  <section class="contentblock" v-if="info._id && info._name">
+  <section class="contentblock" :class="info._name.toLowerCase().replaceAll(' ', '-')" v-if="info._id && info._name">
     <div class="grid" v-if="allElements">
       <h2 v-if="data.titel">
         {{ data.titel }}

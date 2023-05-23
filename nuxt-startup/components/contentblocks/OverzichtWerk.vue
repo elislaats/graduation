@@ -37,56 +37,64 @@ const filteredElements = computed(() => {
 </script>
 
 <template>
-  <section class="contentblock" v-if="info._id && info._name">
+  <section
+    class="contentblock"
+    :class="info._name.toLowerCase().replaceAll(' ', '-')"
+    v-if="info._id && info._name"
+  >
     <div class="grid" v-if="allElements">
       <h2 class="titel-label border-white" v-if="data.titel">
         {{ data.titel }}
       </h2>
 
       <div class="grid no-p">
-        <template v-for="element in filteredElements">
-          <div class="work flex col-1-3">
-            <div class="work-inner flex">
-              <!--link:-->
-              <NuxtLink
-                class="work-link"
-                :to="`/ons-werk/${element.content.slug}`"
-              >
-                {{ element.content.titel }}
-              </NuxtLink>
+        <TransitionGroup name="list" appear>
+          <template v-for="element in filteredElements" :key="element._id">
+            <div class="work flex col-1-3">
+              <div class="work-inner flex">
+                <!--link:-->
+                <NuxtLink
+                  class="work-link"
+                  :to="`/ons-werk/${element.content.slug}`"
+                >
+                  {{ element.content.titel }}
+                </NuxtLink>
 
-              <!--background:-->
-              <ImageComp
-                v-if="
-                  element.content.afbeelding700X700 &&
-                  $route.path == '/homepage'
-                "
-                :id="element.content.afbeelding700X700"
-                :width="700"
-                :className="'bg-image work-bg'"
-              ></ImageComp>
+                <!--background:-->
+                <ImageComp
+                  v-if="
+                    element.content.afbeelding700X700 &&
+                    ($route.path == '/homepage' || !element.content.headerAfbeelding1920X800)
+                  "
+                  :id="element.content.afbeelding700X700"
+                  :width="700"
+                  :className="'bg-image work-bg'"
+                ></ImageComp>
 
-              <ImageComp
-                v-else-if="element.content.headerAfbeelding1920X800"
-                :id="element.content.headerAfbeelding1920X800"
-                :width="1920"
-                :className="'bg-image work-bg'"
-              ></ImageComp>
+                <ImageComp
+                  v-else-if="element.content.headerAfbeelding1920X800"
+                  :id="element.content.headerAfbeelding1920X800"
+                  :width="1920"
+                  :className="'bg-image work-bg'"
+                ></ImageComp>
 
-              <!--logo-->
-              <ImageComp
-                v-if="element.content.transparantLogo400X400MargeAanZijden"
-                :id="element.content.transparantLogo400X400MargeAanZijden"
-                :altText="`Logo van ${element.content.titel}`"
-                :className="'logo work-logo'"
-              ></ImageComp>
-              <div v-else class="work-logo">
-                <h5>{{ element.content.titel }}</h5>
+                <div v-else class="work-bg no-bg">
+                </div>
+
+                <!--logo-->
+                <ImageComp
+                  v-if="element.content.transparantLogo400X400MargeAanZijden"
+                  :id="element.content.transparantLogo400X400MargeAanZijden"
+                  :altText="`Logo van ${element.content.titel}`"
+                  :className="'logo work-logo'"
+                ></ImageComp>
+                <div v-else class="work-logo">
+                  <h5>{{ element.content.titel }}</h5>
+                </div>
               </div>
             </div>
-          </div>
-        </template>
-
+          </template>
+        </TransitionGroup>
         <button
           v-if="allElements.length > filteredElements.length"
           @click="page++"
@@ -131,9 +139,9 @@ const filteredElements = computed(() => {
     margin: 1rem 1rem 1rem 1rem;
     position: relative;
     overflow: hidden;
-    &:hover{
-      .work-bg{
-        transform: scale(1.05)
+    &:hover {
+      .work-bg {
+        transform: scale(1.05);
       }
     }
     .work-link {
@@ -164,6 +172,9 @@ const filteredElements = computed(() => {
       opacity: 0.7;
       z-index: 1;
       transition: transform 3s ease-out;
+      &.no-bg{
+        background-color: #ffffff40;
+      }
     }
   }
 }

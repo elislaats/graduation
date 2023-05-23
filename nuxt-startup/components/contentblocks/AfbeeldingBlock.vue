@@ -18,11 +18,17 @@ const props = defineProps({
     v-if="info && data"
   >
     <div class="grid grid-pad">
-      <h2 class="col-1-1" v-if="data.titel">
-        {{ props.data.titel }}
-      </h2>
-      <div class="video-wrapper col-1-1">
-        <VideoComp :url="data.linkUrl"> </VideoComp>
+      <div class="img-container col-1-1">
+        <template v-if="data.link">
+          <NuxtLink :to="data.link">
+            <ImageComp
+              v-if="data.afbeelding"
+              :id="data.afbeelding"
+              :width="1200"
+              :className="'link-img'"
+            ></ImageComp>
+          </NuxtLink>
+        </template>
       </div>
     </div>
   </section>
@@ -32,17 +38,13 @@ const props = defineProps({
 </template>
 
 <style lang="scss">
-.video-wrapper {
-  position: relative;
-  padding-bottom: 56.25%;
-  width: 100%;
-  height: 0;
-  iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
+.contentblock.afbeelding {
+  img {
+    display: block;
     width: 100%;
-    height: 100%;
+    max-width: 100%;
+    margin: 0;
+    margin-bottom: 2rem;
   }
 }
 </style>

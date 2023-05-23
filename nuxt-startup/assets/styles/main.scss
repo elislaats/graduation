@@ -31,3 +31,13 @@ h2.titel-label {
 .btn {
   font-family: monospace;
 }
+
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.75s ease;
+}
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+  transform: translateY(5rem);
+}
