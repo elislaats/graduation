@@ -76,6 +76,7 @@ const filteredElements = computed(() => {
                   :width="1200"
                   :className="'bg-image case-bg'"
                 ></ImageComp>
+                <div v-else class="case-bg no-bg"></div>
               </div>
             </div>
           </template>
@@ -161,6 +162,9 @@ const filteredElements = computed(() => {
     overflow: hidden;
     opacity: 0.7;
     transition: transform 3s ease-out;
+    &.no-bg {
+      background-color: #ffffff50;
+    }
   }
 }
 </style>
