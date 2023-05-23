@@ -54,9 +54,9 @@ const imgSrc = computed(() => {
     <figure :class="className" class="img-loading"></figure>
   </template>
   <template v-else-if="apiError || imgError">
-    <div :class="className" class="error">
+    <figure :class="className" class="error">
       <img class="img-error" src="~/assets/images/fa-noimage.svg" alt="" />
-    </div>
+    </figure>
   </template>
   <template v-else>
     <figure
@@ -76,12 +76,15 @@ const imgSrc = computed(() => {
 <style lang="scss">
 .error {
   background-color: rgba(255, 255, 255, 0.2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
   .img-error {
-    max-width: 5rem;
-    max-height: 5rem;
+    width: 50%;
+    height: 50%;
+    max-width: 7rem;
+    max-height: 7rem;
+    object-fit: contain;
+    left: 50%;
+    top: 50%;
+    z-index: 0;
   }
 }
 
@@ -130,15 +133,15 @@ figure {
   }
 }
 
-@keyframes gradient {
+@keyframes loading {
   0% {
-    background-position: 0% 50%;
+    background-position: 0 0;
   }
   50% {
-    background-position: 100% 50%;
+    background-position: 20% 100%;
   }
   100% {
-    background-position: 0% 50%;
+    background-position: 100% 70%;
   }
 }
 </style>
