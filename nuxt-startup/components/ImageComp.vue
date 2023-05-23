@@ -51,7 +51,7 @@ const imgSrc = computed(() => {
 
 <template>
   <template v-if="pending">
-    <figure :class="className" class="img-loading"></figure>
+    <div :class="className.replace('bg-image', '')" class="img-loading"></div>
   </template>
   <template v-else-if="apiError || imgError">
     <figure :class="className" class="error">
@@ -91,9 +91,18 @@ const imgSrc = computed(() => {
 .img-loading {
   width: 100%;
   height: 100%;
-  background: linear-gradient(-35deg, #5e5e5e50, #d1d1d167, #66666650);
-  background-size: 400% 400%;
-  animation: gradient 4s ease infinite;
+  background-image: linear-gradient(
+    -45deg,
+    #ffffff50,
+    #ffffff30,
+    #ffffff50,
+    #ffffff30,
+    #ffffff50
+  );
+  background-repeat: no-repeat;
+  background-position: 100% 100%;
+  background-size: 200% 200%;
+  animation: loading 3s linear infinite;
 }
 
 .bg-image {
@@ -135,13 +144,10 @@ figure {
 
 @keyframes loading {
   0% {
-    background-position: 0 0;
-  }
-  50% {
-    background-position: 20% 100%;
+    background-position: 100% 100%;
   }
   100% {
-    background-position: 100% 70%;
+    background-position: 0 0;
   }
 }
 </style>
