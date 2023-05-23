@@ -1,6 +1,8 @@
 <template>
-  <h3>Child Route</h3>
-  <p>{{ $route.params }}</p>
+  <main>
+    <h3>Child Route</h3>
+    <p>{{ $route.params }}</p>
+  </main>
 </template>
 
 <script setup>
