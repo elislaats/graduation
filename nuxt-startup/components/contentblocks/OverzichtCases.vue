@@ -44,26 +44,33 @@ const filteredElements = computed(() => {
         <template v-for="element in filteredElements">
           <div class="case flex col-1-2">
             <div class="case-inner flex">
+              <!--link-->
               <NuxtLink
                 class="case-link"
                 :to="`/cases/${element.content.slug}`"
               ></NuxtLink>
+
+              <!--secondary link-->
               <NuxtLink
                 class="link-secondary bg-black"
                 :to="`/cases/${element.content.slug}`"
               >
                 &#8594;
               </NuxtLink>
-              <ImageComp
-                v-if="element.content.afbeelding1200X900"
-                :id="element.content.afbeelding1200X900"
-                :width="1200"
-                :className="'case-bg'"
-              ></ImageComp>
+
+              <!--content-->
               <div class="case-content flex flex-column align-start p-6">
                 <h4 class="bg-black p-1">{{ element.content.titel }}</h4>
                 <h3>{{ element.content.subtitel }}</h3>
               </div>
+
+              <!--background-image-->
+              <ImageComp
+                v-if="element.content.afbeelding1200X900"
+                :id="element.content.afbeelding1200X900"
+                :width="1200"
+                :className="'bg-image case-bg'"
+              ></ImageComp>
             </div>
           </div>
         </template>
@@ -83,34 +90,7 @@ const filteredElements = computed(() => {
   </section>
 </template>
 
-<style lang="scss" scoped>
-h2.titel-label {
-  font-size: small;
-  margin: 1rem;
-  margin-bottom: 2rem;
-  padding: 1rem 2.5rem;
-  font-family: Inconsolata, monospace;
-}
-.overview-filter {
-  select {
-    height: 4.5rem;
-    padding: 0 2rem;
-    border: 1px solid;
-    color: #fff;
-    letter-spacing: 0.1rem;
-    background-color: #000;
-    font-size: 1rem;
-    margin-left: 3rem;
-    border-radius: 0;
-    box-shadow: none;
-    background: 0 0;
-    outline: 0;
-  }
-}
-.btn {
-  font-family: monospace;
-}
-
+<style lang="scss">
 .case {
   aspect-ratio: 2/1;
   .case-inner {
@@ -118,9 +98,15 @@ h2.titel-label {
     margin: 1rem 1rem 1rem 1rem;
     position: relative;
     overflow: hidden;
-    background-color: rgba(0, 0, 0, 0.25);
     &:hover {
-      background-color: rgba(0, 0, 0, 0.1);
+      .case-bg {
+        transform: scale(1.05);
+      }
+      .case-content {
+        h3 {
+          transform: translateY(0.5rem);
+        }
+      }
     }
     .case-link {
       position: absolute;
@@ -131,7 +117,7 @@ h2.titel-label {
       z-index: 4;
     }
     .case-content {
-      z-index: 1;
+      z-index: 4;
       padding: 3rem 3rem 7rem 3rem;
       h4 {
         padding: 1rem 1.5rem 0.8rem 1.5rem;
@@ -140,6 +126,7 @@ h2.titel-label {
         margin-bottom: 3rem;
       }
       h3 {
+        transition: transform 1s ease;
         width: 70%;
       }
     }
@@ -157,13 +144,16 @@ h2.titel-label {
     }
   }
   .case-bg {
-    position: abosolute;
     position: absolute;
-    z-index: -1;
-    max-width: 120%;
-    min-width: 100%;
-    min-height: 100%;
     top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    opacity: .7;
+    transition: transform 3s ease-out;
   }
 }
 </style>

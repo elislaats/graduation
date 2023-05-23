@@ -46,40 +46,43 @@ const filteredElements = computed(() => {
       <div class="grid no-p">
         <template v-for="element in filteredElements">
           <div class="work flex col-1-3">
-            <div class="work-inner flex bg-grey-dark">
+            <div class="work-inner flex">
+              <!--link:-->
               <NuxtLink
                 class="work-link"
                 :to="`/ons-werk/${element.content.slug}`"
-              ></NuxtLink>
+              >
+                {{ element.content.titel }}
+              </NuxtLink>
+
+              <!--background:-->
+              <ImageComp
+                v-if="
+                  element.content.afbeelding700X700 &&
+                  $route.path == '/homepage'
+                "
+                :id="element.content.afbeelding700X700"
+                :width="700"
+                :className="'bg-image work-bg'"
+              ></ImageComp>
+
+              <ImageComp
+                v-else-if="element.content.headerAfbeelding1920X800"
+                :id="element.content.headerAfbeelding1920X800"
+                :width="1920"
+                :className="'bg-image work-bg'"
+              ></ImageComp>
+
+              <!--logo-->
               <ImageComp
                 v-if="element.content.transparantLogo400X400MargeAanZijden"
                 :id="element.content.transparantLogo400X400MargeAanZijden"
                 :altText="`Logo van ${element.content.titel}`"
-                :className="'work-logo'"
+                :className="'logo work-logo'"
               ></ImageComp>
               <div v-else class="work-logo">
                 <h5>{{ element.content.titel }}</h5>
               </div>
-
-              <ImageComp
-                v-if="
-                  element.content.headerAfbeelding1920X800 &&
-                  $route.params.mainPath != 'homepage'
-                "
-                :id="element.content.headerAfbeelding1920X800"
-                :width="1920"
-                :className="'work-bg'"
-              ></ImageComp>
-
-              <ImageComp
-                v-else-if="
-                  element.content.afbeelding700X700 &&
-                  $route.params.mainPath == 'homepage'
-                "
-                :id="element.content.afbeelding700X700"
-                :width="700"
-                :className="'work-bg'"
-              ></ImageComp>
             </div>
           </div>
         </template>
@@ -99,14 +102,7 @@ const filteredElements = computed(() => {
   </section>
 </template>
 
-<style lang="scss" scoped>
-h2.titel-label {
-  font-size: small;
-  margin: 1rem;
-  margin-bottom: 2rem;
-  padding: 1rem 2.5rem;
-  font-family: Inconsolata, monospace;
-}
+<style lang="scss">
 .overview-filter {
   select {
     height: 4.5rem;
@@ -135,10 +131,10 @@ h2.titel-label {
     margin: 1rem 1rem 1rem 1rem;
     position: relative;
     overflow: hidden;
-    background-color: rgba(0, 0, 0, 0.35);
-    transition: 0.5s;
-    &:hover {
-      background-color: rgba(0, 0, 0, 0.5);
+    &:hover{
+      .work-bg{
+        transform: scale(1.05)
+      }
     }
     .work-link {
       position: absolute;
@@ -147,6 +143,9 @@ h2.titel-label {
       left: 0;
       top: 0;
       z-index: 4;
+      overflow: hidden;
+      text-indent: -9999999px;
+      opacity: 0;
     }
     .work-logo {
       position: absolute;
@@ -155,22 +154,16 @@ h2.titel-label {
       height: 50%;
       left: 25%;
       top: 25%;
-      img {
-        width: 100%;
-        position: absolute;
-        left: 0;
-        top: 0;
-        z-index: 0;
-      }
     }
     .work-bg {
       position: absolute;
-      z-index: -1;
-      max-width: 150%;
-      max-height: 150%;
-      min-width: 100%;
-      min-height: 100%;
+      width: 100%;
+      height: 100%;
+      left: 0;
       top: 0;
+      opacity: 0.7;
+      z-index: 1;
+      transition: transform 3s ease-out;
     }
   }
 }
