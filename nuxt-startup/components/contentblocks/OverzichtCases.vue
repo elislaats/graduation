@@ -99,6 +99,7 @@ const filteredElements = computed(() => {
     position: relative;
     overflow: hidden;
     &:hover {
+      cursor: pointer;
       .case-bg {
         transform: scale(1.05);
       }
