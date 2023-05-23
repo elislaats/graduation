@@ -34,46 +34,52 @@ const filteredElements = computed(() => {
 </script>
 
 <template>
-  <section class="contentblock" :class="info._name.toLowerCase().replaceAll(' ', '-')" v-if="info._id && info._name">
+  <section
+    class="contentblock"
+    :class="info._name.toLowerCase().replaceAll(' ', '-')"
+    v-if="info._id && info._name"
+  >
     <div class="grid" v-if="allElements">
       <h2 class="titel-label border-white" v-if="data.titel">
         {{ data.titel }}
       </h2>
 
       <div class="grid no-p">
-        <template v-for="element in filteredElements">
-          <div class="case flex col-1-2">
-            <div class="case-inner flex">
-              <!--link-->
-              <NuxtLink
-                class="case-link"
-                :to="`/cases/${element.content.slug}`"
-              ></NuxtLink>
+        <TransitionGroup name="list" appear>
+          <template v-for="element in filteredElements" :key="element._id">
+            <div class="case flex col-1-2">
+              <div class="case-inner flex">
+                <!--link-->
+                <NuxtLink
+                  class="case-link"
+                  :to="`/cases/${element.content.slug}`"
+                ></NuxtLink>
 
-              <!--secondary link-->
-              <NuxtLink
-                class="link-secondary bg-black"
-                :to="`/cases/${element.content.slug}`"
-              >
-                &#8594;
-              </NuxtLink>
+                <!--secondary link-->
+                <NuxtLink
+                  class="link-secondary bg-black"
+                  :to="`/cases/${element.content.slug}`"
+                >
+                  &#8594;
+                </NuxtLink>
 
-              <!--content-->
-              <div class="case-content flex flex-column align-start p-6">
-                <h4 class="bg-black p-1">{{ element.content.titel }}</h4>
-                <h3>{{ element.content.subtitel }}</h3>
+                <!--content-->
+                <div class="case-content flex flex-column align-start p-6">
+                  <h4 class="bg-black p-1">{{ element.content.titel }}</h4>
+                  <h3>{{ element.content.subtitel }}</h3>
+                </div>
+
+                <!--background-image-->
+                <ImageComp
+                  v-if="element.content.afbeelding1200X900"
+                  :id="element.content.afbeelding1200X900"
+                  :width="1200"
+                  :className="'bg-image case-bg'"
+                ></ImageComp>
               </div>
-
-              <!--background-image-->
-              <ImageComp
-                v-if="element.content.afbeelding1200X900"
-                :id="element.content.afbeelding1200X900"
-                :width="1200"
-                :className="'bg-image case-bg'"
-              ></ImageComp>
             </div>
-          </div>
-        </template>
+          </template>
+        </TransitionGroup>
 
         <button
           v-if="allElements.length > filteredElements.length"
@@ -153,7 +159,7 @@ const filteredElements = computed(() => {
     width: 100%;
     height: 100%;
     overflow: hidden;
-    opacity: .7;
+    opacity: 0.7;
     transition: transform 3s ease-out;
   }
 }
