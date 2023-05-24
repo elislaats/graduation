@@ -24,10 +24,15 @@ const props = defineProps({
             <ImageComp
               v-if="data.afbeelding"
               :id="data.afbeelding"
-              :width="1200"
               :className="'link-img'"
             ></ImageComp>
           </NuxtLink>
+        </template>
+        <template v-else>
+            <ImageComp
+              v-if="data.afbeelding"
+              :id="data.afbeelding"
+            ></ImageComp>
         </template>
       </div>
     </div>
