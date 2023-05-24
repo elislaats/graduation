@@ -18,7 +18,7 @@ const page = ref({
 });
 const allElements = ref();
 
-await getDatabank(databankId).then((elements) => {
+getDatabank(databankId).then((elements) => {
   allElements.value = elements.toReversed();
 });
 
@@ -39,7 +39,10 @@ window.onscroll = () => {
     ) +
       window.innerHeight ===
     document.documentElement.offsetHeight;
-  if (bottomOfWindow && page.value.index*page.value.amount < allElements.value.length) {
+  if (
+    bottomOfWindow &&
+    page.value.index * page.value.amount < allElements.value.length
+  ) {
     page.value.index++;
   }
 };
@@ -128,7 +131,8 @@ window.onscroll = () => {
   .news-item {
     min-height: 80vh;
     margin-bottom: 5rem;
-    h2, p {
+    h2,
+    p {
       margin: 1.5rem 0;
     }
     .news-image-wrapper {
