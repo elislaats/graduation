@@ -34,6 +34,7 @@ const props = defineProps({
               :id="data.afbeelding"
             ></ImageComp>
         </template>
+        <p v-if="data.ondertitel" v-html="data.ondertitel"></p>
       </div>
     </div>
   </section>
