@@ -128,7 +128,7 @@ window.onscroll = () => {
       height: 100%;
       left: 0;
       top: 0;
-      z-index: 4;
+      z-index: 5;
     }
     .case-content {
       z-index: 4;
