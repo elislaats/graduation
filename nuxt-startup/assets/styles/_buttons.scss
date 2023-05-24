@@ -16,13 +16,15 @@
 }
 
 .btn-primary {
-  background: $primary-color;
-  border: 1px solid $primary-color;
-  color: $grey-dark;
-
+  text-decoration: none;
+  min-height: 4.3rem;
+  color: #fff;
+  border: 0.1rem solid #fff;
+  background-color: transparent;
+  padding: 1rem 2.5rem;
   &:hover {
-    background: darken($primary-color, 10%);
-    border-color: darken($primary-color, 10%);
+    background-color: white;
+    color: black;
   }
 
   &.outline {

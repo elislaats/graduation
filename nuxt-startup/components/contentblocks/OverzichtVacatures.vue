@@ -45,7 +45,7 @@ vacatures.value = await getDatabank(databankId);
             </div>
 
             <div class="button col-1-1 no-p">
-              <NuxtLink class="btn" :to="`/vacatures/${vacature.content.slug}`">
+              <NuxtLink class="btn btn-primary" :to="`/vacatures/${vacature.content.slug}`">
                 Bekijk vacature
               </NuxtLink>
             </div>
@@ -75,18 +75,6 @@ vacatures.value = await getDatabank(databankId);
     }
     .button {
       height: fit-content;
-      a {
-        text-decoration: none;
-        min-height: 4.3rem;
-        color: #fff;
-        border: 0.1rem solid #fff;
-        background-color: transparent;
-        padding: 1rem 2.5rem;
-        &:hover {
-          background-color: white;
-          color: black;
-        }
-      }
     }
   }
 }

@@ -6,12 +6,12 @@ const props = defineProps({
   },
   width: {
     type: Number,
-    default: 500,
+    default: 1200,
     required: false,
   },
   height: {
     type: Number,
-    default: 500,
+    default: 700,
     required: false,
   },
   altText: {
