@@ -41,3 +41,19 @@
   opacity: 0;
   transform: translateY(5rem);
 }
+
+.row-enter-active {
+  transition: all .5s linear;
+  transition-delay: .5s;
+}
+.row-enter-from {
+  opacity: 0;
+  transform: translateX(5em);
+}
+.row-leave-active {
+  transition: all .5s linear;
+}
+.row-leave-to {
+  opacity: 0;
+  transform: translateX(-5em);
+}
