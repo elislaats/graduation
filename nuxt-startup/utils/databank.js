@@ -13,19 +13,49 @@ export const getDatabank = async function (id) {
 };
 
 export const getItemsFromDatabank = async function (id, items) {
-    const idList = items.split(',')
+  const idList = items.split(",");
 
-    const fullDatabank = await getDatabank(id)
+  const fullDatabank = await getDatabank(id);
 
-    let foundElements = [];
+  let foundElements = [];
 
-    fullDatabank.forEach((element) => {
-      idList.forEach((id) => {
-        if (element._id == id) {
-          foundElements.push(element);
-        }
-      });
+  fullDatabank.forEach((element) => {
+    idList.forEach((id) => {
+      if (element._id == id) {
+        foundElements.push(element);
+      }
     });
+  });
 
-    return foundElements;
-}
+  return foundElements;
+};
+
+export const getDetailIdFromSlug = async function (databankId, slug) {
+  const fullDatabank = await getDatabank(databankId);
+  let foundId = null;
+
+  fullDatabank.forEach((element) => {
+    if (element.content.slug == slug) {
+      foundId = element._id
+    }
+  });
+  return foundId;
+};
+
+export const getDatabankIdFromName = function (name) {
+  const lookUpName = name.replaceAll(" ", "").replaceAll("-", "").toLowerCase();
+  switch (lookUpName) {
+    case "cases":
+      return 6;
+    case "onswerk":
+      return 5;
+    case "nieuws":
+      return 7;
+    case "vacatures":
+      return 44;
+    case "medewerkers":
+      return 1017;
+    default:
+      break;
+  }
+};
