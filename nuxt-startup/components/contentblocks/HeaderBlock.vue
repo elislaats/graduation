@@ -32,8 +32,23 @@ const props = defineProps({
       <div class="header-text col-8-12">
         <h1 v-if="data.titel" v-html="data.titel" />
         <div v-if="data.tekst" v-html="data.tekst" />
+
+        <NuxtLink
+          class="btn btn-primary outline header-button"
+          v-if="data.knop1"
+          :to="data.knop1"
+        >
+          (Tekst knop 1?)
+        </NuxtLink>
       </div>
     </div>
+    <NuxtLink
+      class="btn btn-secondary header-button-secondary"
+      v-if="data.knop2"
+      :to="data.knop2"
+    >
+      (Tekst knop 2?)
+    </NuxtLink>
   </section>
   <section class="contentblock text-danger" v-else>
     <p>no content available</p>
@@ -51,6 +66,13 @@ const props = defineProps({
   align-items: center;
   justify-content: center;
 
+  .header-button-secondary {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    z-index: 2;
+  }
+
   .header-inner {
     width: 100%;
     position: relative;
@@ -58,6 +80,9 @@ const props = defineProps({
     padding: 20rem 0;
     .header-text {
       z-index: 4;
+    }
+    .header-button{
+      margin: 2rem 0;
     }
   }
   .video-wrapper {

@@ -16,43 +16,44 @@
 }
 
 .btn-primary {
-  background: $primary-color;
-  border: 1px solid $primary-color;
-  color: $grey-dark;
+  color: $white;
+  background-color: $grey-dark;
 
   &:hover {
-    background: darken($primary-color, 10%);
-    border-color: darken($primary-color, 10%);
+    background-color: white;
+    color: black;
   }
 
   &.outline {
     background-color: transparent;
-    color: $primary-color;
+    border: 0.1rem solid $white;
+    color: $white;
 
     &:hover {
-      background-color: $primary-color;
-      color: $white;
+      background-color: $white;
+      color: $black;
     }
   }
 }
 
 .btn-secondary {
-  background: $grey-dark;
-  border: 1px solid $grey-dark;
-  color: #fff;
+  background: $white;
+  border: 0.1rem solid $white;
+  color: $black;
 
   &:hover {
-    background: #000;
-    border-color: #000;
+    background: $primary-color;
+    border-color: $primary-color;
   }
 
   &.outline {
     background-color: transparent;
-    color: $grey-dark;
+    border: 0.1rem solid $primary-color;
+    color: $primary-color;
 
     &:hover {
-      background-color: $grey-dark;
-      color: #fff;
+      background-color: $primary-color;
+      color: $black;
     }
   }
 }

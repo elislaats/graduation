@@ -30,7 +30,7 @@ export default function (title, metaData) {
     }
   } else {
     useHead({
-      title: title + " | The Cre8ion Lab",
+      title: title + " | The Cre8ion.Lab",
     });
   }
 }

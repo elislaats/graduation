@@ -34,6 +34,20 @@ const filteredElements = computed(() => {
   }
   return allElements.value.slice(0, max.value + max.value * page.value);
 });
+
+window.onscroll = () => {
+  let bottomOfWindow =
+    Math.max(
+      window.pageYOffset,
+      document.documentElement.scrollTop,
+      document.body.scrollTop
+    ) +
+      window.innerHeight ===
+    document.documentElement.offsetHeight;
+  if (bottomOfWindow && page.value * max.value < allElements.value.length) {
+    page.value++;
+  }
+};
 </script>
 
 <template>
@@ -64,7 +78,8 @@ const filteredElements = computed(() => {
                 <ImageComp
                   v-if="
                     element.content.afbeelding700X700 &&
-                    ($route.path == '/homepage' || !element.content.headerAfbeelding1920X800)
+                    ($route.path == '/homepage' ||
+                      !element.content.headerAfbeelding1920X800)
                   "
                   :id="element.content.afbeelding700X700"
                   :width="700"
@@ -78,8 +93,7 @@ const filteredElements = computed(() => {
                   :className="'bg-image work-bg'"
                 ></ImageComp>
 
-                <div v-else class="work-bg no-bg">
-                </div>
+                <div v-else class="work-bg no-bg"></div>
 
                 <!--logo-->
                 <ImageComp
@@ -95,13 +109,6 @@ const filteredElements = computed(() => {
             </div>
           </template>
         </TransitionGroup>
-        <button
-          v-if="allElements.length > filteredElements.length"
-          @click="page++"
-          class="col-2-3 push-1-6 btn btn-secondary"
-        >
-          meer weergeven
-        </button>
       </div>
     </div>
   </section>
@@ -172,7 +179,7 @@ const filteredElements = computed(() => {
       opacity: 0.7;
       z-index: 1;
       transition: transform 3s ease-out;
-      &.no-bg{
+      &.no-bg {
         background-color: #ffffff40;
       }
     }

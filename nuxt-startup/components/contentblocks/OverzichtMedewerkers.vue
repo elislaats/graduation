@@ -32,34 +32,44 @@ const filteredElements = computed(() => {
 </script>
 
 <template>
-  <section class="contentblock" :class="info._name.toLowerCase().replaceAll(' ', '-')" v-if="info._id && info._name">
+  <section
+    class="contentblock"
+    :class="info._name.toLowerCase().replaceAll(' ', '-')"
+    v-if="info._id && info._name"
+  >
     <div class="grid" v-if="allElements">
       <h2 v-if="data.titel">
         {{ data.titel }}
       </h2>
 
       <div class="grid">
-        <div
-          v-for="element in filteredElements"
-          class="col-1-4 employee"
-          :key="element.content.afbeelding"
-        >
-          <ImageComp
+        <TransitionGroup name="row" appear>
+          <div
+            v-for="element in filteredElements"
+            class="col-1-4 employee"
             :key="element.content.afbeelding"
-            :id="element.content.afbeelding"
-            :className="'employee-image'"
-            :width="700"
           >
-          </ImageComp>
-          <div class="employee-info">
-            <h5>{{ element.content.titel }}</h5>
-            <span class="text-primary"> {{ element.content.functie }} </span>
+            <ImageComp
+              :key="element.content.afbeelding"
+              :id="element.content.afbeelding"
+              :className="'employee-image'"
+              :width="700"
+            >
+            </ImageComp>
+            <div class="employee-info">
+              <h5>{{ element.content.titel }}</h5>
+              <span class="text-primary"> {{ element.content.functie }} </span>
+            </div>
           </div>
-        </div>
+        </TransitionGroup>
       </div>
-      <button class="btn btn-primary push-1-1 align-self-end employee-more" @click="page.index++">
+
+      <button
+        class="btn btn-primary push-1-1 align-self-end employee-more"
+        @click="page.index++"
+      >
         +
-     </button>
+      </button>
     </div>
   </section>
   <section class="contentblock text-danger" v-else>

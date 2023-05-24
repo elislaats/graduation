@@ -7,6 +7,8 @@ import AfbeeldingBlock from "~/components/contentblocks/AfbeeldingBlock.vue";
 import OverzichtWerk from "~/components/contentblocks/OverzichtWerk.vue";
 import OverzichtMedewerkers from "~/components/contentblocks/OverzichtMedewerkers.vue";
 import OverzichtNieuws from "~/components/contentblocks/OverzichtNieuws.vue";
+import OverzichtVacatures from "~/components/contentblocks/OverzichtVacatures.vue";
+import TitelBlock from "~/components/contentblocks/TitelBlock.vue";
 
 export default function (id) {
   switch (id) {
@@ -28,6 +30,10 @@ export default function (id) {
       return OverzichtMedewerkers;
     case 60:
       return HeaderBlock;
+    case 70:
+      return TitelBlock;
+    case 71:
+      return OverzichtVacatures;
     default:
       return FallbackBlock;
   }
