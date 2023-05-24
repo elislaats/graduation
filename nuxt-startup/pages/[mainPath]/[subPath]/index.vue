@@ -1,6 +1,6 @@
 <template>
   <ErrorComp v-if="error" :error="error"></ErrorComp>
-  <LoadingComp v-if="pending"></LoadingComp>
+  <LoadingComp v-if="pending" color="white"></LoadingComp>
   <main v-if="!pending && !error">
     <component
       v-for="(block, index) in page.contentBlocks"
