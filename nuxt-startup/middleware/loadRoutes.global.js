@@ -7,7 +7,7 @@ async function loadRoutes() {
 
   response.forEach((route) => {
     loadedRoutes.push({
-      name: route.name.toLowerCase(),
+      name: route.name,
       path: route.url,
       id: route.id,
     });

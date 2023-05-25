@@ -13,6 +13,7 @@ export default defineNuxtRouteMiddleware((to) => {
   routes.forEach((route) => {
     if (route.path == "/" + to.params.paths[0]) {
       foundRoute = true;
+      setMetadata(route.name)
     }
   });
 
@@ -22,5 +23,7 @@ export default defineNuxtRouteMiddleware((to) => {
       statusMessage: "route onbekend",
       message: "de hoofdroute is niet bekend als beschikbare routes",
     });
+  } else {
+    
   }
 });

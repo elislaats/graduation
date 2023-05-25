@@ -3,7 +3,7 @@
     <NuxtLink
       v-for="route in routing.routes"
       :to="route.path"
-      :class="'btn navLink ' + route.name.replaceAll(' ', '')"
+      :class="'btn navLink ' + route.name.replaceAll(' ', '').toLowerCase()"
       :active-class="'text-primary'"
     >
       {{ route.name }}
