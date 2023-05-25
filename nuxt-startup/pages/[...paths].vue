@@ -51,9 +51,16 @@ onMounted(async () => {
   }
 });
 
-watch(idList, async (idList) => {
+watch(
+  idList, async (idList) => {
   if (idList.length > 0) {
     page.value = await getPagedataByIds(idList);
   }
 });
+
+watch(page, (newpage) => {
+  if(newpage.metaData) {
+    setMetadata(newpage.info.titel, newpage.metaData)
+  }
+})
 </script>

@@ -14,7 +14,7 @@ export const getPagedataByIds = async function (idList) {
       throw createError({
         statusCode: 400,
         statusMessage: "API Call mislukt",
-        message: `geprobeerd op te halen: /api/pages/${id}}`,
+        message: `geprobeerd op te halen: /api/page/${idList.join("/")}`,
       });
     }
   }
