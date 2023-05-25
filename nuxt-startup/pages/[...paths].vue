@@ -26,23 +26,25 @@ const page = ref({
 });
 
 onMounted(async () => {
-  const currentPaths = useRoute().params.paths;
-  if (currentPaths.length > 1 && currentPaths[1] != "") {
-    const databankId = getDatabankIdFromName(currentPaths[0]);
-    const detailId = await getDetailIdFromSlug(databankId, currentPaths[1]);
+  const mainPath = useRoute().params.paths[0];
+  const subPath = useRoute().params.paths[1];
+  if (subPath) {
+    const databankId = getDatabankIdFromName(mainPath);
+    const detailId = await getDetailIdFromSlug(databankId, subPath);
     if (detailId) {
       idList.value = [databankId, detailId];
     } else {
       throw createError({
         statusCode: 404,
         statusMessage: "route onbekend",
+        message: "bij deze sub-route is geen id bekend",
         fatal: true,
       });
     }
   } else {
     const routes = useState("routes").value;
     routes.forEach((route) => {
-      if (route.path.includes(currentPaths[0])) {
+      if (route.path.includes(mainPath)) {
         idList.value = [route.id];
       }
     });
@@ -51,27 +53,7 @@ onMounted(async () => {
 
 watch(idList, async (idList) => {
   if (idList.length > 0) {
-    try {
-      const { data: apidata } = await useFetch(
-        `/api/page/${idList.join("/")}`,
-        {
-          key: `pagina-${idList.join("-")}`,
-          method: "GET",
-          baseURL: "https://api-cre8ion.tc8l.dev",
-        }
-      );
-      if (apidata.value) {
-        page.value = mapPageData(apidata.value);
-      } else {
-        throw createError({
-          statusCode: 400,
-          statusMessage: "API Call mislukt",
-          message: `geprobeerd op te halen: /api/page/${idList.join("/")}`,
-        });
-      }
-    } catch (err) {
-      error.value = err;
-    }
+    page.value = await getPagedataByIds(idList);
   }
 });
 </script>

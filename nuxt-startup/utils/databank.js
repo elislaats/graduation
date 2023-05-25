@@ -8,8 +8,7 @@ export const getDatabank = async function (id) {
       baseURL: "https://api-cre8ion.tc8l.dev",
     });
     if (elements) {
-      useState(`databank-${id}`, () => elements);
-      return elements;
+      return useState(`databank-${id}`, () => elements).value;
     } else {
       throw createError({
         statusCode: 400,
