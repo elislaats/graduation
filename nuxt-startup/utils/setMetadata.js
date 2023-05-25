@@ -21,7 +21,7 @@ export default function (title, metaData) {
         useHead({
           meta: [
             {
-              property: key,
+              name: key,
               content: metaData[key],
             },
           ],
