@@ -42,7 +42,6 @@ const video = computed(() => {
       v-if="fallback"
       :id="fallback"
       :altText="'video unavailable'"
-      :width="1200"
       :className="'bg-image ' + className"
     >
     </ImageComp>
@@ -50,7 +49,7 @@ const video = computed(() => {
       v-else
       class="bg-grey-light"
       :style="{ width: '75px', padding: '15px' }"
-      src="@/assets/fa-novideo.svg"
+      src="~/assets/images/fa-noimage.svg"
       alt="video unavailable"
     />
   </template>

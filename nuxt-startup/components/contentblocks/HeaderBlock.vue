@@ -18,13 +18,19 @@ const props = defineProps({
     v-if="info && data"
   >
     <!--background video-->
-    <div class="video-wrapper">
+    <div v-if="data.videoUrl" class="video-wrapper">
       <VideoComp
         :url="data.videoUrl"
         :fallback="data.afbeelding"
         :className="'header-bg'"
       >
       </VideoComp>
+    </div>
+    <div class="image-wrapper" v-else-if="data.afbeelding">
+      <ImageComp
+      :id="data.afbeelding"
+      :className="'bg-image header-bg'">
+      </ImageComp>
     </div>
 
     <!--content: -->

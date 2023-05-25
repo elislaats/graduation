@@ -9,13 +9,13 @@
 
       <p style="font-size: x-large" v-if="error.statusCode == 404">
         Helaas, er werd niets gevonden op
-        <strong class="text-primary">{{ error.url }}</strong>
+        <strong class="text-primary">{{ $route.fullPath }}</strong>
       </p>
 
-      <template v-else-if="error.statusMessage">
+      <template v-else-if="error.message">
         <p>
           {{ error.message }}
-          <strong class="text-primary"> op {{ error.url }} </strong>
+          <strong class="text-primary"> op {{ $route.fullPath }} </strong>
         </p>
       </template>
     </template>
