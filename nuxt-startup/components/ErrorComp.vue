@@ -9,10 +9,17 @@ const props = defineProps({
 <template>
   <section class="flex align-center justify-center">
     <div class="text-danger">
-      <h3>Sorry, er ging iets mis</h3>
-      <p v-if="error">
-        {{ error }}
-      </p>
+      <h2>Sorry, er ging iets mis</h2>
+      <template v-if="error">
+        <h3 v-if="error.statusCode">{{ error.statusCode }}</h3>
+        <p>
+          <strong v-if="error.statusMessage">{{ error.statusMessage }}</strong>
+          <em v-if="error.url">{{ error.url }}</em>
+        </p>
+        <p v-if="error.message">
+          {{ error.message }}
+        </p>
+      </template>
     </div>
   </section>
 </template>
@@ -21,8 +28,8 @@ const props = defineProps({
 section {
   width: 100%;
   height: 100vh;
-  h3 {
-    font-size: large;
+  h2 {
+    font-size: x-large;
   }
 }
 </style>

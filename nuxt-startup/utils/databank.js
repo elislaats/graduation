@@ -3,12 +3,20 @@ export const getDatabank = async function (id) {
   if (stateData) {
     return stateData;
   } else {
-    const { data: elements } = await useFetch(`/api/pages/${id}`, {
+    const elements = await $fetch(`/api/pages/${id}`, {
       method: "GET",
       baseURL: "https://api-cre8ion.tc8l.dev",
     });
-    useState(`databank-${id}`, () => elements.value);
-    return elements.value;
+    if (elements) {
+      useState(`databank-${id}`, () => elements);
+      return elements;
+    } else {
+      throw createError({
+        statusCode: 400,
+        statusMessage: "API Call mislukt",
+        message: `geprobeerd op te halen: /api/pages/${id}}`,
+      });
+    }
   }
 };
 
@@ -36,7 +44,7 @@ export const getDetailIdFromSlug = async function (databankId, slug) {
 
   fullDatabank.forEach((element) => {
     if (element.content.slug == slug) {
-      foundId = element._id
+      foundId = element._id;
     }
   });
   return foundId;
@@ -56,6 +64,10 @@ export const getDatabankIdFromName = function (name) {
     case "medewerkers":
       return 1017;
     default:
-      break;
+      throw createError({
+        statusCode: 404,
+        statusMessage: "geen databank gevonden",
+        message: `Er is geen databank gedefinieerd met de naam ${name}`,
+      });
   }
 };
