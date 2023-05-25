@@ -1,7 +1,11 @@
 # Fontys HBO-ICT Graduation Project
+
 **Door** Eli Slaats\
 **Opdrachtgever** The Cre8ion.Lab ([www.cre8ion.com](https://www.cre8ion.com))\
 **Opdracht** _Vergroten van UX-mogelijkheden voor front-end developers_
+
+## Demo
+Bekijk online demo's van prototypes op [fontys.elislaats.nl](https://fontys.elislaats.nl/)
 
 ## Folders
 
@@ -22,6 +26,8 @@ Applicatie die willekeurige hondenafbeeldingen ophaalt en weergeeft
 **Resultaat:** \
 Applicatie die willekeurige hondenafbeeldingen ophaalt en weergeeft
 
+
+
 ### [`/vue-template-Eli`](/vue-template-Eli)
 
 **Doel:** \
@@ -36,7 +42,10 @@ Vue applicatie opstarten met inhoud uit de Cre8ion API
 Verbeterde versie van inladen inhoud uit Cre8ion API\
 (gebruik van composition API, verbeterd van inladen van router, paginainhoud opslaan in vuex store)
 
-### [`/graduation/nuxt-startup`](/graduation/nuxt-startup)
+**Resultaat:** \
+Applicatie die volledige inhoud van de Cre8ion website vanuit de API ophaalt en in een interface weergeeft
+
+### [`/nuxt-startup`](/graduation/nuxt-startup)
 
 **Doelen:** \
 ‐ Data van API inlezen met een SSR applicatie \
