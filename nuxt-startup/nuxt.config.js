@@ -1,4 +1,6 @@
 export default defineNuxtConfig({
+  target: "static",
+  ssr: false,
   pages: true,
   vite: {
     css: {
