@@ -30,22 +30,24 @@ const filteredElements = computed(() => {
   return allElements.value.slice(0, endValue);
 });
 
-window.onscroll = () => {
-  let bottomOfWindow =
-    Math.max(
-      window.pageYOffset,
-      document.documentElement.scrollTop,
-      document.body.scrollTop
-    ) +
-      window.innerHeight ===
-    document.documentElement.offsetHeight;
-  if (
-    bottomOfWindow &&
-    page.value.index * page.value.amount < allElements.value.length
-  ) {
-    page.value.index++;
-  }
-};
+onMounted(() => {
+  window.onscroll = () => {
+    let bottomOfWindow =
+      Math.max(
+        window.pageYOffset,
+        document.documentElement.scrollTop,
+        document.body.scrollTop
+      ) +
+        window.innerHeight ===
+      document.documentElement.offsetHeight;
+    if (
+      bottomOfWindow &&
+      page.value.index * page.value.amount < allElements.value.length
+    ) {
+      page.value.index++;
+    }
+  };
+});
 </script>
 
 <template>
