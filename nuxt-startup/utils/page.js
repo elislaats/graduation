@@ -1,5 +1,5 @@
-export const getPagedataByIds = async function (idList) {
-  const stateData = useState(`pagedata-${idList.join("-")}`).value;
+export const getPagedataByIds = async function (path, idList) {
+  const stateData = useState(path).value;
   if (stateData) {
     return stateData;
   } else {
@@ -8,8 +8,7 @@ export const getPagedataByIds = async function (idList) {
       baseURL: "https://api-cre8ion.tc8l.dev",
     });
     if (data) {
-      const mapped = mapPageData(data);
-      return useState(`pagedata-${idList.join("-")}`, () => mapped).value;
+      return mapPageData(data);
     } else {
       throw createError({
         statusCode: 400,

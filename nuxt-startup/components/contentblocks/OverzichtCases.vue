@@ -32,19 +32,21 @@ const filteredElements = computed(() => {
   return allElements.value.slice(0, max.value + max.value * page.value);
 });
 
-window.onscroll = () => {
-  let bottomOfWindow =
-    Math.max(
-      window.pageYOffset,
-      document.documentElement.scrollTop,
-      document.body.scrollTop
-    ) +
-      window.innerHeight ===
-    document.documentElement.offsetHeight;
-  if (bottomOfWindow && page.value * max.value < allElements.value.length) {
-    page.value++;
-  }
-};
+onMounted(() => {
+  window.onscroll = () => {
+    let bottomOfWindow =
+      Math.max(
+        window.pageYOffset,
+        document.documentElement.scrollTop,
+        document.body.scrollTop
+      ) +
+        window.innerHeight ===
+      document.documentElement.offsetHeight;
+    if (bottomOfWindow && page.value * max.value < allElements.value.length) {
+      page.value++;
+    }
+  };
+});
 </script>
 
 <template>

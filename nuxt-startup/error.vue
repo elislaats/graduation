@@ -18,6 +18,7 @@
           <strong class="text-primary"> op {{ $route.fullPath }} </strong>
         </p>
       </template>
+      {{ error }}
     </template>
 
     <template v-else>
