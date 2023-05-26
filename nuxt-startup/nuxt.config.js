@@ -12,13 +12,21 @@ export default defineNuxtConfig({
     },
   },
   hooks: {
-    async "nitro:config"(nitroConfig) {
+    async "pages:extend"(pages) {
       const response = await fetch(
         "https://api-cre8ion.tc8l.dev/api/navigation"
       );
       const routes = await response.json();
       routes.forEach((route) => {
-        nitroConfig.prerender.routes.push(route.url);
+        pages.push({
+          name: route.name,
+          path: route.url,
+          file: "~/views/dynamic.vue",
+        })
+        pages.push({
+          path: route.url + "/:subPath",
+          file: "~/views/dynamic.vue",
+        });
       });
     },
   },

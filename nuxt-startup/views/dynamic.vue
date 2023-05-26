@@ -13,10 +13,6 @@
 </template>
 
 <script setup>
-definePageMeta({
-  middleware: ["check-path"],
-});
-
 const error = ref(null);
 const idList = ref([]);
 const page = ref({
@@ -26,8 +22,9 @@ const page = ref({
 });
 
 onMounted(async () => {
-  const mainPath = useRoute().params.paths[0];
-  const subPath = useRoute().params.paths[1];
+  const mainPath = useRoute().fullPath.split('/')[1]
+  const subPath = useRoute().params.subPath
+
   if (subPath) {
     const databankId = getDatabankIdFromName(mainPath);
     const detailId = await getDetailIdFromSlug(databankId, subPath);
