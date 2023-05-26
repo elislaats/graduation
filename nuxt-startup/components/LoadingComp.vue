@@ -15,7 +15,8 @@ const props = defineProps({
 
 <style lang="scss">
 .loading-indicator-wrapper {
-  z-index: 0;
+  background-color: $black;
+  z-index: 99;
   height: 100vh;
   width: 100vw;
   padding: 0;

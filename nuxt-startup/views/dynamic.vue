@@ -8,7 +8,6 @@
       :data="block.data"
     />
   </main>
-  <LoadingComp v-else></LoadingComp>
 </template>
 
 <script setup>
