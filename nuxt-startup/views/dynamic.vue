@@ -12,9 +12,7 @@
 </template>
 
 <script setup>
-definePageMeta({
-  middleware: "load-pagedata",
+const page = computed(() => {
+  return useState(useRoute().path).value;
 });
-
-const page = ref(useState(useRoute().path).value);
 </script>

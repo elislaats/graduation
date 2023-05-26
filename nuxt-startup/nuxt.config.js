@@ -1,6 +1,7 @@
 export default defineNuxtConfig({
   target: "static",
   ssr: true,
+  pages: true,
   vite: {
     css: {
       preprocessorOptions: {
@@ -25,18 +26,27 @@ export default defineNuxtConfig({
               {
                 name: route.name + " Detail",
                 path: route.url + "/:subPath",
-                file: "~/pages/dynamic.vue",
+                file: "~/views/dynamic.vue",
+                meta: {
+                  middleware: "load-pagedata",
+                },
               },
             ],
             props: { id: route.id },
-            file: "~/pages/dynamic.vue",
+            meta: {
+              middleware: "load-pagedata",
+            },
+            file: "~/views/dynamic.vue",
           });
         } else {
           pages.push({
             name: route.name,
             path: "/",
             props: { id: route.id },
-            file: "~/pages/dynamic.vue",
+            file: "~/views/dynamic.vue",
+            meta: {
+              middleware: "load-pagedata",
+            },
           });
         }
       });
