@@ -1,0 +1,30 @@
+html {
+  font-size: 62.5%;
+  font-family: $font-text;
+}
+
+body {
+  font-size: 1.6rem;
+  box-sizing: border-box;
+  background-color: $black;
+  color: $color-text;
+  overflow-y: scroll;
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+a {
+  color: inherit;
+  font-size: 1.4rem;
+}
+
+main {
+  min-height: 100vh;
+  padding-top: 10rem;
+}
