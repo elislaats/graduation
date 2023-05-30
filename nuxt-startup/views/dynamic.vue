@@ -1,5 +1,5 @@
 <template>
-  <main v-if="page.contentBlocks">
+  <main v-if="page">
     <component
       v-for="(block, index) in page.contentBlocks"
       :is="getContentBlockById(block.info._id)"
@@ -11,7 +11,8 @@
 </template>
 
 <script setup>
+const currentPath = useRoute().path;
 const page = computed(() => {
-  return useState(useRoute().path).value;
+  return useState(currentPath).value;
 });
 </script>
