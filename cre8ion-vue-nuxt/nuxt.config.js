@@ -7,6 +7,15 @@ export default defineNuxtConfig({
     },
   },
   css: ["~/assets/styles/main.scss"],
+  vite: {
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: '@import "~/assets/styles/_variables.scss";',
+        },
+      },
+    },
+  },
   hooks: {
     async "pages:extend"(pages) {
       const response = await fetch(
@@ -26,7 +35,10 @@ export default defineNuxtConfig({
           name: name,
           path: path,
           file: "~/pages/index.vue",
-          props: { id: id },
+          meta: {
+            id: id,
+            middleware: "load-main-page",
+          },
           children: [
             {
               path: ":slug",
@@ -39,7 +51,7 @@ export default defineNuxtConfig({
       function setHomepage(route) {
         pages[0].name = route.name;
         pages[0].alias = route.url;
-        pages[0].props = { id: route.id };
+        pages[0].meta = { id: route.id, middleware: "load-main-page" };
       }
     },
   },
