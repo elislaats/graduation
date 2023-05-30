@@ -3,8 +3,6 @@ const props = defineProps({
   error: Object,
 });
 
-setMetadata(`${props.error.statusCode} | ${props.error.statusMessage}`);
-
 const handleError = () => clearError({ redirect: "/" });
 </script>
 
