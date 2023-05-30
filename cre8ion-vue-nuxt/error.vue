@@ -10,10 +10,8 @@ const handleError = () => clearError({ redirect: "/" });
 
 <template>
   <main class="flex flex-column align-center justify-center">
-    <h1>Sorry, er ging iets mis</h1>
-
     <template v-if="error">
-      <h2 v-if="error.statusCode">{{ error.statusCode }}</h2>
+      <h1 v-if="error.statusCode">{{ error.statusCode }}</h1>
       <h3 v-if="error.statusMessage">{{ error.statusMessage }}</h3>
       <template v-for="(value, key, index) in error" :key="key + index">
         <p v-if="key != 'statusCode' && key != 'statusMessage' && value">
@@ -23,6 +21,7 @@ const handleError = () => clearError({ redirect: "/" });
     </template>
 
     <template>
+      <h1>Sorry, er ging iets mis</h1>
       <p>Het is onduidelijk wat er precies mis ging</p>
     </template>
 
