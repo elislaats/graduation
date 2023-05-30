@@ -38,20 +38,22 @@ const video = computed(() => {
   <div v-if="loading && !error" class="vid-loading" :class="className"></div>
   <template v-if="error">
     <!-- error herkend -->
-    <ImageComp
-      v-if="fallback"
-      :id="fallback"
-      :altText="'video unavailable'"
-      :className="'bg-image ' + className"
-    >
-    </ImageComp>
-    <img
-      v-else
-      class="bg-grey-light"
-      :style="{ width: '75px', padding: '15px' }"
-      src="~/assets/images/fa-noimage.svg"
-      alt="video unavailable"
-    />
+    <ClientOnly>
+      <ImageComp
+        v-if="fallback"
+        :id="fallback"
+        :altText="'video unavailable'"
+        :className="'bg-image ' + className"
+      >
+      </ImageComp>
+      <img
+        v-else
+        class="bg-grey-light"
+        :style="{ width: '75px', padding: '15px' }"
+        src="~/assets/images/fa-noimage.svg"
+        alt="video unavailable"
+      />
+    </ClientOnly>
   </template>
 
   <template v-else-if="video.type == 'mp4'">

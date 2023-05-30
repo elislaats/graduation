@@ -47,7 +47,13 @@ const props = defineProps({
           ></div>
         </div>
         <div class="col-img col-4-12 flex">
-          <ImageComp v-if="data.afbeelding" :id="data.afbeelding" className="image"></ImageComp>
+          <ClientOnly>
+            <ImageComp
+              v-if="data.afbeelding"
+              :id="data.afbeelding"
+              className="image"
+            ></ImageComp>
+          </ClientOnly>
         </div>
       </div>
     </template>
@@ -74,24 +80,23 @@ const props = defineProps({
 
 <style lang="scss">
 .text-and-image {
-  .col-text{
+  .col-text {
     .titel {
       font-size: 6rem;
       margin-bottom: 5rem;
-      strong{
-        color: $primary-color
+      strong {
+        color: $primary-color;
       }
     }
   }
 
-
-  .col-img{
+  .col-img {
     position: relative;
     top: 0;
     bottom: 0;
     right: 0;
-    padding:0;
-    .image{
+    padding: 0;
+    .image {
       display: flex;
       width: 100%;
     }

@@ -19,7 +19,7 @@ const page = ref({
 const allElements = ref();
 
 getDatabank(databankId).then((elements) => {
-  allElements.value = elements.toReversed();
+  allElements.value = elements.toReversed()
 });
 
 const filteredElements = computed(() => {
@@ -68,12 +68,14 @@ onMounted(() => {
         <div class="news-item" v-for="element in filteredElements">
           <div class="news-image-wrapper">
             <NuxtLink :to="`/nieuws/${element.content.slug}`">
-              <ImageComp
-                v-if="element.content.afbeelding"
-                :id="element.content.afbeelding"
-                :class-name="'news-image'"
-              >
-              </ImageComp>
+              <ClientOnly>
+                <ImageComp
+                  v-if="element.content.afbeelding"
+                  :id="element.content.afbeelding"
+                  className="news-image"
+                >
+                </ImageComp>
+              </ClientOnly>
             </NuxtLink>
           </div>
 

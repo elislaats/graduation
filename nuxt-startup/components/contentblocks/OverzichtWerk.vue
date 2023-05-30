@@ -76,37 +76,39 @@ onMounted(() => {
                   {{ element.content.titel }}
                 </NuxtLink>
 
-                <!--background:-->
-                <ImageComp
-                  v-if="
-                    element.content.afbeelding700X700 &&
-                    ($route.path == '/homepage' ||
-                      !element.content.headerAfbeelding1920X800)
-                  "
-                  :id="element.content.afbeelding700X700"
-                  :width="700"
-                  :className="'bg-image work-bg'"
-                ></ImageComp>
+                <ClientOnly>
+                  <!--background:-->
+                  <ImageComp
+                    v-if="
+                      element.content.afbeelding700X700 &&
+                      ($route.path == '/homepage' ||
+                        !element.content.headerAfbeelding1920X800)
+                    "
+                    :id="element.content.afbeelding700X700"
+                    :width="700"
+                    :className="'bg-image work-bg'"
+                  ></ImageComp>
 
-                <ImageComp
-                  v-else-if="element.content.headerAfbeelding1920X800"
-                  :id="element.content.headerAfbeelding1920X800"
-                  :width="1920"
-                  :className="'bg-image work-bg'"
-                ></ImageComp>
+                  <ImageComp
+                    v-else-if="element.content.headerAfbeelding1920X800"
+                    :id="element.content.headerAfbeelding1920X800"
+                    :width="1920"
+                    :className="'bg-image work-bg'"
+                  ></ImageComp>
 
-                <div v-else class="work-bg no-bg"></div>
+                  <div v-else class="work-bg no-bg"></div>
 
-                <!--logo-->
-                <ImageComp
-                  v-if="element.content.transparantLogo400X400MargeAanZijden"
-                  :id="element.content.transparantLogo400X400MargeAanZijden"
-                  :altText="`Logo van ${element.content.titel}`"
-                  :className="'logo work-logo'"
-                ></ImageComp>
-                <div v-else class="work-logo">
-                  <h5>{{ element.content.titel }}</h5>
-                </div>
+                  <!--logo-->
+                  <ImageComp
+                    v-if="element.content.transparantLogo400X400MargeAanZijden"
+                    :id="element.content.transparantLogo400X400MargeAanZijden"
+                    :altText="`Logo van ${element.content.titel}`"
+                    :className="'logo work-logo'"
+                  ></ImageComp>
+                  <div v-else class="work-logo">
+                    <h5>{{ element.content.titel }}</h5>
+                  </div>
+                </ClientOnly>
               </div>
             </div>
           </template>

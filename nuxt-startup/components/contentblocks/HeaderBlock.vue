@@ -27,10 +27,10 @@ const props = defineProps({
       </VideoComp>
     </div>
     <div class="image-wrapper" v-else-if="data.afbeelding">
-      <ImageComp
-      :id="data.afbeelding"
-      :className="'bg-image header-bg'">
-      </ImageComp>
+      <ClientOnly>
+        <ImageComp :id="data.afbeelding" :className="'bg-image header-bg'">
+        </ImageComp>
+      </ClientOnly>
     </div>
 
     <!--content: -->
@@ -87,7 +87,7 @@ const props = defineProps({
     .header-text {
       z-index: 4;
     }
-    .header-button{
+    .header-button {
       margin: 2rem 0;
     }
   }

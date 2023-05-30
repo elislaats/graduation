@@ -85,14 +85,17 @@ onMounted(() => {
                   <h3>{{ element.content.subtitel }}</h3>
                 </div>
 
-                <!--background-image-->
-                <ImageComp
-                  v-if="element.content.afbeelding1200X900"
-                  :id="element.content.afbeelding1200X900"
-                  :width="1200"
-                  :className="'bg-image case-bg'"
-                ></ImageComp>
-                <div v-else class="case-bg no-bg"></div>
+                <ClientOnly>
+                  <!--background-image-->
+                  <ImageComp
+                    v-if="element.content.afbeelding1200X900"
+                    :id="element.content.afbeelding1200X900"
+                    :width="1200"
+                    :className="'bg-image case-bg'"
+                  ></ImageComp>
+
+                  <div v-else class="case-bg no-bg"></div>
+                </ClientOnly>
               </div>
             </div>
           </template>
