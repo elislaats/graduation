@@ -43,6 +43,9 @@ export default defineNuxtConfig({
             {
               path: ":slug",
               file: "~/pages/index.vue",
+              meta: {
+                middleware: "load-sub-page",
+              },
             },
           ],
         });
