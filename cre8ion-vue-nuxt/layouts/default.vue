@@ -13,4 +13,5 @@ nuxtApp.hook("page:finish", () => {
   <NavBar></NavBar>
   <LoadingIncicator v-if="loading" :fullscreen="true"></LoadingIncicator>
   <slot />
+  <FooterComp></FooterComp>
 </template>

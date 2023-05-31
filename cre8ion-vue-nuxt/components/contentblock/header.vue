@@ -22,7 +22,7 @@ const props = defineProps(useDefaultProps());
         >
         </ImageComp>
         <template #fallback>
-          <LoadingIncicator v-if="loading"></LoadingIncicator>
+          <LoadingIncicator></LoadingIncicator>
         </template>
       </ClientOnly>
     </div>
