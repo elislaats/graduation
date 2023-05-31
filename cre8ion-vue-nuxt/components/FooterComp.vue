@@ -21,18 +21,18 @@
             <div
               class="cta contact flex flex-nowrap flex-column align-center justify-space-between"
             >
-            <ClientOnly>
-              <ImageComp
-                :id="5755"
-                :width="900"
-                :height="900"
-                className="cta-bg cta-contact bg-image"
-              >
-              </ImageComp>
-              <template #fallback>
-                <LoadingIncicator></LoadingIncicator>
-              </template>
-            </ClientOnly>
+              <ClientOnly>
+                <ImageComp
+                  :id="5755"
+                  :width="900"
+                  :height="900"
+                  className="cta-bg cta-contact bg-image"
+                >
+                </ImageComp>
+                <template #fallback>
+                  <LoadingIncicator></LoadingIncicator>
+                </template>
+              </ClientOnly>
               <div class="cta-icon contact"></div>
               <h3 class="cta-title">
                 Samen met ons aan een mooi experiment werken?
@@ -47,18 +47,18 @@
             <div
               class="cta vacature flex flex-nowrap flex-column align-center justify-space-between"
             >
-            <ClientOnly>
-              <ImageComp
-                :id="5754"
-                :width="900"
-                :height="900"
-                className="cta-bg cta-vacature bg-image"
-              >
-              </ImageComp>
-              <template #fallback>
-                <LoadingIncicator></LoadingIncicator>
-              </template>
-            </ClientOnly>
+              <ClientOnly>
+                <ImageComp
+                  :id="5754"
+                  :width="900"
+                  :height="900"
+                  className="cta-bg cta-vacature bg-image"
+                >
+                </ImageComp>
+                <template #fallback>
+                  <LoadingIncicator></LoadingIncicator>
+                </template>
+              </ClientOnly>
               <div class="cta-icon vacature"></div>
               <h3 class="cta-title">Bij ons in het Lab werken?</h3>
               <NuxtLink class="btn btn-primary outline" to="/vacatures">
@@ -104,32 +104,29 @@
                 href="https://www.facebook.com/thecre8ionlab"
                 target="_blank"
                 title="Volg ons op Facebook"
-                ><i class="icon icon-facebook"></i
-              ></a>
+              >Facebook</a>
             </li>
             <li>
               <a
                 href="https://www.linkedin.com/company/the-cre8ion.lab"
                 target="_blank"
                 title="Volg ons op LinkedIn"
-                ><i class="icon icon-linkedin"></i
-              ></a>
+                >LinkedIn</a>
             </li>
             <li>
               <a
                 href="https://www.instagram.com/thecre8ionlab/"
                 target="_blank"
                 title="Volg ons op Instagram"
-                ><i class="icon icon-instagram"></i
-              ></a>
+                >
+                Instagram</a>
             </li>
             <li>
               <a
                 href="https://twitter.com/thecre8ionlab"
                 target="_blank"
                 title="Volg ons op Twitter"
-                ><i class="icon icon-twitter"></i
-              ></a>
+                >Twitter</a>
             </li>
           </ul>
         </div>
@@ -160,21 +157,60 @@
         aspect-ratio: 10/7;
         width: 100%;
         text-align: center;
+        background-color: #4d4d4d;
         padding: 8rem 3rem;
         margin-bottom: 2rem;
         transition: all ease 0.3s;
         position: relative;
+        &:hover {
+          background-color: $primary-color;
+        }
+        & > * {
+          z-index: 1;
+        }
         .cta-bg {
-          filter: grayscale(1) brightness(.5);
           position: absolute;
           left: 0;
           top: 0;
           width: 100%;
           height: 100%;
-          z-index: -1;
+          z-index: 0;
           -webkit-transition: all ease 0.3s;
           -o-transition: all ease 0.3s;
           transition: all ease 0.3s;
+          mix-blend-mode: multiply;
+          filter: grayscale(1);
+        }
+      }
+    }
+  }
+  .footer-headline {
+    font-weight: 900;
+    font-size: 8rem;
+    margin: 0;
+    padding: 10rem 0;
+  }
+  .footer-beeldmerk{
+    max-width: 6.5rem;
+    margin-right: 3rem;
+  }
+  .footer-contact {
+    padding-bottom: 20rem;
+    position: relative;
+    .footer-text {
+      margin-right: 20rem;
+      margin-bottom: 2rem;
+      .footer-socials {
+        display: flex;
+        list-style-type: none;
+        align-items: center;
+        padding: 1rem 0;
+        a {
+          color: #fff;
+          font-size: 1.8rem;
+          text-decoration: none;
+          margin-right: 3rem;
+          opacity: 0.6;
         }
       }
     }

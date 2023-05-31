@@ -9,6 +9,7 @@ body {
   background-color: $black;
   color: $color-text;
   overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 *,
@@ -20,8 +21,9 @@ body {
 }
 
 a {
-  color: inherit;
-  font-size: 1.4rem;
+  color: $primary-color;
+  text-decoration: underline;
+  outline: 0;
 }
 
 main {

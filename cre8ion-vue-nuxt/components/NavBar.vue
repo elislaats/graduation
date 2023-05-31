@@ -3,7 +3,7 @@ const navRoutes = computed(() => {
   const allRoutes = useRouter().getRoutes();
   let routes = [];
   allRoutes.forEach((route) => {
-    if (route.name && !route.aliasOf && !route.name.includes('Detail')) {
+    if (route.name && !route.aliasOf && !route.name.includes("Detail")) {
       routes.push(route);
     }
   });
@@ -103,10 +103,11 @@ function checkRoutes(expression, routeList) {
           justify-content: center;
           align-items: center;
           a {
+            color: $white;
             text-transform: uppercase;
             text-decoration: none;
-            &:hover{
-                color: $primary-color;
+            &:hover {
+              color: $primary-color;
             }
           }
         }
