@@ -9,11 +9,14 @@ if (page.value.metaData) {
 <template>
   <main>
     <template v-if="page">
-      <ContentblockFallback
-        v-for="block in page.contentBlocks"
+      <component
+        v-for="(block, index) in page.contentBlocks"
+        :key="$route.name + '-cb-' + index"
+        :is="getContentblock(block.info._id)"
         :info="block.info"
         :data="block.data"
-      ></ContentblockFallback>
+      >
+      </component>
     </template>
   </main>
 </template>

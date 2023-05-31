@@ -1,14 +1,5 @@
 <script setup>
-const props = defineProps({
-  info: {
-    type: Object,
-    required: true,
-  },
-  data: {
-    type: Object,
-    required: true,
-  },
-});
+const props = defineProps(useDefaultProps());
 </script>
 
 <template>

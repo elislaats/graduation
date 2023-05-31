@@ -1,7 +1,6 @@
 export default defineNuxtRouteMiddleware(async (to) => {
   const databank = getDatabankIdFromName(to.path.split("/")[1]);
   const id = await getDetailIdFromSlug(databank, to.params.slug);
-
   if (!id) {
     return abortNavigation(
       `De slug: ${to.params.slug} werd niet gevonden in databank: ${databank}`
