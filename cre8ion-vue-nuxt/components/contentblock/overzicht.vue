@@ -37,8 +37,7 @@ const filteredElements = computed(() => {
 });
 </script>
 <template>
-  <section class="contentblock overzicht" v-if="info && data">
-    <h1>{{ info._name }}</h1>
+  <section class="contentblock overzicht" :class="databankName" v-if="info && data">
     <LoadingIncicator v-if="pending" color="white"></LoadingIncicator>
     <template v-else>
       <template v-if="databankId == 6">
