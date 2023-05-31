@@ -10,7 +10,7 @@ export const getFullDatabank = async function (id) {
         message: `geprobeerd op te halen: /api/pages/${id}}`,
       });
     } else {
-      return res.data.value
+      return res.data.value;
     }
   });
   return databank;

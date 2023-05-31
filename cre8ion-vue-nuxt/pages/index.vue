@@ -1,4 +1,16 @@
 <script setup>
+useHead({
+  htmlAttrs: {
+    lang: "NL",
+  },
+  link: [
+    {
+      rel: "icon",
+      type: "image/png",
+      href: "/icon.png",
+    },
+  ],
+});
 const { data: page } = useNuxtData(useRoute().path);
 
 if (page.value.metaData) {

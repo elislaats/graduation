@@ -11,6 +11,6 @@ nuxtApp.hook("page:finish", () => {
 
 <template>
   <NavBar></NavBar>
-  <LoadingComp v-if="loading"></LoadingComp>
+  <LoadingIncicator v-if="loading"></LoadingIncicator>
   <slot />
 </template>
