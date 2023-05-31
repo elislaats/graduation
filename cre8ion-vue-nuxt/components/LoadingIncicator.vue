@@ -1,5 +1,12 @@
 <template>
-  <section class="loading-indicator-wrapper" :class="props.color">
+  <section
+    v-if="fullscreen"
+    class="loading-indicator-wrapper fullscreen"
+    :class="color"
+  >
+    <div class="loading-indicator"></div>
+  </section>
+  <section class="loading-indicator-wrapper small" :class="color" v-else>
     <div class="loading-indicator"></div>
   </section>
 </template>
@@ -10,20 +17,32 @@ const props = defineProps({
     type: String,
     required: false,
   },
+  fullscreen: {
+    type: Boolean,
+    required: false,
+  },
 });
 </script>
 
 <style lang="scss">
 .loading-indicator-wrapper {
-  background-color: $black;
-  z-index: 99;
-  height: 100vh;
-  width: 100vw;
-  padding: 0;
-  margin: 0;
-  position: fixed;
-  top: 0;
-  left: 0;
+  &.fullscreen {
+    background-color: $black;
+    z-index: 99;
+    height: 100vh;
+    width: 100vw;
+    padding: 0;
+    margin: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
+  &.small {
+    min-height: 10rem;
+    min-width: 10rem;
+    height: 100%;
+    width: 100%;
+  }
   display: flex;
   align-items: center;
   justify-content: center;
