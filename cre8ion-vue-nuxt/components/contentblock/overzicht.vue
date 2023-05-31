@@ -37,38 +37,43 @@ const filteredElements = computed(() => {
 });
 </script>
 <template>
-  <h1>{{ info._name }}</h1>
-  <LoadingIncicator v-if="pending" color="white"></LoadingIncicator>
-  <template v-else>
-    <template v-if="databankId == 6">
-      <OverzichtCases
-        @update-page="(i) => (page.index += i)"
-        :elements="filteredElements"
-        :showButton="
-          $route.name !== 'Homepage' &&
-          allElements.length > filteredElements.length
-        "
-      ></OverzichtCases>
-    </template>
-    <template v-if="databankId == 5">
-      <OverzichtWerk
-        @update-page="(i) => (page.index += i)"
-        :elements="filteredElements"
-        :showButton="
-          $route.name !== 'Homepage' &&
-          allElements.length > filteredElements.length
-        "
-      ></OverzichtWerk>
-    </template>
-    <div id="crawl-links">
-      <template v-for="el in allElements" :key="databankName + el._id">
-        <NuxtLink
-          v-if="el.content.slug"
-          :to="`/${databankName}/${el.content.slug}`"
-        ></NuxtLink>
+  <section class="contentblock overzicht" v-if="info && data">
+    <h1>{{ info._name }}</h1>
+    <LoadingIncicator v-if="pending" color="white"></LoadingIncicator>
+    <template v-else>
+      <template v-if="databankId == 6">
+        <OverzichtCases
+          @update-page="(i) => (page.index += i)"
+          :elements="filteredElements"
+          :showButton="
+            $route.name !== 'Homepage' &&
+            allElements.length > filteredElements.length
+          "
+        ></OverzichtCases>
       </template>
-    </div>
-  </template>
+      <template v-if="databankId == 5">
+        <OverzichtWerk
+          @update-page="(i) => (page.index += i)"
+          :elements="filteredElements"
+          :showButton="
+            $route.name !== 'Homepage' &&
+            allElements.length > filteredElements.length
+          "
+        ></OverzichtWerk>
+      </template>
+      <div id="crawl-links">
+        <template v-for="el in allElements" :key="databankName + el._id">
+          <NuxtLink
+            v-if="el.content.slug"
+            :to="`/${databankName}/${el.content.slug}`"
+          ></NuxtLink>
+        </template>
+      </div>
+    </template>
+  </section>
+  <section class="contentblock text-danger" v-else>
+    <p>no content available</p>
+  </section>
 </template>
 
 <style lang="scss" scoped>

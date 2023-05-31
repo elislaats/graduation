@@ -2,16 +2,29 @@
 const props = defineProps(useDefaultProps());
 </script>
 <template>
-  <section
-    class="contentblock-header"
-    v-if="info && data"
-  >
+  <section class="contentblock header" v-if="info && data">
     <!--background video-->
     <div v-if="data.videoUrl" class="video-wrapper">
-      <!-- TO DO: add video component-->
+      <VideoComp
+        :url="data.videoUrl"
+        :fallback="data.afbeelding"
+        :className="'header-bg'"
+      >
+      </VideoComp>
     </div>
     <div class="image-wrapper" v-else-if="data.afbeelding">
-      <!-- TO DO: add image component-->
+      <ClientOnly>
+        <ImageComp
+          :id="data.afbeelding"
+          :width="1920"
+          :height="1080"
+          className="bg-image header-bg"
+        >
+        </ImageComp>
+        <template #fallback>
+          <LoadingIncicator v-if="loading"></LoadingIncicator>
+        </template>
+      </ClientOnly>
     </div>
 
     <!--content: -->
@@ -37,12 +50,16 @@ const props = defineProps(useDefaultProps());
       (Tekst knop 2?)
     </NuxtLink>
   </section>
+  <section class="contentblock text-danger" v-else>
+    <p>no content available</p>
+  </section>
 </template>
 
 <style lang="scss">
-.contentblock-header {
+.contentblock.header {
   position: relative;
   min-height: 100vh;
+  margin-top: 0;
   margin-bottom: 10rem;
   overflow-x: hidden;
   overflow-y: hidden;
@@ -69,7 +86,8 @@ const props = defineProps(useDefaultProps());
       margin: 2rem 0;
     }
   }
-  .video-wrapper {
+  .video-wrapper,
+  .image-wrapper {
     position: absolute;
     top: 0;
     left: 0;

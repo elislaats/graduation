@@ -3,7 +3,7 @@ const props = defineProps(useDefaultProps());
 </script>
 
 <template>
-  <section class="contentblock" v-if="info && data">
+  <section class="contentblock fallback" v-if="info && data">
     <div class="grid grid-pad bg-grey-dark p-2">
       <div class="col-1-3">
         <h4 class="text-primary">{{ info._id }}: {{ info._name }}</h4>
