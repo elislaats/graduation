@@ -11,11 +11,11 @@ useHead({
     },
   ],
 });
-const { data: page } = useNuxtData(useRoute().path);
+const route = useRoute();
 
-if (page.value.metaData) {
-  useSeoMeta(() => page.value.metaData);
-}
+const page = computed(() => {
+  return useNuxtData(route.path).data.value;
+});
 </script>
 
 <template>

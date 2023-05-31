@@ -41,6 +41,7 @@ export default defineNuxtConfig({
           },
           children: [
             {
+              name: name + " Detail",
               path: ":slug",
               file: "~/pages/index.vue",
               meta: {

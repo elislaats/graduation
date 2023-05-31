@@ -17,6 +17,8 @@ export default defineNuxtRouteMiddleware(async (to) => {
         return abortNavigation(
           `Geen paginainhoud gevonden voor databank: ${databank} en id: ${id}`
         );
+      } else {
+        setMeta(res.data.value)
       }
     });
   }

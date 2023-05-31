@@ -60,17 +60,19 @@ const filteredElements = computed(() => {
         "
       ></OverzichtWerk>
     </template>
-    <template v-for="el in allElements" :key="databankName + el._id">
-      <NuxtLink
-        v-if="el.content.slug"
-        :to="`/${databankName}/${el.content.slug}`"
-      ></NuxtLink>
-    </template>
+    <div id="crawl-links">
+      <template v-for="el in allElements" :key="databankName + el._id">
+        <NuxtLink
+          v-if="el.content.slug"
+          :to="`/${databankName}/${el.content.slug}`"
+        ></NuxtLink>
+      </template>
+    </div>
   </template>
 </template>
 
 <style lang="scss" scoped>
-#crawlLinks {
+#crawl-links {
   opacity: 0;
   visibility: hidden;
   position: absolute;

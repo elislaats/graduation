@@ -13,7 +13,7 @@ const emits = defineEmits(["updatePage"]);
 </script>
 <template>
   <div v-for="el in elements">
-    <NuxtLink :to="`cases/${el.content.slug}`">
+    <NuxtLink :to="`/cases/${el.content.slug}`">
       {{ el.content.titel }}
     </NuxtLink>
   </div>

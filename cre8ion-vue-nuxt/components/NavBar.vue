@@ -3,7 +3,7 @@ const navRoutes = computed(() => {
   const allRoutes = useRouter().getRoutes();
   let routes = [];
   allRoutes.forEach((route) => {
-    if (route.name && !route.aliasOf) {
+    if (route.name && !route.aliasOf && !route.name.includes('Detail')) {
       routes.push(route);
     }
   });
