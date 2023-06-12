@@ -22,7 +22,7 @@ const props = defineProps({
         {{ props.data.titel }}
       </h2>
       <div class="video-wrapper col-1-1">
-        <VideoComp :url="data.linkUrl"> </VideoComp>
+        <VideoComp v-if="typeof data.linkUrl == 'string'" :url="data.linkUrl"> </VideoComp>
       </div>
     </div>
   </section>

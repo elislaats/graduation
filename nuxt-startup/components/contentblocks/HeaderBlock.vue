@@ -27,9 +27,7 @@ const props = defineProps({
       </VideoComp>
     </div>
     <div class="image-wrapper" v-else-if="data.afbeelding">
-      <ImageComp
-      :id="data.afbeelding"
-      :className="'bg-image header-bg'">
+      <ImageComp :id="data.afbeelding" :className="'bg-image header-bg'">
       </ImageComp>
     </div>
 
@@ -41,19 +39,21 @@ const props = defineProps({
 
         <NuxtLink
           class="btn btn-primary outline header-button"
-          v-if="data.knop1"
-          :to="data.knop1"
+          v-if="data.knop1.link"
+          :to="data.knop1.link"
+          :target="data.knop1.target"
         >
-          (Tekst knop 1?)
+          {{ data.knop1.name }}
         </NuxtLink>
       </div>
     </div>
     <NuxtLink
       class="btn btn-secondary header-button-secondary"
-      v-if="data.knop2"
-      :to="data.knop2"
+      v-if="data.knop2.link"
+      :to="data.knop2.link"
+      :target="data.knop2.target"
     >
-      (Tekst knop 2?)
+      {{ data.knop2.name }}
     </NuxtLink>
   </section>
   <section class="contentblock text-danger" v-else>
@@ -87,7 +87,7 @@ const props = defineProps({
     .header-text {
       z-index: 4;
     }
-    .header-button{
+    .header-button {
       margin: 2rem 0;
     }
   }
