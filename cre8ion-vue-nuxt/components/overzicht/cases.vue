@@ -3,7 +3,7 @@ const props = defineProps({
   elements: {
     required: true,
     type: Array,
-  }
+  },
 });
 
 const emit = defineEmits(["scrolledDown"]);

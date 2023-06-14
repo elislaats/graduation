@@ -17,6 +17,14 @@ const page = ref({
   amount: 6,
 });
 
+const specificItems = computed(() => {
+  if (props.data["cases"]) {
+    return props.data["cases"];
+  } else if (props.data["onsWerk"]) {
+    return props.data["onsWerk"];
+  }
+});
+
 if (props.data.maximaalWeerTeGevenArtikelen) {
   page.value.amount = parseInt(props.data.maximaalWeerTeGevenArtikelen);
 }
@@ -30,11 +38,11 @@ function getDbId() {
 }
 
 const filteredElements = computed(() => {
-  if (props.data[databankName]) {
-    const setItems = props.data[databankName].split(", ");
+  if (specificItems.value) {
+    const idList = specificItems.value.split(", ");
     let foundItems = [];
     allElements.value.forEach((element) => {
-      setItems.forEach((id) => {
+      idList.forEach((id) => {
         if (element._id == id) {
           foundItems.push(element);
         }
@@ -69,12 +77,8 @@ function handleScroll() {
       </template>
       <template v-if="databankId == 5">
         <OverzichtWerk
-          @update-page="(i) => (page.index += i)"
+          @scrolled-down="handleScroll()"
           :elements="filteredElements"
-          :showButton="
-            $route.name !== 'Homepage' &&
-            allElements.length > filteredElements.length
-          "
         ></OverzichtWerk>
       </template>
       <div id="crawl-links">

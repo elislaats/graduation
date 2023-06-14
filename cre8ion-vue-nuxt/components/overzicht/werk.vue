@@ -4,24 +4,28 @@ const props = defineProps({
     required: true,
     type: Array,
   },
-  showButton: {
-    required: false,
-    type: Boolean,
-  },
 });
-const emits = defineEmits(["updatePage"]);
+
+const emit = defineEmits(["scrolledDown"]);
+
+const werkgrid = ref();
+
+onMounted(() => {
+  window.addEventListener("scroll", () => {
+    if (werkgrid.value) {
+      if (werkgrid.value.getBoundingClientRect().bottom < window.innerHeight) {
+        emit("scrolledDown");
+      }
+    }
+  });
+});
 </script>
 <template>
-  <div v-for="el in elements">
-    <NuxtLink :to="`/ons-werk/${el.content.slug}`">
-      {{ el.content.titel }}
-    </NuxtLink>
+  <div class="grid" ref="werkgrid">
+    <div v-for="el in elements">
+      <NuxtLink :to="`/ons-werk/${el.content.slug}`">
+        {{ el.content.titel }}
+      </NuxtLink>
+    </div>
   </div>
-  <button
-    @click="emits('updatePage', 1)"
-    v-if="showButton"
-    class="btn btn-primary"
-  >
-    more cases
-  </button>
 </template>
