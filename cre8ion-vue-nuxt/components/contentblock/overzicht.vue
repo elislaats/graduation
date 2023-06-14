@@ -69,7 +69,6 @@ function handleScroll() {
   >
     <LoadingIncicator v-if="pending" color="white"></LoadingIncicator>
     <template v-else>
-
       <template v-if="databankId == 6">
         <OverzichtCases
           @scrolled-down="handleScroll()"
@@ -93,11 +92,21 @@ function handleScroll() {
         </div>
       </template>
 
+      <template v-if="databankId == 44">
+        <OverzichtVacatures
+          :titel="data.label"
+          :elements="filteredElements"
+        ></OverzichtVacatures>
+      </template>
+
       <div id="crawl-links">
         <!-- hidden div just to create crawlable links-->
         <template v-for="el in allElements" :key="databankName + el._id">
           <NuxtLink
-            v-if="el.content.slug && databankName != 'medewerkers'"
+            v-if="
+              el.content.slug &&
+              (databankName = 'cases' || databankName == 'ons-werk')
+            "
             :to="`/${databankName}/${el.content.slug}`"
           ></NuxtLink>
         </template>

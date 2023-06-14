@@ -16,6 +16,10 @@ const route = useRoute();
 const page = computed(() => {
   return useNuxtData(route.path).data.value;
 });
+
+watch(page, () => {
+  window.scrollTo(0, 0);
+});
 </script>
 
 <template>
