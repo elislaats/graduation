@@ -32,7 +32,7 @@ const {
   data: image,
   pending,
   error,
-} = await useLazyFetch(
+} = useLazyFetch(
   `media/${props.id}?width=${props.width}&height=${props.height}`,
   {
     key: `image-${props.id}`,
@@ -56,20 +56,19 @@ const imgSrc = computed(() => {
   </template>
   <template v-else-if="error || imgError">
     <figure :class="className" class="error">
-      <img class="img-error" src="~/assets/images/fa-noimage.svg" alt="" />
+      <img class="img-error" src="~/assets/images/fa-noimage.svg" alt="" loading="lazy"/>
     </figure>
   </template>
   <template v-else>
     <figure
       v-if="className.includes('bg-image')"
       :class="className"
-      :style="{ backgroundImage: `url(${imgSrc})` }"
     >
-      <img :src="imgSrc" :alt="altText" />
+      <img :src="imgSrc" :alt="altText" loading="lazy"/>
     </figure>
 
     <figure v-else :class="className">
-      <img :src="imgSrc" :alt="altText" />
+      <img :src="imgSrc" :alt="altText" loading="lazy" />
     </figure>
   </template>
 </template>
