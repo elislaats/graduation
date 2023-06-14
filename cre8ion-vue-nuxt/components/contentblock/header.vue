@@ -35,19 +35,21 @@ const props = defineProps(useDefaultProps());
 
         <NuxtLink
           class="btn btn-primary outline header-button"
-          v-if="data.knop1"
-          :to="data.knop1"
+          v-if="data.knop1.link"
+          :to="data.knop1.link"
+          :target="data.knop1.target"
+          v-text="data.knop1.name"
         >
-          (Tekst knop 1?)
         </NuxtLink>
       </div>
     </div>
     <NuxtLink
       class="btn btn-secondary header-button-secondary"
-      v-if="data.knop2"
-      :to="data.knop2"
+      v-if="data.knop2.link"
+      :to="data.knop2.link"
+      :target="data.knop2.target"
+      v-text="data.knop2.name"
     >
-      (Tekst knop 2?)
     </NuxtLink>
   </section>
   <section class="contentblock text-danger" v-else>
