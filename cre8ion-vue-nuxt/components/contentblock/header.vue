@@ -38,8 +38,8 @@ const props = defineProps(useDefaultProps());
           v-if="data.knop1.link"
           :to="data.knop1.link"
           :target="data.knop1.target"
-          v-text="data.knop1.name"
         >
+        {{ data.knop1.name }}
         </NuxtLink>
       </div>
     </div>
@@ -48,8 +48,8 @@ const props = defineProps(useDefaultProps());
       v-if="data.knop2.link"
       :to="data.knop2.link"
       :target="data.knop2.target"
-      v-text="data.knop2.name"
     >
+    {{ data.knop2.name }}
     </NuxtLink>
   </section>
   <section class="contentblock text-danger" v-else>
