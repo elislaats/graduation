@@ -25,7 +25,7 @@ onMounted(() => {
     <h2 class="titel-label border-white">Cases</h2>
     <div class="grid no-p" v-if="elements">
       <TransitionGroup name="list" appear>
-        <template v-for="element in elements" :key="element._id">
+        <template v-for="element in elements" :key="'case' + element._id">
           <div class="case flex col-1-2">
             <div class="case-inner flex">
               <!--link-->
