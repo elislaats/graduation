@@ -6,6 +6,7 @@ export default function (id) {
   switch (id) {
     case 51:
     case 52:
+    case 57:
       return ContentblockOverzicht;
     case 60:
       return ContentblockHeader;

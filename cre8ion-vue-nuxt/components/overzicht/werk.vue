@@ -22,6 +22,7 @@ onMounted(() => {
 </script>
 <template>
   <div class="grid" ref="workgrid">
+    <h2 class="titel-label border-white">Ons Werk</h2>
     <div class="grid no-p">
       <TransitionGroup name="list" appear>
         <template v-for="element in elements" :key="'werk' + element._id">
