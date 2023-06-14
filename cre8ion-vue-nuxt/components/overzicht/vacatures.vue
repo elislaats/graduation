@@ -11,7 +11,7 @@ const props = defineProps({
 });
 </script>
 <template>
-  <div class="grid grid-pad">
+  <div class="grid grid-pad vacature-overzicht">
     <div class="col-8-12 push-2-12">
       <h4 class="titel-label border-white col-1-5" v-if="titel">
         {{ titel }}
@@ -48,24 +48,26 @@ const props = defineProps({
 </template>
 
 <style lang="scss">
-.vacature {
-  &:first-of-type {
-    border-top: 1px solid;
-  }
-  border-bottom: 1px solid;
-  .vacature-inner {
-    padding: 5rem 0;
-    position: relative;
-    .title {
-      strong {
-        color: $primary-color;
+.vacature-overzicht {
+  .vacature {
+    &:first-of-type {
+      border-top: 1px solid;
+    }
+    border-bottom: 1px solid;
+    .vacature-inner {
+      padding: 5rem 0;
+      position: relative;
+      .title {
+        strong {
+          color: $primary-color;
+        }
       }
-    }
-    .inleiding {
-      padding: 2rem 0;
-    }
-    .button {
-      height: fit-content;
+      .inleiding {
+        padding: 2rem 0;
+      }
+      .button {
+        height: fit-content;
+      }
     }
   }
 }
