@@ -3,20 +3,19 @@ const props = defineProps({
   elements: {
     required: true,
     type: Array,
-  },
-  showButton: {
-    required: false,
-    type: Boolean,
-  },
+  }
 });
-const emits = defineEmits(["updatePage"]);
+
+const emit = defineEmits(["scrolledDown"]);
 
 const casesgrid = ref();
 
 onMounted(() => {
   window.addEventListener("scroll", () => {
     if (casesgrid.value) {
-      console.log(casesgrid.value.getBoundingClientRect().bottom);
+      if (casesgrid.value.getBoundingClientRect().bottom < window.innerHeight) {
+        emit("scrolledDown");
+      }
     }
   });
 });

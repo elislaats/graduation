@@ -30,24 +30,41 @@ function getDbId() {
 }
 
 const filteredElements = computed(() => {
-  if (allElements.value) {
+  if (props.data[databankName]) {
+    const setItems = props.data[databankName].split(", ");
+    let foundItems = [];
+    allElements.value.forEach((element) => {
+      setItems.forEach((id) => {
+        if (element._id == id) {
+          foundItems.push(element);
+        }
+      });
+    });
+    return foundItems;
+  } else {
     const endValue = page.value.index * page.value.amount + page.value.amount;
     return allElements.value.slice(0, endValue);
   }
 });
+
+function handleScroll() {
+  if (filteredElements.value.length < allElements.value.length) {
+    page.value.index++;
+  }
+}
 </script>
 <template>
-  <section class="contentblock overzicht" :class="databankName" v-if="info && data">
+  <section
+    class="contentblock overzicht"
+    :class="databankName"
+    v-if="info && data"
+  >
     <LoadingIncicator v-if="pending" color="white"></LoadingIncicator>
     <template v-else>
       <template v-if="databankId == 6">
         <OverzichtCases
-          @update-page="(i) => (page.index += i)"
+          @scrolled-down="handleScroll()"
           :elements="filteredElements"
-          :showButton="
-            $route.name !== 'Homepage' &&
-            allElements.length > filteredElements.length
-          "
         ></OverzichtCases>
       </template>
       <template v-if="databankId == 5">
