@@ -39,7 +39,7 @@ npm run dev
 
 ### Production
 
-Generate pre-rendered version op the application to deploy to staic hosting
+Generate pre-rendered version op the application to be able to deploy to static hosting
 
 ```bash
 npx nuxi generate
