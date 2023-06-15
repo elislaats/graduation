@@ -3,6 +3,7 @@ const props = defineProps(useDefaultProps());
 
 const databankName = props.info._name
   .replace(" overzicht", "")
+  .replace("Vacatureoverzicht", "vacatures")
   .replace(" ", "-")
   .toLowerCase();
 const databankId = getDbId();
@@ -22,6 +23,8 @@ const specificItems = computed(() => {
     return props.data["cases"];
   } else if (props.data["onsWerk"]) {
     return props.data["onsWerk"];
+  } else {
+    return null;
   }
 });
 
@@ -103,10 +106,7 @@ function handleScroll() {
         <!-- hidden div just to create crawlable links-->
         <template v-for="el in allElements" :key="databankName + el._id">
           <NuxtLink
-            v-if="
-              el.content.slug &&
-              (databankName = 'cases' || databankName == 'ons-werk')
-            "
+            v-if="el.content.slug && databankName != 'medewerkers'"
             :to="`/${databankName}/${el.content.slug}`"
           ></NuxtLink>
         </template>

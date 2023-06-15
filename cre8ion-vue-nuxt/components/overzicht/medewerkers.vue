@@ -9,14 +9,14 @@ const props = defineProps({
 <template>
   <div class="flex flex-nowrap employee-wrapper">
     <div
-      v-for="element in elements"
+      v-for="medewerker in elements"
       class="employee"
-      :key="element.content.afbeelding"
+      :key="medewerker.content.afbeelding"
     >
       <ClientOnly>
         <ImageComp
-          :key="element.content.afbeelding"
-          :id="element.content.afbeelding"
+          :key="medewerker.content.afbeelding"
+          :id="medewerker.content.afbeelding"
           :className="'employee-image'"
           :width="700"
           :height="700"
@@ -24,8 +24,8 @@ const props = defineProps({
         </ImageComp>
       </ClientOnly>
       <div class="employee-info">
-        <h5>{{ element.content.titel }}</h5>
-        <span class="text-primary"> {{ element.content.functie }} </span>
+        <h5>{{ medewerker.content.titel }}</h5>
+        <span class="text-primary"> {{ medewerker.content.functie }} </span>
       </div>
     </div>
   </div>
