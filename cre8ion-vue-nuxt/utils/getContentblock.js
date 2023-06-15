@@ -6,6 +6,7 @@ import ContentblockTekst from "~/components/contentblock/tekst";
 
 export default function (id) {
   switch (id) {
+    case 50:
     case 51:
     case 52:
     case 57:

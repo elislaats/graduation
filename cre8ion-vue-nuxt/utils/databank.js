@@ -2,6 +2,12 @@ export const getFullDatabank = async function (id) {
   const databank = await useFetch(`/pages/${id}`, {
     key: `databank-${id}`,
     baseURL: useRuntimeConfig().public.apiBase,
+    transform: (res) => {
+      if (id == 7) {
+        res.reverse()
+      }
+      return res
+    },
   }).then((res) => {
     if (res.error.value) {
       throw createError({

@@ -6,12 +6,10 @@ const props = defineProps({
   },
   width: {
     type: Number,
-    default: 400,
     required: false,
   },
   height: {
     type: Number,
-    default: 300,
     required: false,
   },
   altText: {
@@ -35,6 +33,7 @@ const {
 } = useLazyFetch(
   `media/${props.id}?width=${props.width}&height=${props.height}`,
   {
+    server: false,
     key: `image-${props.id}`,
     baseURL: useRuntimeConfig().public.apiBase,
   }

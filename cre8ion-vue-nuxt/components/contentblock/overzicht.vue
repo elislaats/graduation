@@ -3,7 +3,8 @@ const props = defineProps(useDefaultProps());
 
 const databankName = props.info._name
   .replace(" overzicht", "")
-  .replace("Vacatureoverzicht", "vacatures")
+  .replace("overzicht", "")
+  .replace("Vacature", "vacatures")
   .replace(" ", "-")
   .toLowerCase();
 const databankId = getDbId();
@@ -30,6 +31,8 @@ const specificItems = computed(() => {
 
 if (props.data.maximaalWeerTeGevenArtikelen) {
   page.value.amount = parseInt(props.data.maximaalWeerTeGevenArtikelen);
+} else if (props.info._name == "Nieuwsoverzicht") {
+  page.value.amount = 1;
 }
 
 function getDbId() {
@@ -95,11 +98,18 @@ function handleScroll() {
         </div>
       </template>
 
-      <template v-if="databankId == 44">
+      <template v-if="info._id == 71">
         <OverzichtVacatures
           :titel="data.label"
           :elements="filteredElements"
         ></OverzichtVacatures>
+      </template>
+
+      <template v-if="info._id == 50">
+        <OverzichtNieuws
+          @scrolled-down="handleScroll()"
+          :elements="filteredElements"
+        ></OverzichtNieuws>
       </template>
 
       <div id="crawl-links">
