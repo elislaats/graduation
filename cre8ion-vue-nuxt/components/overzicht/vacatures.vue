@@ -20,7 +20,7 @@ const props = defineProps({
       <div
         class="vacature grid no-p"
         v-for="vacature in elements"
-        :key="vacature._id"
+        :key="'vacature' + vacature._id"
       >
         <div class="vacature-inner col-1-1">
           <h2
@@ -29,8 +29,7 @@ const props = defineProps({
               vacature.content.titel.replace('<p>', '').replace('</p>', '')
             "
           ></h2>
-          <div class="inleiding col-10-12">
-            <p v-html="vacature.content.inleiding"></p>
+          <div class="inleiding col-10-12" v-html="vacature.content.inleiding">
           </div>
 
           <div class="button col-1-1 no-p">
