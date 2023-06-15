@@ -35,8 +35,8 @@ const {
 } = useLazyFetch(
   `media/${props.id}?width=${props.width}&height=${props.height}`,
   {
+    immediate: false,
     key: `image-${props.id}`,
-    responseType: "blob",
     baseURL: useRuntimeConfig().public.apiBase,
   }
 )
