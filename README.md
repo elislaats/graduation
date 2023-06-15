@@ -50,3 +50,6 @@ Applicatie die volledige inhoud van de Cre8ion website vanuit de API ophaalt en 
 **Doelen:** \
 ‐ Data van API inlezen met een SSR applicatie \
 ‐ Content stylen op basis van type blok
+
+**Resultaat:** \
+Applicatie die volledige met behulp van gegevens uit de API een interface opbouwt dat lijkt op cre8ion.com
