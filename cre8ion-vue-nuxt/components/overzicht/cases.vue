@@ -53,8 +53,8 @@ onMounted(() => {
                   <!--background-image-->
                   <ImageComp
                     :id="element.content.afbeelding1200X900"
-                    :width="1200"
-                    :height="900"
+                    :width="900"
+                    :height="600"
                     :className="'bg-image case-bg'"
                   ></ImageComp>
                   <template #fallback>

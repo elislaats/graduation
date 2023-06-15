@@ -41,7 +41,7 @@ onMounted(() => {
                 <ImageComp
                   v-if="
                     element.content.afbeelding700X700 &&
-                    ($route.path == '/homepage' ||
+                    ($route.name.includes('Homepage') ||
                       !element.content.headerAfbeelding1920X800)
                   "
                   :id="element.content.afbeelding700X700"
@@ -52,8 +52,8 @@ onMounted(() => {
                 <ImageComp
                   v-else-if="element.content.headerAfbeelding1920X800"
                   :id="element.content.headerAfbeelding1920X800"
-                  :width="1920"
-                  :height="800"
+                  :width="700"
+                  :height="700"
                   :className="'bg-image work-bg'"
                 ></ImageComp>
                 <div v-else class="work-bg no-bg"></div>

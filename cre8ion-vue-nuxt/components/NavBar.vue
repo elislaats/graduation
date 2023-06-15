@@ -79,7 +79,7 @@ function checkRoutes(expression, routeList) {
     padding: 2.5rem 3rem;
     border-right: 1px solid rgba(255, 255, 255, 0.4);
     border-bottom: 1px solid rgba(255, 255, 255, 0.4);
-    .logo-image {
+    .logo-img {
       height: 5rem;
     }
   }
