@@ -1,24 +1,27 @@
 export const getFullDatabank = async function (id) {
-  const databank = await useFetch(`/pages/${id}`, {
-    key: `databank-${id}`,
-    baseURL: useRuntimeConfig().public.apiBase,
-    transform: (res) => {
-      if (id == 7) {
-        res.reverse()
+  let databank = useNuxtData(`databank-${id}`).data.value;
+  if (databank == null) {
+    databank = await useFetch(`/pages/${id}`, {
+      key: `databank-${id}`,
+      baseURL: useRuntimeConfig().public.apiBase,
+      transform: (res) => {
+        if (id == 7) {
+          res.reverse();
+        }
+        return res;
+      },
+    }).then((res) => {
+      if (res.error.value) {
+        throw createError({
+          statusCode: 400,
+          statusMessage: "Ophalen Databank mislukt",
+          message: `geprobeerd op te halen: /api/pages/${id}}`,
+        });
+      } else {
+        return res.data.value;
       }
-      return res
-    },
-  }).then((res) => {
-    if (res.error.value) {
-      throw createError({
-        statusCode: 400,
-        statusMessage: "Ophalen Databank mislukt",
-        message: `geprobeerd op te halen: /api/pages/${id}}`,
-      });
-    } else {
-      return res.data.value;
-    }
-  });
+    });
+  }
   return databank;
 };
 
