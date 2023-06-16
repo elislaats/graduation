@@ -16,5 +16,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
         setMeta(res.data.value);
       }
     });
+  } else {
+    setMeta(useNuxtData(key).data.value)
   }
 });

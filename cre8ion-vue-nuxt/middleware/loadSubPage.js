@@ -18,10 +18,12 @@ export default defineNuxtRouteMiddleware(async (to) => {
           return abortNavigation(
             `Geen paginainhoud gevonden voor databank: ${databank} en id: ${id}`
           );
-        } else {
+        } else if (res.data.value.metaData) {
           setMeta(res.data.value);
         }
       });
     }
+  } else if (useNuxtData(to.path).data.value.metaData) {
+    setMeta(useNuxtData(to.path).data.value);
   }
 });
