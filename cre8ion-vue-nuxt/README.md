@@ -25,18 +25,10 @@ Start the development server on `http://localhost:3000`
 npm run dev
 ```
 
-## Production
+### Production
 
-Build the application for production:
-
-```bash
-npm run build
-```
-
-Locally preview production build:
+Generate pre-rendered version op the application to be able to deploy to static hosting
 
 ```bash
-npm run preview
+npx nuxi generate
 ```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
