@@ -39,16 +39,8 @@ npm run dev
 
 ### Production
 
-Build the application for production:
+Generate pre-rendered version op the application to be able to deploy to static hosting
 
 ```bash
-npm run build
+npx nuxi generate
 ```
-
-Locally preview production build:
-
-```bash
-npm run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
