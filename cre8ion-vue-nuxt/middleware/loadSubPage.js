@@ -1,5 +1,6 @@
 export default defineNuxtRouteMiddleware(async (to) => {
-  if (useNuxtData(to.path).data.value == null) {
+  const key = to.path
+  if (useNuxtData(key).data.value == null) {
     const databank = getDatabankIdFromName(to.path.split("/")[1]);
     const id = await getDetailIdFromSlug(databank, to.params.slug);
     if (!id) {
@@ -8,7 +9,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
       );
     } else {
       await useFetch(`/page/${databank}/${id}`, {
-        key: to.path,
+        key: key,
         baseURL: useRuntimeConfig().public.apiBase,
         transform: (data) => {
           return mapPageData(data);
@@ -23,7 +24,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
         }
       });
     }
-  } else if (useNuxtData(to.path).data.value.metaData) {
-    setMeta(useNuxtData(to.path).data.value);
+  } else if (useNuxtData(key).data.value.metaData) {
+    setMeta(useNuxtData(key).data.value);
   }
 });
