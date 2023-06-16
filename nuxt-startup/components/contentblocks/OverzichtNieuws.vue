@@ -19,7 +19,7 @@ const page = ref({
 const allElements = ref();
 
 getDatabank(databankId).then((elements) => {
-  allElements.value = elements.toReversed();
+  allElements.value = elements.toReversed()
 });
 
 const filteredElements = computed(() => {
@@ -30,22 +30,24 @@ const filteredElements = computed(() => {
   return allElements.value.slice(0, endValue);
 });
 
-window.onscroll = () => {
-  let bottomOfWindow =
-    Math.max(
-      window.pageYOffset,
-      document.documentElement.scrollTop,
-      document.body.scrollTop
-    ) +
-      window.innerHeight ===
-    document.documentElement.offsetHeight;
-  if (
-    bottomOfWindow &&
-    page.value.index * page.value.amount < allElements.value.length
-  ) {
-    page.value.index++;
-  }
-};
+onMounted(() => {
+  window.onscroll = () => {
+    let bottomOfWindow =
+      Math.max(
+        window.pageYOffset,
+        document.documentElement.scrollTop,
+        document.body.scrollTop
+      ) +
+        window.innerHeight ===
+      document.documentElement.offsetHeight;
+    if (
+      bottomOfWindow &&
+      page.value.index * page.value.amount < allElements.value.length
+    ) {
+      page.value.index++;
+    }
+  };
+});
 </script>
 
 <template>
@@ -66,12 +68,14 @@ window.onscroll = () => {
         <div class="news-item" v-for="element in filteredElements">
           <div class="news-image-wrapper">
             <NuxtLink :to="`/nieuws/${element.content.slug}`">
-              <ImageComp
-                v-if="element.content.afbeelding"
-                :id="element.content.afbeelding"
-                :class-name="'news-image'"
-              >
-              </ImageComp>
+              <ClientOnly>
+                <ImageComp
+                  v-if="element.content.afbeelding"
+                  :id="element.content.afbeelding"
+                  className="news-image"
+                >
+                </ImageComp>
+              </ClientOnly>
             </NuxtLink>
           </div>
 

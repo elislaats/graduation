@@ -21,18 +21,19 @@ const props = defineProps({
       <div class="img-container col-1-1">
         <template v-if="data.link">
           <NuxtLink :to="data.link">
-            <ImageComp
-              v-if="data.afbeelding"
-              :id="data.afbeelding"
-              :className="'link-img'"
-            ></ImageComp>
+            <ClientOnly>
+              <ImageComp
+                v-if="data.afbeelding"
+                :id="data.afbeelding"
+                :className="'link-img'"
+              ></ImageComp>
+            </ClientOnly>
           </NuxtLink>
         </template>
         <template v-else>
-            <ImageComp
-              v-if="data.afbeelding"
-              :id="data.afbeelding"
-            ></ImageComp>
+          <ClientOnly>
+            <ImageComp v-if="data.afbeelding" :id="data.afbeelding"></ImageComp>
+          </ClientOnly>
         </template>
         <p v-if="data.ondertitel" v-html="data.ondertitel"></p>
       </div>

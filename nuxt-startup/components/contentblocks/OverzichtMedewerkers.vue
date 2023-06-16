@@ -49,13 +49,15 @@ const filteredElements = computed(() => {
             class="col-1-4 employee"
             :key="element.content.afbeelding"
           >
-            <ImageComp
-              :key="element.content.afbeelding"
-              :id="element.content.afbeelding"
-              :className="'employee-image'"
-              :width="700"
-            >
-            </ImageComp>
+            <ClientOnly>
+              <ImageComp
+                :key="element.content.afbeelding"
+                :id="element.content.afbeelding"
+                :className="'employee-image'"
+                :width="700"
+              >
+              </ImageComp>
+            </ClientOnly>
             <div class="employee-info">
               <h5>{{ element.content.titel }}</h5>
               <span class="text-primary"> {{ element.content.functie }} </span>

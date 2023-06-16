@@ -32,19 +32,21 @@ const filteredElements = computed(() => {
   return allElements.value.slice(0, max.value + max.value * page.value);
 });
 
-window.onscroll = () => {
-  let bottomOfWindow =
-    Math.max(
-      window.pageYOffset,
-      document.documentElement.scrollTop,
-      document.body.scrollTop
-    ) +
-      window.innerHeight ===
-    document.documentElement.offsetHeight;
-  if (bottomOfWindow && page.value * max.value < allElements.value.length) {
-    page.value++;
-  }
-};
+onMounted(() => {
+  window.onscroll = () => {
+    let bottomOfWindow =
+      Math.max(
+        window.pageYOffset,
+        document.documentElement.scrollTop,
+        document.body.scrollTop
+      ) +
+        window.innerHeight ===
+      document.documentElement.offsetHeight;
+    if (bottomOfWindow && page.value * max.value < allElements.value.length) {
+      page.value++;
+    }
+  };
+});
 </script>
 
 <template>
@@ -83,14 +85,17 @@ window.onscroll = () => {
                   <h3>{{ element.content.subtitel }}</h3>
                 </div>
 
-                <!--background-image-->
-                <ImageComp
-                  v-if="element.content.afbeelding1200X900"
-                  :id="element.content.afbeelding1200X900"
-                  :width="1200"
-                  :className="'bg-image case-bg'"
-                ></ImageComp>
-                <div v-else class="case-bg no-bg"></div>
+                <ClientOnly>
+                  <!--background-image-->
+                  <ImageComp
+                    v-if="element.content.afbeelding1200X900"
+                    :id="element.content.afbeelding1200X900"
+                    :width="1200"
+                    :className="'bg-image case-bg'"
+                  ></ImageComp>
+
+                  <div v-else class="case-bg no-bg"></div>
+                </ClientOnly>
               </div>
             </div>
           </template>

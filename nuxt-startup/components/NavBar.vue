@@ -1,32 +1,19 @@
 <template>
-  <nav v-if="routing.loaded" class="navBar">
-    <NuxtLink
-      v-for="route in routing.routes"
-      :to="route.path"
-      :class="'btn navLink ' + route.name.replaceAll(' ', '').toLowerCase()"
-      :active-class="'text-primary'"
-    >
-      {{ route.name }}
-    </NuxtLink>
+  <nav class="navBar">
+    <template v-for="route in $router.options.routes">
+      <NuxtLink
+        v-if="route.name && !route.name?.toString().includes('detail')"
+        :to="route.path"
+        :class="'btn navLink ' + route.name.toString().replaceAll(' ', '').toLowerCase()"
+        :active-class="'text-primary'"
+      >
+        {{ route.name }}
+      </NuxtLink>
+    </template>
     <div class="spacer-top"></div>
     <div class="spacer-bottom"></div>
   </nav>
 </template>
-
-<script setup>
-const routing = ref({
-  loaded: false,
-  routes: [],
-});
-
-onMounted(() => {
-  const loadedRoutes = useState("routes");
-  routing.value = {
-    loaded: true,
-    routes: loadedRoutes.value,
-  };
-});
-</script>
 
 <style lang="scss">
 .navBar {
