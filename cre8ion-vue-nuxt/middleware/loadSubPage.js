@@ -1,5 +1,8 @@
 export default defineNuxtRouteMiddleware(async (to) => {
-  const key = to.path
+  let key = to.path;
+  if (key.endsWith("/")) {
+    key = key.replace(/.$/, "");
+  }
   if (useNuxtData(key).data.value == null) {
     const databank = getDatabankIdFromName(to.path.split("/")[1]);
     const id = await getDetailIdFromSlug(databank, to.params.slug);
@@ -12,19 +15,16 @@ export default defineNuxtRouteMiddleware(async (to) => {
         key: key,
         baseURL: useRuntimeConfig().public.apiBase,
         transform: (data) => {
-          return mapPageData(data);
+          return mapPageData(data, key);
         },
       }).then((res) => {
         if (res.error.value) {
           return abortNavigation(
             `Geen paginainhoud gevonden voor databank: ${databank} en id: ${id}`
           );
-        } else if (res.data.value.metaData) {
-          setMeta(res.data.value, to.fullPath);
         }
       });
     }
-  } else if (useNuxtData(key).data.value.metaData) {
-    setMeta(useNuxtData(key).data.value, to.fullPath);
   }
+  useSeoMeta(useNuxtData(key).data.value.metaData);
 });
