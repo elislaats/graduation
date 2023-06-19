@@ -3,10 +3,29 @@ const props = defineProps(useDefaultProps());
 </script>
 
 <template>
-  <section class="contentblock tekst" v-if="info._id && info._name">
+  <section
+    class="contentblock tekst"
+    v-if="info._id && info._name"
+    :class="{
+      'margin-none': data.marginBottom == 'margin-none',
+      'margin-small': data.marginBottom == 'margin-small',
+    }"
+  >
+    <template v-if="info._id == 33">
+      <!--Tekst 1 koloms-->
+      <div class="grid grid-pad">
+        <h2 v-if="data.titel" class="col-1-1">{{ data.titel }}</h2>
+        <div
+          v-if="data.tekst"
+          class="col-7-12 push-2-12"
+          v-html="data.tekst"
+        ></div>
+      </div>
+    </template>
+
     <template v-if="info._id == 54">
       <!--Tekst 2 koloms-->
-      <div class="grid grid-pad p-5">
+      <div class="grid grid-pad">
         <h2 v-if="data.titel" class="col-1-1">{{ data.titel }}</h2>
         <div class="col-4-12 push-1-12" v-html="data.tekstLinks"></div>
         <div class="col-4-12 push-1-12" v-html="data.tekstRechts"></div>
@@ -33,3 +52,17 @@ const props = defineProps(useDefaultProps());
     <p>no content available</p>
   </section>
 </template>
+
+<style lang="scss">
+.contentblock {
+  &.tekst {
+    margin-top: 0;
+    &.margin-none {
+      margin-bottom: 0;
+    }
+    &.margin-small {
+      margin-bottom: 5rem;
+    }
+  }
+}
+</style>

@@ -12,6 +12,7 @@ export default function (id) {
     case 57:
     case 71:
       return ContentblockOverzicht;
+    case 33:
     case 54:
     case 58:
       return ContentblockTekst;
