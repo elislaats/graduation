@@ -13,10 +13,10 @@ export default defineNuxtRouteMiddleware(async (to) => {
           `Geen paginainhoud gevonden voor id: ${to.meta.id}`
         );
       } else {
-        setMeta(res.data.value);
+        setMeta(res.data.value, to.fullPath);
       }
     });
   } else {
-    setMeta(useNuxtData(key).data.value)
+    setMeta(useNuxtData(key).data.value, to.fullPath)
   }
 });

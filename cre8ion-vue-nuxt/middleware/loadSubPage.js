@@ -20,11 +20,11 @@ export default defineNuxtRouteMiddleware(async (to) => {
             `Geen paginainhoud gevonden voor databank: ${databank} en id: ${id}`
           );
         } else if (res.data.value.metaData) {
-          setMeta(res.data.value);
+          setMeta(res.data.value, to.fullPath);
         }
       });
     }
   } else if (useNuxtData(key).data.value.metaData) {
-    setMeta(useNuxtData(key).data.value);
+    setMeta(useNuxtData(key).data.value, to.fullPath);
   }
 });
