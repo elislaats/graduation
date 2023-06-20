@@ -27,6 +27,7 @@ const props = defineProps({
 const imgError = ref(false);
 
 const {
+  execute,
   data: image,
   pending,
   error,
@@ -34,10 +35,15 @@ const {
   `media/${props.id}?width=${props.width}&height=${props.height}`,
   {
     server: false,
+    immediate: false,
     key: `image-${props.id}`,
     baseURL: useRuntimeConfig().public.apiBase,
   }
-)
+);
+
+if(!image.value){
+  execute()
+}
 
 const imgSrc = computed(() => {
   try {
@@ -54,15 +60,17 @@ const imgSrc = computed(() => {
   </template>
   <template v-else-if="error || imgError">
     <figure :class="className" class="error">
-      <img class="img-error" src="~/assets/images/fa-noimage.svg" alt="" loading="lazy"/>
+      <img
+        class="img-error"
+        src="~/assets/images/fa-noimage.svg"
+        alt=""
+        loading="lazy"
+      />
     </figure>
   </template>
   <template v-else>
-    <figure
-      v-if="className.includes('bg-image')"
-      :class="className"
-    >
-      <img :src="imgSrc" :alt="altText" loading="lazy"/>
+    <figure v-if="className.includes('bg-image')" :class="className">
+      <img :src="imgSrc" :alt="altText" loading="lazy" />
     </figure>
 
     <figure v-else :class="className">

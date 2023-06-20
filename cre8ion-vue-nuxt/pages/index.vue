@@ -11,10 +11,15 @@ useHead({
     },
   ],
 });
+
 const route = useRoute();
 
 const page = computed(() => {
-  return useNuxtData(route.path).data.value;
+  let key = route.path
+  if (key.endsWith('/') && key.length > 1){
+    key = key.replace(/.$/,"")
+  }
+  return useNuxtData(key).data.value;
 });
 
 watch(page, () => {
